@@ -1,0 +1,70 @@
+// 弹性布局
+@mixin flex($align-item: flex-start, $justify-content: flex-start){
+  display: flex;
+  align-items: #{$align-item};
+  justify-content: #{$justify-content};
+}
+
+.flex-start-start{
+  @include flex();
+}
+
+.flex-start-center{
+  @include flex(flex-start, center);
+}
+
+.flex-start-end{
+  @include flex(flex-start, flex-end);
+}
+
+.flex-start-around{
+  @include flex(flex-start, space-around);
+}
+
+.flex-start-between{
+  @include flex(flex-start, space-between);
+}
+
+.flex-center-start{
+  @include flex(center)
+}
+
+.flex-center-center{
+  @include flex(center, center);
+}
+
+.flex-center-end{
+  @include flex(center, flex-end);
+}
+
+.flex-center-around{
+  @include flex(center, space-around);
+}
+
+.flex-center-between{
+  @include flex(center, space-between);
+}
+
+.flex-end-start{
+  @include flex(flex-end)
+}
+
+.flex-end-center{
+  @include flex(flex-end, center);
+}
+
+.flex-end-end{
+  @include flex(flex-end, flex-end);
+}
+
+.flex-end-around{
+  @include flex(flex-end, space-around);
+}
+
+.flex-end-between{
+  @include flex(flex-end, space-between);
+}
+
+.flex-stretch-start{
+  @include flex(stretch, space-start);
+}
