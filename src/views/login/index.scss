@@ -15,7 +15,6 @@
 			top: 50px;
 			left: 80px;
 			z-index: 1;
-			animation: logoAnimation 0.3s ease;
 			img {
 				width: 52px;
 				height: 52px;
@@ -75,7 +74,6 @@
 				&::after {
 					content: '';
 					position: absolute;
-					z-index: 1;
 				}
 			}
 			.login-right-warp-one {
@@ -127,15 +125,19 @@
 				.login-right-warp-main-title {
 					font-size: 27px;
 					margin: 0px 50px;
-					letter-spacing: 3px;
-					animation: logoAnimation 0.3s ease;
-					animation-delay: 0.3s;
+					letter-spacing: 1px;
+					font-weight: bold;
 					color: var(--el-text-color-primary);
 				}
 
 				.login-right-warp-register-title{
 					margin: 0px 50px;
-					color: var(--el-text-color-secondary);
+					color: var(--el-color-info);
+
+					.register-btn{
+						cursor: pointer;
+						color: var(--van-primary-color);
+					}
 				}
 				
 				.login-right-warp-main-form {

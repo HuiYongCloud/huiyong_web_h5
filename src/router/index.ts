@@ -8,6 +8,7 @@ const routes: RouteRecordRaw[] = [
     { path: '/', redirect: '/home' },
     { path: '/home', name: 'home', component: () => import('/@/views/home/index.vue') },
     { path: '/login', name: 'login', component: () => import('/@/views/login/index.vue') },
+    { path: '/register', name: 'register', component: () => import('/@/views/register/index.vue') },
 ]
 
 // 根路由404配置

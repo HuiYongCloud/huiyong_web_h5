@@ -15,14 +15,18 @@
 		</div>
 		<div class="login-right">
 			<div class="login-right-warp flex-center-center">
-				<span class="login-right-warp-one"></span>
-				<span class="login-right-warp-two"></span>
+				<!-- <span class="login-right-warp-one"></span>
+				<span class="login-right-warp-two"></span> -->
 				<div class="login-right-warp-mian">
-					<div class="login-right-warp-main-title">{{ themeConfig.globalTitle }} 欢迎您！</div>
-					<div class="login-right-warp-register-title">
-						<span>没有账户？</span>
-						<span>免费注册</span>
+					<div class="login-right-warp-main-title mb20">{{ themeConfig.globalTitle }} 欢迎您！</div>
+					<div class="login-right-warp-register-title mb50 flex">
+						<div>没有账户？</div> 
+						<div class="flex-center-center register-btn" @click="toRegPage">
+							<div >免费注册</div>
+							<Icon style="margin-top: 2px;" size="12" name="arrow" />
+						</div>
 					</div>
+
 					<div class="login-right-warp-main-form">
 						<Tabs v-model:active="state.active">
 							<Tab title="密码登录"><Account ref="loginByEmailPassword" @log-in-success="logInSuccess"/></Tab>
@@ -35,9 +39,10 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="loginIndex">
+<script setup lang="ts">
 import { defineAsyncComponent, onMounted, onUnmounted, reactive, ref, nextTick} from 'vue';
-import { Tab, Tabs } from 'vant';
+import { useRoute, useRouter } from "vue-router"
+import { Tab, Tabs, Icon } from 'vant';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { NextLoading } from '/@/components/loading/loading';
 import logoMini from '/@/assets/login/logo_mini.png';
@@ -63,6 +68,7 @@ const loginByEmailPassword = ref()
 const loginByEmailCode = ref()
 
 // 定义变量内容
+const router = useRouter()
 const mainStore = appStore()
 const themeConfig = useThemeConfig();
 const state = reactive({
@@ -82,6 +88,10 @@ const toMainPage = () => {
 	// 添加 loading，防止第一次进入界面时出现短暂空白
 	NextLoading.start();
 };
+
+const toRegPage = () => {
+    router.push({path: '/register'})
+}
 
 /**
  * enter监听

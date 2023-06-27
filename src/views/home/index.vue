@@ -2,7 +2,6 @@
   <div class="page-home flex-center-center">
     <div class="flex-center-center" style="flex-direction: column;">
       <h1>Home</h1>
-			<ThemeSwitch class="mt30"/>
       <div class="flex mt30">
         <Button plain type="primary" to="/login" class="mt10">去登录</Button>
         <Button plain type="primary" to="/401" class="ml10">4 0 1</Button>
@@ -14,7 +13,6 @@
 
 <script setup lang="ts">
 import { Button } from 'vant';
-import ThemeSwitch from '/@/components/theme-switch/index.vue';
 </script>
 
 <style scoped lang="scss">

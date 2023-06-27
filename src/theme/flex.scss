@@ -5,6 +5,10 @@
   justify-content: #{$justify-content};
 }
 
+.flex{
+  @include flex();
+}
+
 .flex-start-start{
   @include flex();
 }
