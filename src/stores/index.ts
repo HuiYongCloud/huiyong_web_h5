@@ -31,7 +31,7 @@ export const appStore = defineStore('appStore', {
         enabled: true,
         //指定字段存储，并且指定存储方式：sessionStorage 或者 localStorage
         strategies: [
-            { storage: localStorage, paths: ['theme', 'themeFromUser', 'count'] },
+            { storage: localStorage, paths: ['theme'] },
         ],
     },
 

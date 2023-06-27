@@ -1,5 +1,5 @@
 <template>
-    <div class="theme-toggle flex-center-center" title="主题模式">
+    <div :class="{'theme-toggle-sticky':sticky}" class="theme-toggle flex-center-center" @click="changeTheme">
         <svg class="sun-and-moon" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24">
         <mask class="moon" id="moon-mask">
             <rect x="0" y="0" width="100%" height="100%" fill="white" />
@@ -19,6 +19,31 @@
         </svg>
     </div>
 </template>
+
+<script setup lang="ts">
+import { appStore } from '/@/stores/appStore'
+
+// 定义父组件传过来的值
+const props = defineProps({
+	// 是否使用粘性布局
+	sticky: {
+		type: Boolean,
+		default: () => false,
+	},
+})
+
+const mainStore = appStore()
+const changeTheme = () => {
+	let isDark = false;
+	if(mainStore.theme){
+		isDark = mainStore.theme === 'dark'
+	}else{
+		isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+	}
+	mainStore.theme = isDark ? 'light' : 'dark';
+}
+</script>
+
 
 <style scoped lang="scss">
 @import "./sun-and-moon.scss";
@@ -50,6 +75,13 @@
     stroke-linecap: round;
     font-size: 10px;
   }
+}
+
+.theme-toggle-sticky{
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  z-index: 100;
 }
 
 [data-theme='dark'] {

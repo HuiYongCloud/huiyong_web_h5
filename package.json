@@ -10,8 +10,11 @@
   },
   "dependencies": {
     "@types/lodash": "^4.14.195",
+    "axios": "^1.4.0",
+    "nprogress": "^0.2.0",
     "pinia": "^2.1.4",
     "pinia-plugin-persist": "^1.0.0",
+    "qrcodejs2-fixes": "^0.0.2",
     "sass": "^1.63.3",
     "vant": "^4.6.0",
     "vue": "^3.2.47",

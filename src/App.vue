@@ -1,13 +1,15 @@
 <template >
-	<ConfigProvider :theme="state.sysTheme" >
+	<ConfigProvider id="app" :theme="state.sysTheme" >
 		<router-view/>
+		<ThemeSwitch :sticky="true"/>
 	</ConfigProvider>
 </template>
 
 <script setup lang="ts">
 import { onMounted, nextTick, watch, computed, ref, reactive} from 'vue';
 import { ConfigProvider } from 'vant';
-import { appStore } from '/@/store'
+import { appStore } from '/@/stores/appStore'
+import ThemeSwitch from '/@/components/theme-switch/index.vue';
 const mainStore = appStore()
 const state = reactive({
 	sysTheme: '' as any,
@@ -32,7 +34,6 @@ const onInitTheme = () => {
 	const body = document.documentElement as HTMLElement;
 	body.setAttribute('data-theme', isDark ? 'dark' : 'light')
 	state.sysTheme = isDark ? 'dark' : 'light';
-	console.log(state.sysTheme)
 }
 
 // 系统主题色切换监听
@@ -53,4 +54,4 @@ onMounted(() => {
 		initSysThemeLister()
 	});
 });
-</script>
+</script>./stores

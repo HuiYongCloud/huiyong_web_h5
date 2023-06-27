@@ -1,4 +1,7 @@
 import { createRouter, createWebHistory, RouterOptions, Router, RouteRecordRaw } from 'vue-router'
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
+import { NextLoading } from '/@/components/loading/loading';
 
 // 页面配置
 const routes: RouteRecordRaw[] = [
@@ -32,14 +35,21 @@ const options: RouterOptions = {
 }
 
 // Router是路由对象类型
-import { NextLoading } from '/@/components/loading/loading';
 const router: Router = createRouter(options)
 
 // 路由加载前
 router.beforeEach(async (to, from, next) => {
-	NextLoading.start();
-    next();
-    NextLoading.done(1000);
+    NProgress.configure({ showSpinner: false });
+	NProgress.start();
+
+    if (to.path === '/login') {
+		next();
+		NProgress.done();
+	}else{
+        NextLoading.start();
+        next();
+        NextLoading.done(1000);
+    }
 })
 
 export default router
