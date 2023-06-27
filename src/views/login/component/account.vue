@@ -15,7 +15,7 @@
 				placeholder="请输入密码"
 				/>
 		</Form>
-		<Button type="primary" class="login-content-submit" round @click="onLogin" :loading="state.loginLoading">登录</Button>
+		<Button type="primary" class="login-content-submit mt50" round @click="onLogin" :loading="state.loginLoading">登录</Button>
 	</div>
 </template>
 

@@ -15,8 +15,8 @@
 		</div>
 		<div class="login-right">
 			<div class="login-right-warp flex-center-center">
-				<!-- <span class="login-right-warp-one"></span>
-				<span class="login-right-warp-two"></span> -->
+				<span class="login-right-warp-one"></span>
+				<span class="login-right-warp-two"></span>
 				<div class="login-right-warp-mian">
 					<div class="login-right-warp-main-title mb20">{{ themeConfig.globalTitle }} 欢迎您！</div>
 					<div class="login-right-warp-register-title mb50 flex">
@@ -30,7 +30,7 @@
 					<div class="login-right-warp-main-form">
 						<Tabs v-model:active="state.active">
 							<Tab title="密码登录"><Account ref="loginByEmailPassword" @log-in-success="logInSuccess"/></Tab>
-  							<Tab title="邮箱登录"><Email ref="loginByEmailCode" @log-in-success="logInSuccess"/></Tab>
+  						<Tab title="邮箱登录"><Email ref="loginByEmailCode" @log-in-success="logInSuccess"/></Tab>
 						</Tabs>
 					</div>
 				</div>

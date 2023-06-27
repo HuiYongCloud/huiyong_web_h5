@@ -64,12 +64,13 @@
 			position: relative;
 			overflow: hidden;
 			background-color: var(--app-color-bg);
+			
 			.login-right-warp-one,
 			.login-right-warp-two {
 				position: absolute;
-				display: block;
 				width: inherit;
 				height: inherit;
+				z-index: 0;
 				&::before,
 				&::after {
 					content: '';
@@ -121,10 +122,11 @@
 			}
 			.login-right-warp-mian {
 				width: 100%;
+				z-index: 1;
 
 				.login-right-warp-main-title {
 					font-size: 27px;
-					margin: 0px 50px;
+					margin: 30px 50px 0px;
 					letter-spacing: 1px;
 					font-weight: bold;
 					color: var(--el-text-color-primary);
