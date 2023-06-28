@@ -1,18 +1,8 @@
 <template>
 	<div class="login-content-form">
 		<Form>
-			<Field
-				v-model="state.ruleForm.email"
-				name="邮箱"
-				label="邮箱"
-				placeholder="请输入邮箱"
-				/>
-			<Field
-				v-model="state.ruleForm.password"
-				name="密码"
-				label="密码"
-				placeholder="请输入密码"
-				/>
+			<Field v-model="state.ruleForm.email" placeholder="请输入邮箱" required/>
+			<Field v-model="state.ruleForm.password" placeholder="请输入密码"/>
 		</Form>
 		<Button type="primary" class="w100 mt40" round @click="onLogin" :loading="state.loginLoading">登录</Button>
 		
@@ -25,10 +15,9 @@
 
 <script setup lang="ts" name="loginAccount">
 import { reactive, computed , onMounted, onUnmounted} from 'vue';
-import { Form, Field, CellGroup, Radio, RadioGroup, Button, showNotify} from 'vant';
+import { Form, Field, Button, showNotify} from 'vant';
 import Api from "/@/api/api"
 import Request from "/@/api/request"
-import { emailSuffix } from "/@/utils/matchingEamil"
 
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['logInSuccess']);
