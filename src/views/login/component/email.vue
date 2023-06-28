@@ -1,61 +1,23 @@
 <template>
-	<Form class="login-content-form">
-		<Field
-			name="邮箱"
-			label="邮箱"
-			placeholder="请输入邮箱"
-			:rules="[{ required: true, message: '请输入邮箱' }]"
-			/>
-		<Field
-			name="密码"
-			label="密码"
-			placeholder="请输入密码"
-			:rules="[{ required: true, message: '请输入密码' }]"
-			/>
-		<Button type="primary" class="login-content-submit" round @click="onLogin">登录</Button>
-		<div class="font12 login-msg">* 温馨提示：建议使用Chrome、Microsoft Edge，360浏览器</div>
-	</Form>
-<!-- <el-form size="large" class="login-content-form">
-		<el-form-item class="login-animation1">
-			<el-autocomplete class="el-autocomplete" text placeholder="请输入邮箱" v-model="state.ruleForm.email" :fetch-suggestions="emailSuffix">
-				<template #prefix>
-					<el-icon><Message /></el-icon>
-				</template>
-				<template #suffix>
-					<div class="login-content-email" @click="state.ruleForm.email = ''"><SvgIcon name="ele-CircleClose" :size="15" /></div>
-				</template>
-			</el-autocomplete>
-		</el-form-item>
-		<el-form-item class="login-animation2">
-			<el-col :span="15">
-				<el-input text maxlength="4" placeholder="请输入验证码" v-model="state.ruleForm.code" clearable autocomplete="off">
-					<template #prefix>
-						<el-icon class="el-input__icon"><ele-Position /></el-icon>
-					</template>
-				</el-input>
-			</el-col>
-			<el-col :span="1"></el-col>
-			<el-col :span="8">
-				<el-button 
-					v-waves 
-					class="login-content-code" 
-					:loading="state.codeBtn.codeLoading" 
-					:disabled="state.codeBtn.disabled"
-					@click="getLoginCode">{{state.codeBtn.getCodeBtn}}</el-button>
-			</el-col>
-		</el-form-item>
-		<el-form-item class="login-animation3">
-			<el-button 
-				round 
-				type="primary" 
-				v-waves 
-				class="login-content-submit" 
-				:loading="state.loginBtn.loginLoading" 
-				:disabled="state.loginBtn.disabled" 
-				@click="onLogin">登录</el-button>
-		</el-form-item>
-
-	</el-form> -->
+	<div class="login-content-form">
+		<Form >
+			<Field
+				name="邮箱"
+				label="邮箱"
+				placeholder="请输入邮箱"
+				/>
+			<Field
+				name="密码"
+				label="密码"
+				placeholder="请输入密码"
+				/>
+		</Form>
+		<Button type="primary" class="w100 mt40" round @click="onLogin">登录</Button>
+		<div class="flex-center-center mt20">
+			<span>点击「登录」表示已阅读并同意 </span>
+			<span class="cursor-pointer ml10 lisenter-msg">服务条款</span>
+		</div>
+	</div>
 </template>
 
 <script setup lang="ts" name="loginMobile">
@@ -64,7 +26,6 @@ import { Form, Field, showNotify, Button} from 'vant';
 import Api from "/@/api/api"
 import Request from "/@/api/request"
 import { emailSuffix } from "/@/utils/matchingEamil"
-// import { ElMessage } from 'element-plus';
 
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['logInSuccess']);
@@ -166,40 +127,13 @@ defineExpose({
 .login-content-form {
 	margin-top: 20px;
 
-	// Chrome自动填充背景色问题修复
-	input{
-    	background-color: rgba(255,255,255,0) !important;
-	}
 	input:-webkit-autofill{
-		transition: background-color 5000s ease-in-out 0s;
-		-webkit-text-fill-color: var(--el-input-text-color,var(--el-text-color-regular)) !important;
-	}
-	input:-webkit-autofill:focus{
+		-webkit-box-shadow: 0 0 0px 1000px var(--app-color-bg) inset;
 		-webkit-text-fill-color: var(--el-input-text-color,var(--el-text-color-regular)) !important;
 	}
 
-	@for $i from 1 through 4 {
-		.login-animation#{$i} {
-			opacity: 0;
-			animation-name: error-num;
-			animation-duration: 0.5s;
-			animation-fill-mode: forwards;
-			animation-delay: calc($i/10) + s;
-		}
-	}
-	.login-content-code {
-		width: 100%;
-		padding: 0;
-	}
-	.login-content-submit {
-		width: 100%;
-		letter-spacing: 2px;
-		font-weight: 300;
-		margin-top: 15px;
-	}
-	.login-msg {
-		margin-top: 80px;
-		color: var(--el-text-color-placeholder);
+	.lisenter-msg{
+		color: var(--van-primary-color);
 	}
 }
 </style>

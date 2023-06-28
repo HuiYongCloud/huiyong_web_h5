@@ -1,6 +1,5 @@
 <template>
 	<div class="login-content-form">
-
 		<Form>
 			<Field
 				v-model="state.ruleForm.email"
@@ -15,7 +14,12 @@
 				placeholder="请输入密码"
 				/>
 		</Form>
-		<Button type="primary" class="login-content-submit mt50" round @click="onLogin" :loading="state.loginLoading">登录</Button>
+		<Button type="primary" class="w100 mt40" round @click="onLogin" :loading="state.loginLoading">登录</Button>
+		
+		<div class="flex-center-center mt20">
+			<span>点击「登录」表示已阅读并同意 </span>
+			<span class="cursor-pointer ml10 lisenter-msg">服务条款</span>
+		</div>
 	</div>
 </template>
 
@@ -73,56 +77,8 @@ defineExpose({
 		-webkit-text-fill-color: var(--el-input-text-color,var(--el-text-color-regular)) !important;
 	}
 
-	.el-autocomplete{
-		width: 100% !important;
-	}
-
-	@for $i from 1 through 4 {
-		.login-animation#{$i} {
-			opacity: 0;
-			animation-name: error-num;
-			animation-duration: 0.5s;
-			animation-fill-mode: forwards;
-			animation-delay: calc($i/10) + s;
-		}
-	}
-
-	.login-content-prefix{
-		display: flex;
-		align-items: center;
-		width: 20px;
-		padding-right: 4px;
-	}
-
-	.login-content-email{
-		display: flex;
-		align-items: center;
-		width: 20px;
-		padding-left: 4px;
-		cursor: pointer;
-		&:hover {
-			color: #909399;
-		}
-	}
-	.login-content-password {
-		display: inline-block;
-		width: 20px;
-		cursor: pointer;
-		padding-left: 4px;
-		&:hover {
-			color: #909399;
-		}
-	}
-	.login-content-submit {
-		width: 100%;
-		letter-spacing: 2px;
-		font-weight: 300;
-		margin-top: 15px;
-	}
-
-	.login-msg {
-		margin-top: 80px;
-		color: var(--el-text-color-placeholder);
+	.lisenter-msg{
+		color: var(--van-primary-color);
 	}
 }
 </style>

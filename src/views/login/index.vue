@@ -30,7 +30,7 @@
 					<div class="login-right-warp-main-form">
 						<Tabs v-model:active="state.active">
 							<Tab title="密码登录"><Account ref="loginByEmailPassword" @log-in-success="logInSuccess"/></Tab>
-  						<Tab title="邮箱登录"><Email ref="loginByEmailCode" @log-in-success="logInSuccess"/></Tab>
+  							<Tab title="邮箱登录"><Email ref="loginByEmailCode" @log-in-success="logInSuccess"/></Tab>
 						</Tabs>
 					</div>
 				</div>
