@@ -6,9 +6,24 @@ import { NextLoading } from '/@/components/loading/loading';
 // 页面配置
 const routes: RouteRecordRaw[] = [
     { path: '/', redirect: '/home' },
-    { path: '/home', name: 'home', component: () => import('/@/views/home/index.vue') },
-    { path: '/login', name: 'login', component: () => import('/@/views/login/index.vue') },
-    { path: '/register', name: 'register', component: () => import('/@/views/register/index.vue') },
+    { 
+        path: '/home', 
+        name: 'home', 
+        component: () => import('/@/views/home/index.vue') ,
+        meta: { title: '首页' }
+    },
+    { 
+        path: '/login', 
+        name: 'login', 
+        component: () => import('/@/views/login/index.vue')  ,
+        meta: { title: '登录' }
+    },
+    { 
+        path: '/register', 
+        name: 'register', 
+        component: () => import('/@/views/register/index.vue')  ,
+        meta: { title: '注册' }
+    },
 ]
 
 // 根路由404配置
@@ -16,14 +31,17 @@ const routePage404: Array<RouteRecordRaw> = [
     {
         path: '/401',
         component: () => import('/@/views/error/401.vue'),
+        meta: { title: '401' }
     },
     {
         path: '/404',
         component: () => import('/@/views/error/404.vue'),
+        meta: { title: '404' }
     },
     {
         path: '/:pathMatch(.*)',
         component: () => import('/@/views/error/404.vue'),
+        meta: { title: '404' }
     },
 ]
 
@@ -52,5 +70,13 @@ router.beforeEach(async (to, from, next) => {
         NextLoading.done(1000);
     }
 })
+
+router.afterEach((to, from, next) => {
+    //遍历meta改变title
+    if (to.meta.title) {
+        document.title = to.meta.title as string
+    }
+    window.scrollTo(0, 0)
+  })
 
 export default router
