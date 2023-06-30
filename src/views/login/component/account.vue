@@ -4,12 +4,6 @@
 			<Field v-model="state.ruleForm.email" placeholder="请输入邮箱" required/>
 			<Field v-model="state.ruleForm.password" placeholder="请输入密码"/>
 		</Form>
-		<Button type="primary" class="w100 mt40" round @click="onLogin" :loading="state.loginLoading">登录</Button>
-		
-		<div class="flex-center-center mt20">
-			<span>点击「登录」表示已阅读并同意 </span>
-			<span class="cursor-pointer ml10 lisenter-msg">服务条款</span>
-		</div>
 	</div>
 </template>
 
@@ -57,17 +51,12 @@ defineExpose({
 </script>
 
 <style scoped lang="scss">
-
 .login-content-form {
 	padding-top: 20px;
 
 	input:-webkit-autofill{
 		-webkit-box-shadow: 0 0 0px 1000px var(--app-color-bg) inset;
 		-webkit-text-fill-color: var(--el-input-text-color,var(--el-text-color-regular)) !important;
-	}
-
-	.lisenter-msg{
-		color: var(--van-primary-color);
 	}
 }
 </style>

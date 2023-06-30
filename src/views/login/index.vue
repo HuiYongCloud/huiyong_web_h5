@@ -28,10 +28,17 @@
 					</div>
 
 					<div class="login-right-warp-main-form">
-						<Tabs v-model:active="state.active">
+						<Tabs v-model:active="state.active" animated>
 							<Tab title="密码登录"><Account ref="loginByEmailPassword" @log-in-success="logInSuccess"/></Tab>
   							<Tab title="邮箱登录"><Email ref="loginByEmailCode" @log-in-success="logInSuccess"/></Tab>
 						</Tabs>
+
+						<!-- @click="onLogin" :loading="state.loginLoading" -->
+						<Button type="primary" class="w100 mt40" round >登录</Button>
+						<div class="flex-center-center mt20">
+							<span>点击「登录」表示已阅读并同意 </span>
+							<span class="cursor-pointer ml10 lisenter-msg">服务条款</span>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -42,6 +49,7 @@
 <script setup lang="ts">
 import { defineAsyncComponent, onMounted, onUnmounted, reactive, ref, nextTick} from 'vue';
 import { useRoute, useRouter } from "vue-router"
+import { Form, Field, showNotify, Button} from 'vant';
 import { Tab, Tabs, Icon } from 'vant';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { NextLoading } from '/@/components/loading/loading';
