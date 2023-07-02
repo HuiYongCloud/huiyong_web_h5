@@ -33,8 +33,7 @@
   							<Tab title="邮箱登录"><Email ref="loginByEmailCode" @log-in-success="logInSuccess"/></Tab>
 						</Tabs>
 
-						<!-- @click="onLogin" :loading="state.loginLoading" -->
-						<Button type="primary" class="w100 mt40" round >登录</Button>
+						<Button type="primary" class="w100 mt40" round @click="onLogin" :loading="state.loginLoading">登录</Button>
 						<div class="flex-center-center mt20">
 							<span>点击「登录」表示已阅读并同意 </span>
 							<span class="cursor-pointer ml10 lisenter-msg">服务条款</span>
@@ -82,6 +81,7 @@ const themeConfig = useThemeConfig();
 const state = reactive({
 	active : ref(0),
 	svgbg: '' as any,
+	loginLoading: false
 });
 
 const logInSuccess = (res: any) => {
@@ -101,20 +101,28 @@ const toRegPage = () => {
     router.push({path: '/register'})
 }
 
+const onLogin = () => {
+	switch(state.active){
+		case 0:
+			state.loginLoading = true;
+			loginByEmailPassword.value.onLogin();
+			state.loginLoading = false;
+			break
+		case 1:
+			state.loginLoading = true;
+			loginByEmailCode.value.onLogin();
+			state.loginLoading = false;
+			break
+	}
+}
+
 /**
  * enter监听
  * @param event 
  */
  const keydownListener = (event : any) => {
 	if(event.key === 'Enter'){
-		switch(state.active){
-			case 0:
-				loginByEmailPassword.value.onLogin()
-				break
-			case 1:
-				loginByEmailCode.value.onLogin()
-				break
-		}
+		onLogin()
 	}
 }
 
@@ -126,6 +134,10 @@ onMounted(() => {
 		NextLoading.done();
 		// 注册监听
 		window.addEventListener('keydown', keydownListener);
+		// 获取焦点
+		setTimeout(() => {
+			loginByEmailPassword.value.emailFocus();			
+		}, 200);
 	})
 });
 

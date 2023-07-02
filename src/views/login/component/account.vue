@@ -1,20 +1,24 @@
 <template>
 	<div class="login-content-form">
 		<Form>
-			<Field v-model="state.ruleForm.email" placeholder="请输入邮箱" required/>
+			<Field ref="emailRef" v-model="state.ruleForm.email" placeholder="请输入邮箱" required/>
 			<Field v-model="state.ruleForm.password" placeholder="请输入密码"/>
 		</Form>
 	</div>
 </template>
 
 <script setup lang="ts" name="loginAccount">
-import { reactive, computed , onMounted, onUnmounted} from 'vue';
+import { reactive, ref} from 'vue';
 import { Form, Field, Button, showNotify} from 'vant';
 import Api from "/@/api/api"
 import Request from "/@/api/request"
 
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['logInSuccess']);
+const emailRef = ref();
+const emailFocus = () => {
+	emailRef.value.focus();
+}
 
 // 定义变量内容
 const state = reactive({
@@ -29,8 +33,7 @@ const state = reactive({
 // 登录
 const onLogin = () => {
 	state.loginLoading = true;
-	Request.post(Api.AUTH_Login, {
-		type: 0,
+	Request.post(Api.Login_Password, {
 		email: state.ruleForm.email,
 		password: state.ruleForm.password
 	}).then((res:any) =>{
@@ -46,11 +49,12 @@ const onLogin = () => {
 // 暴露变量
 defineExpose({
 	onLogin,
+	emailFocus
 });
 
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .login-content-form {
 	padding-top: 20px;
 
