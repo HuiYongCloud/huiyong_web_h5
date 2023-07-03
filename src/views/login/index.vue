@@ -134,10 +134,6 @@ onMounted(() => {
 		NextLoading.done();
 		// 注册监听
 		window.addEventListener('keydown', keydownListener);
-		// 获取焦点
-		setTimeout(() => {
-			loginByEmailPassword.value.emailFocus();			
-		}, 200);
 	})
 });
 

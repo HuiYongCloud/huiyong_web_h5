@@ -1,20 +1,23 @@
 <template>
-	<div class="login-content-form">
+	<div class="login-email-content-form">
 		<Form >
 			<Field v-model="state.ruleForm.email" placeholder="请输入邮箱" required/>
-			<Field v-model="state.ruleForm.code" placeholder="请输入验证码"/>
+			<Field v-model="state.ruleForm.code" placeholder="请输入验证码">
+			    <template #button>
+					<Button 
+						size="small" 
+						type="primary"
+						:loading="state.loginBtn.loginLoading" 
+						@click="getLoginCode">{{state.codeBtn.getCodeBtn}}</Button>
+				</template>
+			</Field>
 		</Form>
-		<!-- <Button type="primary" class="w100 mt40" round @click="onLogin">登录</Button>
-		<div class="flex-center-center mt20">
-			<span>点击「登录」表示已阅读并同意 </span>
-			<span class="cursor-pointer ml10 lisenter-msg">服务条款</span>
-		</div> -->
 	</div>
 </template>
 
 <script setup lang="ts" name="loginMobile">
 import { reactive, onUnmounted } from 'vue';
-import { Form, Field, showNotify, Button} from 'vant';
+import { Form, Field, Button, showNotify} from 'vant';
 import Api from "/@/api/api"
 import Request from "/@/api/request"
 
@@ -30,9 +33,9 @@ const state = reactive({
 
 	codeBtn:{
 		leftTime: 0,
-		getCodeBtn: '获取',
+		getCodeBtn: '发送验证码',
 		codeLoading: false,
-		disabled: false,
+		disabled: true,
 	},
 
 	loginBtn:{
@@ -53,7 +56,7 @@ const startTimer = () => {
 		if (state.codeBtn.leftTime <= 0) {
 			state.codeBtn.leftTime = 0;
 			clearTimer();
-			state.codeBtn.getCodeBtn = '获取'
+			state.codeBtn.getCodeBtn = '发送验证码'
 			state.codeBtn.disabled = false;
 		} else {
 			state.codeBtn.getCodeBtn = `${state.codeBtn.leftTime}秒`
@@ -88,8 +91,7 @@ const onLogin = () => {
 		return
 	}
 	state.loginBtn.loginLoading = true;
-	Request.post(Api.AUTH_Login_By_Code, {
-		type: 0,
+	Request.post(Api.Login_Email_Code, {
 		email: state.ruleForm.email,
 		code: state.ruleForm.code
 	}).then((res:any) =>{
@@ -114,12 +116,12 @@ defineExpose({
 
 </script>
 
-<style scoped lang="scss">
-.login-content-form {
+<style lang="scss">
+.login-email-content-form {
 	margin-top: 20px;
 
 	input:-webkit-autofill{
-		-webkit-box-shadow: 0 0 0px 1000px var(--app-color-bg) inset;
+		-webkit-box-shadow: 0 0 0px 1000px var(--van-cell-background) inset;
 		-webkit-text-fill-color: var(--el-input-text-color,var(--el-text-color-regular)) !important;
 	}
 }
