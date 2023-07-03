@@ -4,10 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-		"dev": "vite --mode dev",
-		"build": "vite build --mode prod"
+    "dev": "vite --mode dev",
+    "build": "vite build --mode prod"
   },
   "dependencies": {
+    "@toast-ui/editor": "^3.2.2",
+    "@toast-ui/editor-plugin-code-syntax-highlight": "^3.1.0",
     "@types/lodash": "^4.14.195",
     "axios": "^1.4.0",
     "nprogress": "^0.2.0",
