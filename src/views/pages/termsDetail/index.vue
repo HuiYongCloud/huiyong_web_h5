@@ -1,31 +1,27 @@
 <template>
-  <div class="page-home flex-center-center">
-    <div class="flex-center-center" style="flex-direction: column;">
-      <h1>Register</h1>
-    </div>
+  <div class="page-terms-detail">
+	<TuiViewer ref="tuiViewer"/>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive} from 'vue';
+import { onMounted, reactive, ref} from 'vue';
 import { useRoute, useRouter } from "vue-router"
 import { showNotify} from 'vant';
+import TuiViewer from '/@/components/TuiViewer.vue';
 import Api from "/@/api/api"
 import Request from "/@/api/request"
-
-const state = reactive({
-	detail: ''
-});
 
 // 定义变量内容
 const route = useRoute();
 const router = useRouter();
+const tuiViewer = ref();
 
 const getDetail = (id: any) => {
 	Request.post(Api.Terms_Detail, {
 		id: id
 	}).then((res:any) =>{
-		state.detail = res
+		tuiViewer.value.setMarkdown(res)
 	}).catch((res:any) =>{
 		showNotify({ type: 'danger', message: res.message });
 	})
