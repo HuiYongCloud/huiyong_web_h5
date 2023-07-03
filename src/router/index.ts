@@ -23,6 +23,14 @@ const routes: RouteRecordRaw[] = [
         component: () => import('/@/views/register/index.vue')  ,
         meta: { title: '注册' }
     },
+
+    // 业务页面
+    { 
+        path: '/termsDetail', 
+        name: 'termsDetail', 
+        component: () => import('/@/views/pages/termsDetail/index.vue')  ,
+        meta: { title: '服务条款' }
+    },
 ]
 
 // 根路由404配置
@@ -62,9 +70,7 @@ router.beforeEach((to, from, next) => {
     if (to.path === '/login') {
         next();
 	}else{
-        console.log(userInfo.userId)
         if (!userInfo.userId) {
-            console.log(222)
             next(`/login?redirect=${to.path}&params=${JSON.stringify(to.query ? to.query : to.params)}`);
 			mainStore.userInfo = ''
 		} else if (userInfo.userId && to.path === '/login') {

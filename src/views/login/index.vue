@@ -36,7 +36,7 @@
 						<Button type="primary" class="w100 mt40" round @click="onLogin" :loading="state.loginLoading">登录</Button>
 						<div class="flex-center-center mt20">
 							<span>点击「登录」表示已阅读并同意 </span>
-							<span class="cursor-pointer ml10 lisenter-msg">服务条款</span>
+							<span class="cursor-pointer ml10 lisenter-msg" @click="toPageTermsDetail('2023062814265601')">服务条款</span>
 						</div>
 					</div>
 				</div>
@@ -90,6 +90,13 @@ const logInSuccess = (res: any) => {
 	mainStore.userInfo = res
 	// 登录成功操作页面
 	toMainPage()
+}
+
+const toPageTermsDetail = (id: string) => {
+	router.push({
+		path: '/termsDetail',
+		query: {id: id}
+	})
 }
 
 // 登录成功后的跳转
