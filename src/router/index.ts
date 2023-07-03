@@ -56,21 +56,24 @@ const options: RouterOptions = {
 const router: Router = createRouter(options)
 
 // 路由加载前
-router.beforeEach(async (to, from, next) => {
+router.beforeEach((to, from, next) => {
     const mainStore = appStore()
     const userInfo = mainStore.userInfo
     if (to.path === '/login') {
-		next();
+        next();
 	}else{
-        if (!userInfo.adminId) {
-			next(`/login?redirect=${to.path}&params=${JSON.stringify(to.query ? to.query : to.params)}`);
+        console.log(userInfo.userId)
+        if (!userInfo.userId) {
+            console.log(222)
+            next(`/login?redirect=${to.path}&params=${JSON.stringify(to.query ? to.query : to.params)}`);
 			mainStore.userInfo = ''
-		} else if (userInfo.adminId && to.path === '/login') {
+		} else if (userInfo.userId && to.path === '/login') {
 		    NextLoading.start();
             next('/home');
             NextLoading.done(1000);
 		} else {
-			next({ path: to.path, query: to.query });
+            NextLoading.start();
+			next();
             NextLoading.done(1000);
 		}
     }
@@ -82,6 +85,6 @@ router.afterEach((to, from, next) => {
         document.title = to.meta.title as string
     }
     window.scrollTo(0, 0)
-  })
+})
 
 export default router
