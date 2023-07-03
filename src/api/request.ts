@@ -4,7 +4,6 @@
  */
 import axios, { AxiosInstance } from 'axios';
 import { showConfirmDialog } from 'vant';
-import NProgress from 'nprogress';
 import { appStore } from "/@/stores/appStore";
 
 // 创建实例
@@ -41,7 +40,6 @@ service.interceptors.response.use(
         const mainStore = appStore()
         // 过期或者账号已在别处登录
         if(mainStore.userInfo != null){
-          NProgress.done();
           // 清除浏览器全部临时缓存
           mainStore.userInfo = ''
           showConfirmDialog({title: '提示', message:res.message,})

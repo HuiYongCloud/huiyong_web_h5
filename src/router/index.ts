@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory, RouterOptions, Router, RouteRecordRaw } from 'vue-router'
-import NProgress from 'nprogress';
-import 'nprogress/nprogress.css';
 import { NextLoading } from '/@/components/loading/loading';
+import { appStore } from "/@/stores/appStore";
 
 // 页面配置
 const routes: RouteRecordRaw[] = [
@@ -58,16 +57,22 @@ const router: Router = createRouter(options)
 
 // 路由加载前
 router.beforeEach(async (to, from, next) => {
-    NProgress.configure({ showSpinner: false });
-	NProgress.start();
-
+    const mainStore = appStore()
+    const userInfo = mainStore.userInfo
     if (to.path === '/login') {
 		next();
-		NProgress.done();
 	}else{
-        NextLoading.start();
-        next();
-        NextLoading.done(1000);
+        if (!userInfo.adminId) {
+			next(`/login?redirect=${to.path}&params=${JSON.stringify(to.query ? to.query : to.params)}`);
+			mainStore.userInfo = ''
+		} else if (userInfo.adminId && to.path === '/login') {
+		    NextLoading.start();
+            next('/home');
+            NextLoading.done(1000);
+		} else {
+			next({ path: to.path, query: to.query });
+            NextLoading.done(1000);
+		}
     }
 })
 
