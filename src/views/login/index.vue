@@ -1,5 +1,6 @@
 <template>
 	<div class="login-container">
+		<ThemeSwitch :sticky="true"/>
 		<div class="login-left">
 			<div class="login-left-logo">
 				<img :src="logoMini" />
@@ -70,6 +71,7 @@ import { appStore } from "/@/stores/appStore";
 // 引入组件
 const Account = defineAsyncComponent(() => import('/@/views/login/component/account.vue'));
 const Email = defineAsyncComponent(() => import('/@/views/login/component/email.vue'));
+const ThemeSwitch = defineAsyncComponent(() => import('/@/components/theme-switch/index.vue'));
 
 const loginByEmailPassword = ref()
 const loginByEmailCode = ref()
