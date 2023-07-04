@@ -1,12 +1,11 @@
 <template>
 	<div class="layout-nav-bar flex-center-end">
 		<ThemeSwitch/>
-		<div class="ml20">
-			<div class="flex-center-center" @mouseover="state.isSelectUser = true" @mouseleave="state.isSelectUser = false">
-				<img class="user-header" :src="userInfo.userImage">
-				<div class="user-name ml5">{{userInfo.userName}}</div>
-				<Icon class="ml5" name="arrow-down" />
-			</div>
+		<div class="flex-center-center pl20 pr15 pt12 pb12" @mouseover="state.isSelectUser = true" @mouseleave="state.isSelectUser = false">
+			<img class="user-header" :src="userInfo.userImage">
+			<div class="user-name pl5">{{userInfo.userName}}</div>
+			<Icon class="ml5" name="arrow-down" />
+
 			<div class="user-menu-box">
 				<transition name="slide-top">
 					<div class="user-menu-list" v-if="state.isSelectUser">
@@ -46,7 +45,6 @@ const ThemeSwitch = defineAsyncComponent(() => import('/@/components/theme-switc
 <style scoped lang="scss">
 .layout-nav-bar {
 	width: 100%;
-	padding: 12px 15px;
 
 	.user-header{
 		border-radius: 50%;
@@ -63,7 +61,7 @@ const ThemeSwitch = defineAsyncComponent(() => import('/@/components/theme-switc
 		z-index: 1;
 		right: 0px;
 		top: 0px;
-		margin-top: 50px;
+		margin-top: 45px;
 		overflow: hidden;
 	}
 
