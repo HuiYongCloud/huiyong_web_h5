@@ -1,7 +1,6 @@
 <template >
 	<ConfigProvider id="app" :theme="state.sysTheme" >
 		<router-view/>
-		<ThemeSwitch :sticky="true"/>
 	</ConfigProvider>
 </template>
 
@@ -9,7 +8,6 @@
 import { onMounted, nextTick, watch, computed, ref, reactive} from 'vue';
 import { ConfigProvider } from 'vant';
 import { appStore } from '/@/stores/appStore'
-import ThemeSwitch from '/@/components/theme-switch/index.vue';
 const mainStore = appStore()
 const state = reactive({
 	sysTheme: '' as any,

@@ -1,6 +1,7 @@
 <template>
-  <div class="page-home flex-center-center">
-    <div class="flex-center-center" style="flex-direction: column;">
+  <div class="page-home h100">
+    <Navbar/>
+    <div class="flex-center-center mt50" style="flex-direction: column;">
       <h1>Home</h1>
       <div class="flex mt30">
         <Button plain type="primary" to="/login">去登录</Button>
@@ -9,10 +10,15 @@
       </div>
     </div>
   </div>
+  
 </template>
 
 <script setup lang="ts">
+import { defineAsyncComponent, onMounted, computed, ref } from 'vue';
 import { Button } from 'vant';
+// 引入组件
+const Navbar = defineAsyncComponent(() => import('/@/components/layout/navbar/index.vue'));
+
 </script>
 
 <style scoped lang="scss">
