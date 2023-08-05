@@ -27,7 +27,7 @@ const viteConfig = defineConfig((mode: ConfigEnv) => {
 			open: false,
 			hmr: true,
 			proxy: {
-				'/api-blog': {
+				'/api-client': {
 					target: 'http://localhost:20001',
 					changeOrigin: true,
 					ws: true

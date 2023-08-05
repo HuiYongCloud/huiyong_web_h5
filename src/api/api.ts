@@ -14,7 +14,7 @@ export const Api = {
 	/**
 	 * 服务条款 
 	 */
-	Terms_Detail:       	'/api-blog/baseTerms/n/getDetail',       // 条款详情
+	Terms_Detail:       	'/api-client/baseTerms/n/getDetail',       // 条款详情
 
 }
 
