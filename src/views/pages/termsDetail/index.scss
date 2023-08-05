@@ -1,3 +1,29 @@
-.page-terms-detail{
-  padding: 10px;
+@import '/@/theme/media.scss';
+
+.terms-page{
+  padding: 0 16px;
+
+  .toastui-editor-contents h1 {
+    border-bottom:none;
+  }
+  .toastui-editor-contents h2 {
+    border-bottom:none;
+  }
+
+  .content-page{
+    width: 70vw;
+    margin: 10px 0 0 10px;
+  }
+}
+
+@media screen and (max-width: $lg) {
+  .terms-page {
+    padding: 0px;
+    display: block;
+
+    .content-page{
+      width: 100vw;
+      margin: 0px;
+    }
+  }
 }

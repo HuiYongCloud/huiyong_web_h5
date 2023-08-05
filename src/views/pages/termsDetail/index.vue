@@ -1,6 +1,8 @@
 <template>
-  <div class="page-terms-detail">
-	<TuiViewer ref="tuiViewer"/>
+  <div class="terms-page flex-start-center">
+	<div class="content-page">
+		<TuiViewer ref="tuiViewer"/>
+	</div>
   </div>
 </template>
 
@@ -34,6 +36,6 @@ onMounted(() => {
     
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import './index.scss';
 </style>
