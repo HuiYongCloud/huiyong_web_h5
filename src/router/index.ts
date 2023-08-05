@@ -31,6 +31,18 @@ const routes: RouteRecordRaw[] = [
         component: () => import('/@/views/pages/termsDetail/index.vue')  ,
         meta: { title: '服务条款' }
     },
+    { 
+        path: '/blogDetail', 
+        name: 'blogDetail', 
+        component: () => import('/@/views/pages/blogDetail/index.vue')  ,
+        meta: { title: '博客详情' }
+    },
+    { 
+        path: '/blogOwner', 
+        name: 'blogOwner', 
+        component: () => import('/@/views/pages/blogOwner/index.vue')  ,
+        meta: { title: '博主信息' }
+    },
 ]
 
 // 根路由404配置
