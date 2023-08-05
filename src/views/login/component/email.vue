@@ -2,7 +2,7 @@
 	<div class="login-email-content-form">
 		<Form >
 			<Field v-model="state.ruleForm.email" placeholder="请输入邮箱" required/>
-			<Field v-model="state.ruleForm.code" placeholder="请输入验证码">
+			<Field  v-model="state.ruleForm.code" placeholder="请输入验证码">
 			    <template #button>
 					<Button 
 						size="small" 

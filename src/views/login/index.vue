@@ -29,12 +29,14 @@
 					</div>
 
 					<div class="login-right-warp-main-form">
-						<Tabs v-model:active="state.active" animated>
-							<Tab title="密码登录"><Account ref="loginByEmailPassword" @log-in-success="logInSuccess"/></Tab>
-  							<Tab title="邮箱登录"><Email ref="loginByEmailCode" @log-in-success="logInSuccess"/></Tab>
-						</Tabs>
+						<div style="height: 220px;">
+							<Tabs v-model:active="state.active" animated>
+								<Tab title="密码登录"><Account ref="loginByEmailPassword" @log-in-success="logInSuccess"/></Tab>
+								<Tab title="邮箱登录"><Email ref="loginByEmailCode" @log-in-success="logInSuccess"/></Tab>
+							</Tabs>
+						</div>
 
-						<Button type="primary" class="w100 mt40" round @click="onLogin" :loading="state.loginLoading">登录</Button>
+						<Button type="primary" class="w100" round @click="onLogin" :loading="state.loginLoading">登录</Button>
 						<div class="flex-center-center mt20">
 							<span>点击「登录」表示已阅读并同意 </span>
 							<span class="cursor-pointer ml10 lisenter-msg" @click="toPageTermsDetail('2023062814265601')">服务条款</span>
