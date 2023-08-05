@@ -83,4 +83,7 @@ defineExpose({
 </script>
 
 <style lang="scss">
+.token.operator{
+	background: transparent;
+}
 </style>
