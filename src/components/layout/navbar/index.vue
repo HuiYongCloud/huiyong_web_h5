@@ -1,9 +1,9 @@
 <template>
 	<div class="layout-nav-bar flex-center-end">
 		<ThemeSwitch/>
-		<div class="flex-center-center pl20 pr15 pt12 pb12" @mouseover="state.isSelectUser = true" @mouseleave="state.isSelectUser = false">
-			<img class="user-header" :src="userInfo.userImage">
-			<div class="user-name pl5">{{userInfo.userName}}</div>
+		<div class="flex-center-center pl20 pr15 pt12 pb12" v-if="mainStore.userInfo" @mouseover="state.isSelectUser = true" @mouseleave="state.isSelectUser = false">
+			<img class="user-header" :src="mainStore.userInfo.userImage">
+			<div class="user-name pl5">{{mainStore.userInfo.userName}}</div>
 			<Icon class="ml5" name="arrow-down" />
 
 			<div class="user-menu-box">
@@ -11,15 +11,15 @@
 					<div class="user-menu-list" v-if="state.isSelectUser">
 						<div class="user-info flex-center-start">
 							<div class="menu-user-image">
-								<img class="user-header" :src="userInfo.userImage"/>
+								<img class="user-header" :src="mainStore.userInfo.userImage"/>
 							</div>
-							<div class="menu-user-name">{{userInfo.userName}}</div>
+							<div class="menu-user-name">{{mainStore.userInfo.userName}}</div>
 						</div>
-						<div class="menu-item flex-center-between">首页</div>
+						<div class="menu-item flex-center-between" @click="toHome">首页</div>
 						<div class="menu-line"/>
-						<div class="menu-item flex-center-between">
-							<div>退出登录</div>
-						</div>
+						<div class="menu-item flex-center-between" @click="toAdmin">后台管理</div>
+						<div class="menu-line"/>
+						<div class="menu-item flex-center-between" @click="outLogin">退出登录</div>
 					</div>  
 				</transition>
 			</div>
@@ -31,15 +31,37 @@
 import { defineAsyncComponent, reactive, ref} from 'vue';
 import { appStore } from '/@/stores/appStore'
 import { Icon } from 'vant';
+import { useRoute, useRouter } from 'vue-router';
+import { showConfirmDialog } from 'vant';
 
 // 定义变量
+const route = useRoute();
+const router = useRouter();
 const mainStore = appStore()
-const userInfo = mainStore.userInfo
 const state = reactive({
 	isSelectUser: false
 });
 // 引入组件
 const ThemeSwitch = defineAsyncComponent(() => import('/@/components/theme-switch/index.vue'));
+
+// 首页
+const toHome = ()=> router.push('/home')
+// 管理后台
+const toAdmin = ()=> window.open("https://admin.huiyong.online/", '_blank')
+// 退出登录
+const outLogin = () => {
+	showConfirmDialog({
+		title: '提示',
+		message:'此操作将退出登录, 是否继续?'}
+	).then(() => {
+		// 清除缓存
+		mainStore.userInfo = ''
+		// 使用 reload 时，不需要调用 resetRoute() 重置路由
+		window.location.reload();
+	}).catch(() => {
+	});
+}
+
 </script>
 
 <style scoped lang="scss">
