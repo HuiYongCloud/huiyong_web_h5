@@ -1,3 +1,5 @@
+
+const Api_Client = '/api-client'
 export const Api = {
 
 	/**
@@ -14,8 +16,20 @@ export const Api = {
 	/**
 	 * 服务条款 
 	 */
-	Terms_Detail:       	'/api-client/baseTerms/n/getDetail',       // 条款详情
+	Terms_Detail:       	Api_Client + '/baseTerms/n/getDetail',       // 条款详情
 
+	// 博客
+	Blog_Detail:          	Api_Client + '/blog/n/detail',               // 博客详情
+	Blog_List_by_tag_id:  	Api_Client + '/blog/n/blogListByTagId',      // 博客列表【分类id获取】
+	Blog_List_by_user_id: 	Api_Client + '/blog/n/blogListByUserId',     // 博客列表【博主id获取】
+
+	// 博客收藏
+	BLOG_LIKE_ADD:         	Api_Client + '/blogLike/likeAdd',            // 收藏博客
+	BLOG_LIKE_CANCEL:      	Api_Client + '/blogLike/likeCancel',         // 取消收藏
+
+	// 关注
+	BLOG_FOCUS_ADD:       	Api_Client + '/blogFocus/addFocus',            // 关注博主
+	BLOG_FOCUS_CANCEL:    	Api_Client + '/blogFocus/cancelFocus',         // 取消关注
+	BLOG_FOCUS_LIST:      	Api_Client + '/blogFocus/n/focusUserList',     // 关注列表	
 }
-
 export default Api

@@ -1,3 +1,33 @@
-.page-terms-detail{
-  padding: 10px;
+.blog-detail-page{
+  padding: 0 16px;
+
+  .blog-info-left{
+    width: 15vw;
+    min-width: 200px;
+    position: sticky;
+    top: 0;
+    padding-top: 10px;
+  }
+
+  .blog-content-page{
+    width: 70vw;
+    margin: 10px 0 0 10px;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .blog-detail-page {
+    padding: 0px;
+    display: block;
+
+    .blog-info-left{
+      position: static;
+      padding-top: 0px;
+    }
+
+    .blog-content-page{
+      width: 100vw;
+      margin: 0px;
+    }
+  }
 }
