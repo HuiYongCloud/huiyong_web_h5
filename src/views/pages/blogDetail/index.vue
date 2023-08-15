@@ -4,14 +4,14 @@
 	<!-- 右侧导航 -->
 	<div class="blog-info-left">
 		<blog-user-info :detail="state.blogInfoDetail"/>
-		<!-- <blog-tag-info/> -->
+		<blog-tag-info :list="state.tagList"/>
 	</div>
 
 	<div class="blog-content-page">
 		<!-- 博客详情 -->
-		<!-- <blog-detail v-if="state.isShowBlogDetail == true" :blogId="state.blogId"/> -->
+		<blog-detail v-if="state.isShowBlogDetail == true" :blogId="state.blogId"/>
 		<!-- 文章列表 -->
-		<!-- <blog-list v-if="state.isShowBlogDetail == false" :tagId="state.tagId"/> -->
+		<blog-list v-if="state.isShowBlogDetail == false" :tagId="state.tagId"/>
 	</div>
 </div>
 </template>
@@ -31,21 +31,36 @@ import BlogDetail from './components/blogDetail.vue';
 const route = useRoute();
 const router = useRouter();
 const state = reactive({
-	userId:'' as any,
-	blogInfoDetail: '' as any,
-	
+	userId:'' as any,	
 	tagId:'' as any,
 	blogId:'' as any,
+
+	blogInfoDetail: '' as any,
+	tagList: '' as any,
+
 	isShowBlogDetail: '' as any,
 });
 
-const getBlogInfoDetail = (id: any) => {
-	state.userId = id
-	Request.post(Api.BLOG_INFO_DETAIL, {
-		id: id
-	}).then((res:any) =>{
+const getBlogInfoDetail = (userId: any) => {
+	state.userId = userId
+	Request.post(Api.BLOG_INFO_DETAIL, {userId: userId})
+	.then((res:any) =>{
 		state.blogInfoDetail = res
+		if(!state.tagList){
+			getTagList(userId)
+		}
 	}).catch((res:any) =>{
+		showNotify({ type: 'danger', message: res.message });
+	})
+}
+
+const getTagList = (userId: any) => {
+	Request.post(Api.BLOG_TAG_INFO_LIST, {
+		userId: userId
+	}).then((res:any) =>{
+		state.tagList = res
+	}).catch((res:any) =>{
+		showNotify({ type: 'danger', message: res.message });
 	})
 }
 
@@ -56,6 +71,7 @@ const getTagDetail = (id: any) => {
 		id: id
 	}).then((res:any) =>{
 	}).catch((res:any) =>{
+		showNotify({ type: 'danger', message: res.message });
 	})
 }
 
@@ -67,6 +83,7 @@ const getBlogDetail = (id: any) => {
 	}).then((res:any) =>{
 
 	}).catch((res:any) =>{
+		showNotify({ type: 'danger', message: res.message });
 	})
 }
 

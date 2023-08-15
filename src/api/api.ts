@@ -22,6 +22,7 @@ export const Api = {
 	Blog_Detail:          	Api_Client + '/blog/n/detail',               // 博客详情
 	Blog_List_by_tag_id:  	Api_Client + '/blog/n/blogListByTagId',      // 博客列表【分类id获取】
 	Blog_List_by_user_id: 	Api_Client + '/blog/n/blogListByUserId',     // 博客列表【博主id获取】
+	BLOG_TAG_INFO_LIST:   	Api_Client + '/blogTag/n/tagList',   		 // 标签列表（文章数）
 
 	// 博客收藏
 	BLOG_LIKE_ADD:         	Api_Client + '/blogLike/likeAdd',            // 收藏博客

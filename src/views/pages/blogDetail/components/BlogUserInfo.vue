@@ -127,6 +127,8 @@ const toBlogUser = ()=>{
 </script>
 
 <style lang="scss" scoped>
+@import '/@/theme/media.scss';
+
 .root-info-pc{
   display: inline-block;
   width: 100%;
@@ -199,7 +201,7 @@ const toBlogUser = ()=>{
   display: none;
 }
 
-@media screen and (max-width: 1023px) {
+@media screen and (max-width: $lg) {
   .root-info-pc{
     display: none;
   }
