@@ -3,7 +3,7 @@
 
 	<!-- 右侧导航 -->
 	<div class="blog-info-left">
-		<blog-user-info/>
+		<blog-user-info :detail="state.blogInfoDetail"/>
 		<!-- <blog-tag-info/> -->
 	</div>
 
@@ -31,12 +31,37 @@ import BlogDetail from './components/blogDetail.vue';
 const route = useRoute();
 const router = useRouter();
 const state = reactive({
+	userId:'' as any,
+	blogInfoDetail: '' as any,
+	
+	tagId:'' as any,
+	blogId:'' as any,
 	isShowBlogDetail: '' as any,
-	blogId: '',
-	tagId: '',
 });
 
+const getBlogInfoDetail = (id: any) => {
+	state.userId = id
+	Request.post(Api.BLOG_INFO_DETAIL, {
+		id: id
+	}).then((res:any) =>{
+		state.blogInfoDetail = res
+	}).catch((res:any) =>{
+	})
+}
+
+const getTagDetail = (id: any) => {
+	state.tagId = id
+	state.isShowBlogDetail == false
+	Request.post(Api.Terms_Detail, {
+		id: id
+	}).then((res:any) =>{
+	}).catch((res:any) =>{
+	})
+}
+
 const getBlogDetail = (id: any) => {
+	state.blogId = id
+	state.isShowBlogDetail == true
 	Request.post(Api.Blog_Detail, {
 		id: id
 	}).then((res:any) =>{
@@ -45,23 +70,14 @@ const getBlogDetail = (id: any) => {
 	})
 }
 
-const getTagDetail = (id: any) => {
-	Request.post(Api.Terms_Detail, {
-		id: id
-	}).then((res:any) =>{
-	}).catch((res:any) =>{
-	})
-}
-
 // 页面加载时
 onMounted(() => {
-	if(route.query.blogId){
-		state.isShowBlogDetail == true
-		getBlogDetail(route.query.blogId)
-	}
-	if(route.query.tagId){
-		state.isShowBlogDetail == false
+	if(route.query.userId){
+		getBlogInfoDetail(route.query.userId)
+	} else if(route.query.tagId){
 		getTagDetail(route.query.tagId)
+	} else if(route.query.blogId){
+		getBlogDetail(route.query.blogId)
 	}
 });
     

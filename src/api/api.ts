@@ -31,5 +31,8 @@ export const Api = {
 	BLOG_FOCUS_ADD:       	Api_Client + '/blogFocus/addFocus',            // 关注博主
 	BLOG_FOCUS_CANCEL:    	Api_Client + '/blogFocus/cancelFocus',         // 取消关注
 	BLOG_FOCUS_LIST:      	Api_Client + '/blogFocus/n/focusUserList',     // 关注列表	
+
+	// 博主信息
+	BLOG_INFO_DETAIL:     	Api_Client + '/blogInfo/n/detail',             // 博主信息
 }
 export default Api

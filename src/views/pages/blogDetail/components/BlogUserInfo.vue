@@ -3,13 +3,13 @@
     <div class="root-info-pc">
       <div class="user-info flex-center-start">
         <div style="cursor: pointer;" @click="toBlogUser">
-          <avatar :size="45" :src="detail.userImage"/>
+          <avatar :size="45" :src="props.detail.userImage"/>
         </div>
         <div>
-          <div class="user-name">{{detail.userName}}</div>
+          <div class="user-name">{{props.detail.userName}}</div>
           <div class="user-code-year-box flex-center-center">
             <img class="code-year-img" :src="imgPig">
-            <span class="code-year">{{detail.codeYear}}</span>
+            <span class="code-year">{{props.detail.codeYear}}</span>
           </div>
         </div>
       </div>
@@ -17,54 +17,54 @@
       <div class="blog-info flex">
         <div class="info-item flex-center-start">
           <div class="info-title">访问：</div>
-          <div class="info-value">{{detail.blogInfoReadNum || 0}}</div>
+          <div class="info-value">{{props.detail.blogInfoReadNum || 0}}</div>
         </div>
         <div class="info-item flex-center-start">
           <div class="info-title">文章：</div>
-          <div class="info-value">{{detail.blogNum || 0}}</div>
+          <div class="info-value">{{props.detail.blogNum || 0}}</div>
         </div>
         <div class="info-item flex-center-start">
           <div class="info-title">收藏：</div>
-          <div class="info-value">{{detail.blogLikeNum || 0}}</div>
+          <div class="info-value">{{props.detail.blogLikeNum || 0}}</div>
         </div>
         <div class="info-item flex-center-start">
           <div class="info-title">关注：</div>
-          <div class="info-value">{{detail.focusNum || 0}}</div>
+          <div class="info-value">{{props.detail.focusNum || 0}}</div>
         </div>
       </div>
 
-      <div class="focus-btn" v-if="!isRootBlog && detail">
-        <favate-btn v-if="detail.focusId" text="取消关注" @click="cancelFocus"/>
-        <favate-btn v-if="!detail.focusId" text="关注博主" @click="addFocus"/>
+      <div class="focus-btn" v-if="!isRootBlog && props.detail">
+        <favate-btn v-if="props.detail.focusId" text="取消关注" @click="cancelFocus"/>
+        <favate-btn v-if="!props.detail.focusId" text="关注博主" @click="addFocus"/>
       </div>
     </div>
 
     <div class="root-info-mobile">
       <div class="user-info flex">
         <div @click="toBlogUser">
-          <avatar :size="45" :src="detail.userImage"/>
+          <avatar :size="45" :src="props.detail.userImage"/>
         </div>
         <div class="user-name-box flex-start-between">
           <div class="user-name-top flex-center-start">
-            <div class="user-name">{{detail.userName}}</div>
-            <div class="focus-btn" v-if="!isRootBlog && detail">
-              <favate-btn v-if="detail.focusId" text="取消关注" @click="cancelFocus"/>
-              <favate-btn v-if="!detail.focusId" text="关注博主" @click="addFocus"/>
+            <div class="user-name">{{props.detail.userName}}</div>
+            <div class="focus-btn" v-if="!isRootBlog && props.detail">
+              <favate-btn v-if="props.detail.focusId" text="取消关注" @click="cancelFocus"/>
+              <favate-btn v-if="!props.detail.focusId" text="关注博主" @click="addFocus"/>
             </div>
           </div>
           
           <div class="blog-info flex">
             <div class="info-item flex-center-start">
               <div class="info-title">访问：</div>
-              <div class="info-value">{{detail.blogReadNum || 0}}</div>
+              <div class="info-value">{{props.detail.blogReadNum || 0}}</div>
             </div>
             <div class="info-item flex-center-start">
               <div class="info-title">文章：</div>
-              <div class="info-value">{{detail.blogNum || 0}}</div>
+              <div class="info-value">{{props.detail.blogNum || 0}}</div>
             </div>
             <div class="info-item flex-center-start">
               <div class="info-title">关注：</div>
-              <div class="info-value">{{detail.focusNum || 0}}</div>
+              <div class="info-value">{{props.detail.focusNum || 0}}</div>
             </div>
           </div>
         </div>
@@ -88,11 +88,6 @@ const props = defineProps({
 	// 用户信息
 	userInfo: {
 		type: Object,
-		default: () => '',
-	},
-  // 用户id
-  userId: {
-		type: String,
 		default: () => '',
 	},
   // 详情
