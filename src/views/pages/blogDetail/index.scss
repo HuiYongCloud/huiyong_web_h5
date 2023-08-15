@@ -1,3 +1,5 @@
+@import '/@/theme/media.scss';
+
 .blog-detail-page{
   padding: 0 16px;
 
@@ -15,7 +17,7 @@
   }
 }
 
-@media screen and (max-width: 1023px) {
+@media screen and (max-width: $lg) {
   .blog-detail-page {
     padding: 0px;
     display: block;

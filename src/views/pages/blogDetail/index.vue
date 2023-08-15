@@ -4,14 +4,14 @@
 	<!-- 右侧导航 -->
 	<div class="blog-info-left">
 		<blog-user-info/>
-		<blog-tag-info/>
+		<!-- <blog-tag-info/> -->
 	</div>
 
 	<div class="blog-content-page">
 		<!-- 博客详情 -->
-		<blog-detail v-if="state.isShowBlogDetail == true" :blogId="state.blogId"/>
+		<!-- <blog-detail v-if="state.isShowBlogDetail == true" :blogId="state.blogId"/> -->
 		<!-- 文章列表 -->
-		<blog-list v-if="state.isShowBlogDetail == false" :tagId="state.tagId"/>
+		<!-- <blog-list v-if="state.isShowBlogDetail == false" :tagId="state.tagId"/> -->
 	</div>
 </div>
 </template>
@@ -30,7 +30,6 @@ import BlogDetail from './components/blogDetail.vue';
 // 定义变量内容
 const route = useRoute();
 const router = useRouter();
-const tuiViewer = ref();
 const state = reactive({
 	isShowBlogDetail: '' as any,
 	blogId: '',

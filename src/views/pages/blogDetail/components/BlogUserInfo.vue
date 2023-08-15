@@ -8,7 +8,7 @@
         <div>
           <div class="user-name">{{detail.userName}}</div>
           <div class="user-code-year-box flex-center-center">
-            <img class="code-year-img" src="@/assets/img/pig1.gif">
+            <img class="code-year-img" :src="imgPig">
             <span class="code-year">{{detail.codeYear}}</span>
           </div>
         </div>
@@ -75,11 +75,13 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import Avatar from '@/components/Avatar.vue'
-import FavateBtn from '@/components/FavateBtn.vue'
+import Avatar from '/@/components/Avatar.vue'
+import FavateBtn from '/@/components/FavateBtn.vue'
 import Api from "/@/api/api"
 import Request from "/@/api/request"
 import { showNotify} from 'vant';
+
+import imgPig from '/@/assets/img/pig1.gif';
 
 // 定义父组件传过来的值
 const props = defineProps({
