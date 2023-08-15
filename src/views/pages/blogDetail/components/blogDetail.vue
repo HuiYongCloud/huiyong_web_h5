@@ -5,7 +5,7 @@
     <div class="blog-detail-page">
       <h1 class="blog-title">{{state.blogDetail.title}}</h1>
       <div class="like-blog-box" v-if="state.blogDetail.isFavorite != null">
-        <FB :text="!state.blogDetail || state.blogDetail.isFavorite == false ? '收藏文章':'取消收藏'" @click="favorite"/>
+        <FavateBtn :text="!state.blogDetail || state.blogDetail.isFavorite == false ? '收藏文章':'取消收藏'" @click="favorite"/>
       </div>
 
       <div v-if="state.blogDetail && !state.blogDetail.blogCode && state.blogDetail.content">
@@ -48,18 +48,13 @@
     </div>
 
     <!-- 博客目录 -->
-    <!-- <div class="blog-toc" :class="{'blog-toc-show': showToc}">
+    <div class="blog-toc" :class="{'blog-toc-show': true}">
       <div class="blog-toc-title flex-center-start">
         <svg-icon icon-class="blog-toc" style="margin-left:8px"/>
         <div style="margin-left:10px">目录</div>
       </div>
       <div class="toc" id="toc"></div>
-    </div> -->
-
-    <!-- <el-image-viewer
-      v-if="imagePreview" 
-      :on-close="closePreview" 
-      :url-list="[showImage]" /> -->
+    </div>
   </div>
 </template>
 
@@ -73,6 +68,9 @@ import Request from "/@/api/request"
 import { showNotify, showDialog } from 'vant';
 import TuiViewer from '/@/components/TuiViewer.vue';
 
+
+// 定义子组件向父组件传值/事件
+const emit = defineEmits(['onDetailLoad']);
 // 定义父组件传过来的值
 const props = defineProps({
 	// 博客id
@@ -104,6 +102,7 @@ const state = reactive({
   showImage:'',
 });
 
+
 // 收藏、取消收藏
 const favorite = () => {
   let url = (state.blogDetail && state.blogDetail.isFavorite == false) ? Api.Blog_Like_Add : Api.Blog_Like_Cancel
@@ -134,13 +133,15 @@ const getBlogDetail = () => {
   Request.post(Api.Blog_Detail, { blogId: props.blogId, priCode : state.priCode})
   .then((res:any) =>{      
     state.blogDetail = res
-    tuiViewer.value.setMarkdown(res.content)
+    emit('onDetailLoad', {userId: res.userId, tagId: res.tagId});
+    setTimeout(() => {
+      tuiViewer.value.setMarkdown(res.content)      
+    }, 200);
   })
   .catch(res =>{
     showNotify({ type: 'danger', message: res.message });
   })
 }
-
 
 // 页面加载时
 onMounted(() => {
@@ -244,7 +245,7 @@ onMounted(() => {
   }
 }
 
-@media screen and (max-width: 1023px) {
+@media screen and (max-width: $lg) {
   .blog-page {
     margin: 0px;
 

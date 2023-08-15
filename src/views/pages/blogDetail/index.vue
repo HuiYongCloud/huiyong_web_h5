@@ -4,14 +4,14 @@
 	<!-- 右侧导航 -->
 	<div class="blog-info-left">
 		<BlogUserInfo :detail="state.blogInfo"/>
-		<BlogTagInfo :list="state.tagList"/>
+		<BlogTagInfo :list="state.tagList" :tagId="state.tagId"/>
 	</div>
 
 	<div class="blog-content-page">
 		<!-- 博客详情 -->
-		<BlogDetail v-if="state.isShowBlogDetail === true" :blogId="state.blogId"/>
+		<BlogDetail v-if="state.isShowBlogDetail === true" :blogId="state.blogId" @onDetailLoad="onDetailLoad"/>
 		<!-- 文章列表 -->
-		<!-- <blog-list v-if="state.isShowBlogDetail == false" :tagId="state.tagId"/> -->
+		<!-- <BlogList v-if="state.isShowBlogDetail == false" :tagId="state.tagId"/> -->
 	</div>
 </div>
 </template>
@@ -46,9 +46,6 @@ const getBlogInfo = (userId: any) => {
 	Request.post(Api.BLOG_INFO_DETAIL, {userId: userId})
 	.then((res:any) =>{
 		state.blogInfo = res
-		if(!state.tagList){
-			getTagList(userId)
-		}
 	}).catch((res:any) =>{
 		showNotify({ type: 'danger', message: res.message });
 	})
@@ -75,14 +72,26 @@ const getTagDetail = (id: any) => {
 	})
 }
 
+const onDetailLoad = (data: any) => {
+	// 详情标签id
+	state.tagId = data.tagId
+	console.log(state.tagId)
+	// 博主信息
+	getBlogInfo(data.userId);
+	// 标签列表
+	getTagList(data.userId);
+}
+
 // 页面加载时
 onMounted(() => {
 	if(route.query.userId){
+		// 博主信息
 		getBlogInfo(route.query.userId)
+		// 标签列表
+		getTagList(route.query.userId);
 	} else if(route.query.tagId){
 		getTagDetail(route.query.tagId)
 	} else if(route.query.blogId){
-		console.log(route.query.blogId)
 		state.blogId = route.query.blogId
 		state.isShowBlogDetail = true
 	}
