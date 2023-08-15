@@ -25,8 +25,8 @@ export const Api = {
 	BLOG_TAG_INFO_LIST:   	Api_Client + '/blogTag/n/tagList',   		 // 标签列表（文章数）
 
 	// 博客收藏
-	BLOG_LIKE_ADD:         	Api_Client + '/blogLike/likeAdd',            // 收藏博客
-	BLOG_LIKE_CANCEL:      	Api_Client + '/blogLike/likeCancel',         // 取消收藏
+	Blog_Like_Add:         	Api_Client + '/blogLike/likeAdd',            // 收藏博客
+	Blog_Like_Cancel:      	Api_Client + '/blogLike/likeCancel',         // 取消收藏
 
 	// 关注
 	BLOG_FOCUS_ADD:       	Api_Client + '/blogFocus/addFocus',            // 关注博主

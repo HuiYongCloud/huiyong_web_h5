@@ -3,8 +3,9 @@
  * 处理请求、响应错误信息
  */
 import axios, { AxiosInstance } from 'axios';
-import { showConfirmDialog } from 'vant';
+import { showDialog } from 'vant';
 import { appStore } from "/@/stores/appStore";
+const mainStore = appStore()
 
 // 创建实例
 const service : AxiosInstance = axios.create({
@@ -12,7 +13,11 @@ const service : AxiosInstance = axios.create({
   // 使Session的Token跨域不失效
   withCredentials: true,                 
   timeout: 3000,
-  headers: { 'Content-Type': 'application/json' , 'client': 'admin'},
+  headers: { 
+    'Content-Type': 'application/json' ,
+    'client': 'h5',
+    'token': mainStore.userInfo.token,
+  },
 })
 
 // 添加请求拦截器
@@ -37,14 +42,12 @@ service.interceptors.response.use(
       
       // 登录失效
       case 403:        
-        const mainStore = appStore()
         // 过期或者账号已在别处登录
         if(mainStore.userInfo != null){
           // 清除浏览器全部临时缓存
           mainStore.userInfo = ''
-          showConfirmDialog({title: '提示', message:res.message,})
-            .then(() => {window.location.reload();})
-            .catch(() => {});
+          showDialog({title: '提示', message:res.message,})
+            .then(() => {window.location.reload();});
         }
         return Promise.reject({code: res.code, message: res.message})
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="props.detail">
     <div class="root-info-pc">
       <div class="user-info flex-center-start">
         <div style="cursor: pointer;" @click="toBlogUser">
@@ -88,7 +88,7 @@ const props = defineProps({
 	// 用户信息
 	userInfo: {
 		type: Object,
-		default: () => '',
+		default: () => null,
 	},
   // 详情
 	detail: {

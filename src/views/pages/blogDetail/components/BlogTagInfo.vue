@@ -29,7 +29,7 @@ const props = defineProps({
   // 详情
 	list: {
 		type: Object,
-		default: () => '',
+		default: () => [],
 	},
 });
 

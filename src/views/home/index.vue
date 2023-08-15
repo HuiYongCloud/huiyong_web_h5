@@ -6,7 +6,7 @@
       <div class="flex mt30">
         <Button plain type="primary" to="/login">去登录</Button>
         <Button plain type="primary" to="/blogDetail?userId=U202111250003" class="ml10">博主详情</Button>
-        <Button plain type="primary" to="/blogDetail?userId=U202111250003" class="ml10">博主详情</Button>
+        <Button plain type="primary" to="/blogDetail?blogId=202112130007" class="ml10">博客详情</Button>
         <Button plain type="primary" to="/blogDetail?userId=U202111250003" class="ml10">博主详情</Button>
         <Button plain type="primary" to="/404" class="ml10">4 0 4</Button>
         <Button plain type="primary" to="/404" class="ml10">4 0 4</Button>

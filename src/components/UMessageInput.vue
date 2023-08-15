@@ -1,7 +1,7 @@
 <template>
 	<div class="u-char-box">
 		<div class="u-char-flex flex-start-center">
-			<input v-model="valueModel" type="number" autofocus :maxlength="maxlength" class="u-input" @input="changeInput"/>
+			<input v-model="state.valueModel" type="number" autofocus :maxlength="maxlength" class="u-input" @input="changeInput"/>
 			<div v-for="(item, index) in loopCharArr" :key="index">
 				<div :class="[breathe && charArrLength == index ? 'u-breathe' : '', 'u-char-item flex-center-center',
 				charArrLength === index && mode == 'box' ? 'u-box-active' : '',
@@ -29,137 +29,126 @@
 	</div>
 </template>
 
-<script>
-	/**
-	 * messageInput 验证码输入框
-	 * @description 该组件一般用于验证用户短信验证码的场景，也可以结合uView的键盘组件使用
-	 * @tutorial https://www.uviewui.com/components/messageInput.html
-	 * @property {String Number} maxlength 输入字符个数（默认4）
-	 * @property {Boolean} dot-fill 是否用圆点填充（默认false）
-	 * @property {String} mode 模式选择，见上方"基本使用"说明（默认box）
-	 * @property {String Number} value 预置值
-	 * @property {Boolean} breathe 是否开启呼吸效果，见上方说明（默认true）
-	 * @property {Boolean} focus 是否自动获取焦点（默认false）
-	 * @property {Boolean} bold 字体和输入横线是否加粗（默认true）
-	 * @property {String Number} font-size 字体大小，单位px（默认60）
-	 * @property {String} active-color 当前激活输入框的样式（默认#2979ff）
-	 * @property {String} inactive-color 非激活输入框的样式，文字颜色同此值（默认#606266）
-	 * @property {String | Number} width 输入框宽度，单位px，高等于宽（默认80）
-	 * @property {Boolean} disabled-keyboard 禁止点击输入框唤起系统键盘（默认false）
-	 * @event {Function} change 输入内容发生改变时触发，具体见官网说明
-	 * @event {Function} finish 输入字符个数达maxlength值时触发，见官网说明
-	 * @example <u-message-input mode="bottomLine"></u-message-input>
-	 */
-	export default {
-		props: {
-			// 最大输入长度
-			maxlength: {
-				type: [Number, String],
-				default: 4
-			},
-			// 是否用圆点填充
-			dotFill: {
-				type: Boolean,
-				default: false
-			},
-			// 显示模式，box-盒子模式，bottomLine-横线在底部模式，middleLine-横线在中部模式
-			mode: {
-				type: String,
-				default: "box"
-			},
-			// 预置值
-			value: {
-				type: [String, Number],
-				default: ''
-			},
-			// 当前激活输入item，是否带有呼吸效果
-			breathe: {
-				type: Boolean,
-				default: true
-			},
-			// 是否自动获取焦点
-			focus: {
-				type: Boolean,
-				default: true
-			},
-			// 字体是否加粗
-			bold: {
-				type: Boolean,
-				default: true
-			},
-			// 字体大小
-			fontSize: {
-				type: [String, Number],
-				default: 60
-			},
-			// 激活样式
-			activeColor: {
-				type: String,
-				default: '#161823'
-			},
-			// 未激活的样式
-			inactiveColor: {
-				type: String,
-				default: '#161823'
-			},
-			// 输入框的大小，单位px，宽等于高
-			width: {
-				type: [Number, String],
-				default: '80'
-			},
-		},
-		watch: {
-			value: {
-				immediate: true,
-				handler(val) {
-					// 转为字符串
-					val = String(val);
-					// 超出部分截掉
-					this.valueModel = val.substring(0, this.maxlength);
-				}
-			},
-		},
-		data() {
-			return {
-				valueModel: ""
-			}
-		},
+<script setup lang="ts">
+import { computed, nextTick, reactive, watch} from 'vue';
 
-		computed: {
-			// 用于显示字符
-			charArr() {
-				return this.valueModel.split('');
-			},
-			charArrLength() {
-				return this.charArr.length;
-			},
-			// 根据长度，循环输入框的个数，因为头条小程序数值不能用于v-for
-			loopCharArr() {
-				return new Array(this.maxlength);
-			}
-		},
+/**
+ * messageInput 验证码输入框
+ * @description 该组件一般用于验证用户短信验证码的场景，也可以结合uView的键盘组件使用
+ * @tutorial https://www.uviewui.com/components/messageInput.html
+ * @property {String Number} maxlength 输入字符个数（默认4）
+ * @property {Boolean} dot-fill 是否用圆点填充（默认false）
+ * @property {String} mode 模式选择，见上方"基本使用"说明（默认box）
+ * @property {String Number} value 预置值
+ * @property {Boolean} breathe 是否开启呼吸效果，见上方说明（默认true）
+ * @property {Boolean} focus 是否自动获取焦点（默认false）
+ * @property {Boolean} bold 字体和输入横线是否加粗（默认true）
+ * @property {String Number} font-size 字体大小，单位px（默认60）
+ * @property {String} active-color 当前激活输入框的样式（默认#2979ff）
+ * @property {String} inactive-color 非激活输入框的样式，文字颜色同此值（默认#606266）
+ * @property {String | Number} width 输入框宽度，单位px，高等于宽（默认80）
+ * @property {Boolean} disabled-keyboard 禁止点击输入框唤起系统键盘（默认false）
+ * @event {Function} change 输入内容发生改变时触发，具体见官网说明
+ * @event {Function} finish 输入字符个数达maxlength值时触发，见官网说明
+ * @example <u-message-input mode="bottomLine"></u-message-input>
+ */
+const props = defineProps({
+	// 最大输入长度
+	maxlength: {
+		type: [Number],
+		default: 4
+	},
+	// 是否用圆点填充
+	dotFill: {
+		type: Boolean,
+		default: false
+	},
+	// 显示模式，box-盒子模式，bottomLine-横线在底部模式，middleLine-横线在中部模式
+	mode: {
+		type: String,
+		default: "box"
+	},
+	// 预置值
+	value: {
+		type: [String, Number],
+		default: ''
+	},
+	// 当前激活输入item，是否带有呼吸效果
+	breathe: {
+		type: Boolean,
+		default: true
+	},
+	// 是否自动获取焦点
+	focus: {
+		type: Boolean,
+		default: true
+	},
+	// 字体是否加粗
+	bold: {
+		type: Boolean,
+		default: true
+	},
+	// 字体大小
+	fontSize: {
+		type: [String, Number],
+		default: 60
+	},
+	// 激活样式
+	activeColor: {
+		type: String,
+		default: '#161823'
+	},
+	// 未激活的样式
+	inactiveColor: {
+		type: String,
+		default: '#161823'
+	},
+	// 输入框的大小，单位px，宽等于高
+	width: {
+		type: [Number, String],
+		default: '80'
+	},
+});
 
-		methods: {
-			changeInput(e) {
-				if (String(this.valueModel).length < this.maxlength) {
-					this.$emit('change', this.valueModel);
-				}
+// 用于显示字符
+const charArr = computed(() => {return state.valueModel.split('');});
+const charArrLength = computed(() => {return state.valueModel.split('').length;});
+// 根据长度，循环输入框的个数，因为头条小程序数值不能用于v-for
+const loopCharArr = computed(() => {return new Array(props.maxlength);});
 
-				if (String(this.valueModel).length == this.maxlength) {
-					this.$emit('finish', this.valueModel);
-				}
-				
-				if (String(this.valueModel).length > this.maxlength) {
-					this.valueModel = String(this.valueModel).substring(0, this.maxlength);
-				}
-			}
-		}
+// 监听路由的变化，切换主题时，变更地图样式
+watch(
+	() => props.value,
+	(value) => {
+		nextTick(() => {
+			// 转为字符串
+			value = String(value);
+			// 超出部分截掉
+			state.valueModel = value.substring(0, props.maxlength);
+		})
 	}
+);
+
+const state = reactive({
+	valueModel:'' as String,	
+});
+
+const emit = defineEmits(['change','finish']);
+const changeInput = (e: any) => {
+	if (String(state.valueModel).length < props.maxlength) {
+		emit('change', state.valueModel);
+	}
+	if (String(state.valueModel).length == props.maxlength) {
+		emit('finish', state.valueModel);
+	}
+	if (String(state.valueModel).length > props.maxlength) {
+		state.valueModel = String(state.valueModel).substring(0, props.maxlength);
+	}
+}
 </script>
 
 <style scoped lang="scss">
-@import '@/assets/css/index.less';
-	
+@import '/@/theme/media.scss';
 	@keyframes breathe-in {
 		0% {
 			opacity: 0.3;
@@ -262,7 +251,7 @@
 		transform: translate(-50%);
 	}
 
-@media screen and (max-width: 1023px) {
+@media screen and (max-width: $lg) {
 	.u-char-box{
 		.u-char-flex{
 			.u-char-item{
