@@ -32,7 +32,7 @@
 				<div class="item-control show-in-pc" v-if="isRoot" @click.stop="toEdit(item.blogId)">编辑</div>
 
 				<div class="draggable-box" @click.stop="">
-					<svg-icon icon-class="draggable" class="draggable-icon"/>
+					<!-- <svg-icon icon-class="draggable" class="draggable-icon"/> -->
 				</div>
 			</div>
 		</div>

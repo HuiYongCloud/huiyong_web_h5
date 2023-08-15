@@ -93,7 +93,7 @@ const props = defineProps({
   // 详情
 	detail: {
 		type: Object,
-		default: () => '',
+		default: () => null,
 	},
 });
 

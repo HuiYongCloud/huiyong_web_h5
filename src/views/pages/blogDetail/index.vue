@@ -75,7 +75,6 @@ const getTagDetail = (id: any) => {
 const onDetailLoad = (data: any) => {
 	// 详情标签id
 	state.tagId = data.tagId
-	console.log(state.tagId)
 	// 博主信息
 	getBlogInfo(data.userId);
 	// 标签列表

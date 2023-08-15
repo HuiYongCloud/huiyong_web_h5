@@ -15,7 +15,7 @@
         </div>
         <div class="blog-info-box flex-center-start">
           <div class="flex-center-start">
-            <svg-icon icon-class="blog-calendar" style="margin-right:8px"/>
+            <!-- <svg-icon icon-class="blog-calendar" style="margin-right:8px"/> -->
 					  <div class="item-status-num">{{state.blogDetail.createTime}}</div>  
           </div>
 
@@ -50,10 +50,10 @@
     <!-- 博客目录 -->
     <div class="blog-toc" :class="{'blog-toc-show': true}">
       <div class="blog-toc-title flex-center-start">
-        <svg-icon icon-class="blog-toc" style="margin-left:8px"/>
+        <!-- <svg-icon icon-class="blog-toc" style="margin-left:8px"/> -->
         <div style="margin-left:10px">目录</div>
       </div>
-      <div class="toc" id="toc"></div>
+      <!-- <div class="toc" id="toc"></div> -->
     </div>
   </div>
 </template>
@@ -77,12 +77,7 @@ const props = defineProps({
 	blogId: {
 		type: String,
 		default: () => '',
-	},
-  // 详情
-	detail: {
-		type: Object,
-		default: () => '',
-	},
+	}
 });
 
 const tuiViewer = ref();
@@ -134,9 +129,13 @@ const getBlogDetail = () => {
   .then((res:any) =>{      
     state.blogDetail = res
     emit('onDetailLoad', {userId: res.userId, tagId: res.tagId});
-    setTimeout(() => {
+
+    // 如果有文章，则可以查看
+    if(res.content){
+      setTimeout(() => {
       tuiViewer.value.setMarkdown(res.content)      
     }, 200);
+    }
   })
   .catch(res =>{
     showNotify({ type: 'danger', message: res.message });
