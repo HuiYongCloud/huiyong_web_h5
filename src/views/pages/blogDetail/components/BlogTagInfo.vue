@@ -46,9 +46,10 @@ const changeTagInfo = (tagId: String)=>{
 
 .root-tag{
   font-size: 14px;
+  border: 1px solid var(--el-border-color-light, #ebeef5);
 
   .tag-title {
-    background-color: #d6ecf8;
+    background-color: var(--el-color-primary-dark-2);
     font-size: 14px;
     padding: 10px 16px;
     font-style: bold;
@@ -58,34 +59,33 @@ const changeTagInfo = (tagId: String)=>{
   .tag-list-info{
     overflow: auto;
     margin-bottom: 10px;
-    box-shadow: 0 2px 4px 0 #e2e2e2;
   }
 
   .info-list{
     .info-item {
       padding: 5px 15px;
       cursor: pointer;
-      background-color: white;
       transition: all .01s;
       position: relative;
       min-height: 40px;
 
       &:hover{
-		    background-color:#edf0f5;
+        background-color: rgba(var(--el-color-primary-rgb), .1);
       }
 
       .info-title{
-        color: #333333;
+        color: var(--el-menu-text-color);
       }
 
       .info-value{
-        color: #999999;
+        color: var(--el-text-color-secondary);
       }
     }
 
     .info-item-active{
       border-left: 3px solid #3386ff;
-      background: #e3e8f0;
+      // background: #e3e8f0;
+      background-color: rgba(var(--el-color-primary-rgb), .1);
     }
   }
 

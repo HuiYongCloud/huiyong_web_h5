@@ -4,9 +4,6 @@
     <!-- 博客详情 -->
     <div class="blog-detail-page">
       <h1 class="blog-title">{{state.blogDetail.title}}</h1>
-      <div class="like-blog-box" v-if="state.blogDetail.isFavorite != null">
-        <FavateBtn :text="!state.blogDetail || state.blogDetail.isFavorite == false ? '收藏文章':'取消收藏'" @click="favorite"/>
-      </div>
 
       <div v-if="state.blogDetail && !state.blogDetail.blogCode && state.blogDetail.content">
         <div class="blog-info-box flex-center-start">
@@ -31,6 +28,10 @@
           <div class="item-status-num">{{state.wordNum}}字</div>    
           <div class="item-status-dot"/>
 					<div class="item-status-num">大概{{state.readTime}}</div>    
+
+          <div style="margin-left: 15px;" v-if="!isRootBlog && state.blogDetail.content">
+            <FavateBtn :width="75" :height="20" :size="12" :text="!state.blogDetail || state.blogDetail.isFavorite == false ? '收藏文章':'取消收藏'" @click="favorite"/>
+          </div>
         </div>
         <div class="blog-content">
           <TuiViewer ref="tuiViewer"/>
@@ -61,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, nextTick, ref} from 'vue';
+import { onMounted, reactive, nextTick, ref, computed} from 'vue';
 import Empty from '/@/components/Empty.vue'
 import FavateBtn from '/@/components/FavateBtn.vue'
 import UMessageInput from '/@/components/UMessageInput.vue'
@@ -71,9 +72,15 @@ import { showNotify, showDialog } from 'vant';
 import TuiViewer from '/@/components/TuiViewer.vue';
 import blogCalendar from '/@/assets/svg/blog-calendar.svg';
 import blogTag from '/@/assets/svg/blog-tag.svg';
+import { appStore } from '/@/stores/appStore'
+const mainStore = appStore()
+const userInfo = mainStore.userInfo
 
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['onDetailLoad']);
+const isRootBlog = computed(() => {
+	return userInfo && userInfo.userId && userInfo.userId === state.blogDetail.blogUserId;
+});
 // 定义父组件传过来的值
 const props = defineProps({
 	// 博客id
@@ -99,7 +106,6 @@ const state = reactive({
   imagePreview: false,
   showImage:'',
 });
-
 
 // 收藏、取消收藏
 const favorite = () => {
@@ -162,7 +168,6 @@ onMounted(() => {
 
   // 博客详情 
   .blog-detail-page{
-    background: white;
     width: 60vw;
     min-width: 500px;
     min-height: calc(100vh - 30px);
@@ -182,7 +187,7 @@ onMounted(() => {
     }
 
     .blog-title{
-      color: #000;
+      color: var(--el-color-black);
       font-size: 24px;
       font-weight: bold;
       padding: 12px 24px;
@@ -190,11 +195,11 @@ onMounted(() => {
     }
 
     .blog-info-box{
-      color: #999aaa;
+      // color: #999aaa;
       padding: 0px 24px 12px;
 
 			.item-status-num{
-				color: #999aaa;
+				// color: #999aaa;
 				font-size: 12px;
 			}
 
@@ -202,7 +207,7 @@ onMounted(() => {
 				height: 3px;
 				width: 3px;
 				border-radius: 50%;
-				background-color: #555666;
+				// background-color: #555666;
 				margin: 0 8px;
 			}
     }
@@ -212,11 +217,6 @@ onMounted(() => {
       font-size: 14px;
       line-height: 2;
       padding: 12px 24px;
-    }
-
-    .like-blog-box{
-      padding: 12px 24px;
-      width: 150px;
     }
   }
 

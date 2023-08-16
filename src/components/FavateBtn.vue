@@ -1,6 +1,6 @@
 <template>
   <div class="favate-btn" 
-    :style="{width: props.width+'px'}"
+    :style="{width: props.width+'px', fontSize: props.size + 'px', height: props.height+'px', lineHeight : props.height+'px'}"
     @mouseover="state.hover = true"
     @mouseleave="state.hover = false"
     @click="click">
@@ -14,16 +14,26 @@ import {reactive} from 'vue';
 
 // 定义父组件传过来的值
 const props = defineProps({
-	// 图片宽
+	// 宽
 	width: {
-		type: String,
+		type: Number,
 		default: () => '',
 	},
+  // 高
+  height: {
+		type: Number,
+		default: () => 26,
+	},  
   // 文案
   text: {
 		type: String,
 		default: () => '',
 	},
+  // 大小
+  size: {
+		type: Number,
+		default: () => 13,
+	}
 });
 
 const state = reactive({
@@ -40,8 +50,6 @@ const click = ()=>{
 <style lang="scss" scoped>
 @import '/@/theme/media.scss';
 .favate-btn{
-  height: 26px;
-  line-height: 26px;
   border-radius: 14px;
   border: 1px solid #ccccd8;
   text-align: center;

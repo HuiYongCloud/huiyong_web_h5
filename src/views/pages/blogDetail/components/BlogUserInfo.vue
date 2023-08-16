@@ -131,14 +131,13 @@ const toBlogUser = ()=>{
   width: 100%;
   font-size: 14px;
   padding: 16px;
-  box-shadow: 0 2px 4px 0 #e2e2e2;
   margin-bottom: 8px;
-  background-color: white;
+  border: 1px solid var(--el-border-color-light, #ebeef5);
 
   .user-info {
 
     .user-name{
-      color: #000000;
+      color: var(--el-color-black);
       margin-bottom: 5px;
       margin-left: 12px;
       font-size: 15px;
@@ -177,14 +176,12 @@ const toBlogUser = ()=>{
       margin: 24px 0 0;
 
       .info-title{
-        color: #222226;
-        font-weight: bold;
-        letter-spacing: 1px;
+        color: var(--el-color-black);
         font-size: 14px;
       }
 
       .info-value{
-        color: #4a4d52;
+        color: var(--el-text-color-regular);
       }
     }
   }
