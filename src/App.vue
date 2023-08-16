@@ -52,4 +52,4 @@ onMounted(() => {
 		initSysThemeLister()
 	});
 });
-</script>./stores
+</script>

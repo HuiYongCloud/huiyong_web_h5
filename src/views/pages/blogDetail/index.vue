@@ -3,7 +3,7 @@
 
 	<!-- 右侧导航 -->
 	<div class="blog-info-left">
-		<BlogUserInfo :detail="state.blogInfo"/>
+		<BlogUserInfo  :detail="state.blogInfo"/>
 		<BlogTagInfo :list="state.tagList" :tagId="state.tagId"/>
 	</div>
 

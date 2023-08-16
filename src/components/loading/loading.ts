@@ -13,22 +13,23 @@ const AppLoading = defineAsyncComponent(() =>
 export const NextLoading = {
 	// 创建 loading
 	start: () => {
-		const bodys: Element = document.body;
 		const div = <HTMLElement>document.createElement('div');
 		div.setAttribute('class', 'loading-next');
 		//使用render函数把组件挂载到容器上
 		//第一个参数是我们使用h函数创造的VNode
 		//第二个参数是需要挂载的位置
 		render(h(AppLoading), div)
+		//插入样式
+		const bodys: Element = document.body;
 		bodys.insertBefore(div, bodys.childNodes[0]);
 		window.nextLoading = true;
 	},
 	// 移除 loading
 	done: (time: number = 0) => {
 		nextTick(() => {
+			const el = <HTMLElement>document.querySelector('.loading-next');
 			setTimeout(() => {
 				window.nextLoading = false;
-				const el = <HTMLElement>document.querySelector('.loading-next');
 				el?.parentNode?.removeChild(el);
 			}, time);
 		});

@@ -80,16 +80,13 @@ import FavateBtn from '/@/components/FavateBtn.vue'
 import Api from "/@/api/api"
 import Request from "/@/api/request"
 import { showNotify} from 'vant';
-
 import imgPig from '/@/assets/img/pig1.gif';
+import { appStore } from '/@/stores/appStore'
+const mainStore = appStore()
+const userInfo = mainStore.userInfo
 
 // 定义父组件传过来的值
 const props = defineProps({
-	// 用户信息
-	userInfo: {
-		type: Object,
-		default: () => null,
-	},
   // 详情
 	detail: {
 		type: Object,
@@ -98,7 +95,7 @@ const props = defineProps({
 });
 
 const isRootBlog = computed(() => {
-	return props.userInfo && props.userInfo.userId && props.userInfo.userId === props.detail.blogUserId;
+	return userInfo && userInfo.userId && userInfo.userId === props.detail.blogUserId;
 });
 
 const addFocus = ()=>{
