@@ -12,8 +12,35 @@
   }
 
   .blog-content-page{
-    width: 70vw;
+    width: 55vw;
     margin: 10px 0 0 10px;
+  }
+
+  .blog-info-right{
+    width: 15vw;
+    min-width: 200px;
+    position: sticky;
+    top: 0;
+
+    // 博客目录
+    .blog-toc{
+      width: 15vw;
+      min-width: 200px;
+      min-height: 300px;
+      top: 10px;
+      margin-left: 10px;
+      padding:10px ;
+      overflow: hidden;
+      display: block;
+      // border: 1px solid var(--el-border-color-light, #ebeef5);
+
+      .blog-toc-title{
+        font-size: 16px;
+        margin-bottom: 10px;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+    }
   }
 }
 

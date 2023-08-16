@@ -49,15 +49,6 @@
         <UMessageInput mode="bottomLine" :font-size="40" :width="50" @finish="priCodeRes"/>
       </div>
     </div>
-
-    <!-- 博客目录 -->
-    <div class="blog-toc" :class="{'blog-toc-show': true}">
-      <div class="blog-toc-title flex-center-start">
-        <!-- <svg-icon icon-class="blog-toc" style="margin-left:8px"/> -->
-        <div style="margin-left:10px">目录</div>
-      </div>
-      <!-- <div class="toc" id="toc"></div> -->
-    </div>
   </div>
 </template>
 
@@ -94,7 +85,7 @@ const tuiViewer = ref();
 const state = reactive({
   blogDetail:'' as any,
   // 字数
-  wordNum: '',
+  wordNum: 0,
   // 阅读时间
   readTime:'',
 
@@ -137,13 +128,25 @@ const getBlogDetail = () => {
   Request.post(Api.Blog_Detail, { blogId: props.blogId, priCode : state.priCode})
   .then((res:any) =>{      
     state.blogDetail = res
+    // 回调显示博客内容
     emit('onDetailLoad', {userId: res.userId, tagId: res.tagId});
-
     // 如果有文章，则可以查看
     if(res.content){
+
+      // 滑动到顶部
+      document.documentElement.scrollTop = 0   
+
+      // 统计文章字数
+      state.wordNum = res.content.replace(/<\/?[^>]*>/g, "")
+                        .replace(/[|]*\n/, "")
+                        .replace(/&npsp;/gi, "")
+                        .length;
+      // 计算阅读时间
+      state.readTime = Math.round(state.wordNum / 400) + "分钟"
+      // 显示内容
       setTimeout(() => {
-      tuiViewer.value.setMarkdown(res.content)      
-    }, 200);
+        tuiViewer.value.setMarkdown(res.content)      
+      }, 200);
     }
   })
   .catch(res =>{
@@ -207,7 +210,7 @@ onMounted(() => {
 				height: 3px;
 				width: 3px;
 				border-radius: 50%;
-				// background-color: #555666;
+				background-color: var(--el-text-color-regular);
 				margin: 0 8px;
 			}
     }
@@ -218,31 +221,6 @@ onMounted(() => {
       line-height: 2;
       padding: 12px 24px;
     }
-  }
-
-  // 博客目录
-  .blog-toc{
-    width: 15vw;
-    min-width: 200px;
-    min-height: 300px;
-    position: sticky;
-    top: 10px;
-    margin-left: 10px;
-    padding:10px ;
-    overflow: hidden;
-    display: none;
-    border: 1px solid var(--el-border-color-light, #ebeef5);
-
-    .blog-toc-title{
-      font-size: 16px;
-      margin-bottom: 10px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-  }
-
-  .blog-toc-show{
-    display: block;
   }
 }
 
