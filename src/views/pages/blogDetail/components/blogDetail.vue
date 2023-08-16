@@ -227,15 +227,14 @@ onMounted(() => {
     min-height: 300px;
     position: sticky;
     top: 10px;
-    background:white;
     margin-left: 10px;
     padding:10px ;
     overflow: hidden;
     display: none;
+    border: 1px solid var(--el-border-color-light, #ebeef5);
 
     .blog-toc-title{
       font-size: 16px;
-      color: #2c2c2c;
       margin-bottom: 10px;
       font-weight: bold;
       letter-spacing: 1px;
