@@ -1,6 +1,6 @@
 <template>
   <div class="favate-btn" 
-    :style="{width: props.width+'px', fontSize: props.size + 'px', height: props.height+'px', lineHeight : props.height+'px'}"
+    :style="{width: props.width+'px', fontSize: props.size + 'px', height: props.height+'px', lineHeight : props.height+'px', borderRadius : props.height / 2+'px'}"
     @mouseover="state.hover = true"
     @mouseleave="state.hover = false"
     @click="click">
@@ -50,10 +50,8 @@ const click = ()=>{
 <style lang="scss" scoped>
 @import '/@/theme/media.scss';
 .favate-btn{
-  border-radius: 14px;
-  border: 1px solid #ccccd8;
+  border: 1px solid var(--el-border-color-light, #ebeef5);
   text-align: center;
-  font-size: 13px;
   cursor: pointer;
   position: relative;
   transition: all 1s ease;
@@ -70,14 +68,14 @@ const click = ()=>{
     left: 0px;
     bottom: 0px;
     right: 0px;    
-    background: black;
+    background: var(--el-color-black);
     transform: translateX(-100%);
     transition: all 0.3s;
   }
 
   .favate-btn-back-show{
     transform: translateX(0px);
-    color:white !important;
+    color:var(--el-color-white) !important;
   }
 
   .favate-btn-text{
@@ -86,11 +84,10 @@ const click = ()=>{
     left: 0px;
     bottom: 0px;
     right: 0px;  
-    color:white;
-    color: #555666;
+    color: var(--el-color-black);
 
     &:hover, &:active{
-      color:white !important;
+      color:var(--el-color-white) !important;
     }
   }
 }
