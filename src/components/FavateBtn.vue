@@ -41,6 +41,7 @@ const click = ()=>{
 @import '/@/theme/media.scss';
 .favate-btn{
   height: 26px;
+  line-height: 26px;
   border-radius: 14px;
   border: 1px solid #ccccd8;
   text-align: center;

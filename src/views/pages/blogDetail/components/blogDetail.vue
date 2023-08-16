@@ -9,13 +9,15 @@
       </div>
 
       <div v-if="state.blogDetail && !state.blogDetail.blogCode && state.blogDetail.content">
-        <div v-if="state.blogDetail.tagName" class="blog-info-box flex-center-start show-in-mobile">
-          <!-- <svg-icon icon-class="blog-tag" style="margin-right:8px"/> -->
-					<div class="item-status-num">{{state.blogDetail.tagName}}</div>     
-        </div>
         <div class="blog-info-box flex-center-start">
           <div class="flex-center-start">
-            <!-- <svg-icon icon-class="blog-calendar" style="margin-right:8px"/> -->
+            <img :src="blogTag" style="margin-right:8px; width: 12px; height: 10px; filter: drop-shadow(10000px 0 0 #999aaa); transform: translate(-10000px);"/>
+					  <div class="item-status-num">{{state.blogDetail.tagName}}</div> 
+          </div>
+          
+          <div class="item-status-dot"/>
+          <div class="flex-center-start">
+            <img :src="blogCalendar" style="margin-right:8px; width: 16px; height: 16px; filter: drop-shadow(10000px 0 0 #999aaa); transform: translate(-10000px);"/>
 					  <div class="item-status-num">{{state.blogDetail.createTime}}</div>  
           </div>
 
@@ -67,7 +69,8 @@ import Api from "/@/api/api"
 import Request from "/@/api/request"
 import { showNotify, showDialog } from 'vant';
 import TuiViewer from '/@/components/TuiViewer.vue';
-
+import blogCalendar from '/@/assets/svg/blog-calendar.svg';
+import blogTag from '/@/assets/svg/blog-tag.svg';
 
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['onDetailLoad']);
