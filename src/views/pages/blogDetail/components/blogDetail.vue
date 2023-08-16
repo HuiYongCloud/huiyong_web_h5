@@ -79,7 +79,7 @@ const userInfo = mainStore.userInfo
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['onDetailLoad']);
 const isRootBlog = computed(() => {
-	return userInfo && userInfo.userId && userInfo.userId === state.blogDetail.blogUserId;
+	return userInfo && userInfo.userId && userInfo.userId === state.blogDetail.userId;
 });
 // 定义父组件传过来的值
 const props = defineProps({
