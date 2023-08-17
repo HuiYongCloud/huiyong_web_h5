@@ -40,7 +40,7 @@ import Request from "/@/api/request"
 const Navbar = defineAsyncComponent(() => import('/@/components/layout/navbar/index.vue'));
 const BlogUserInfo = defineAsyncComponent(() => import('./components/BlogUserInfo.vue'));
 const BlogTagInfo = defineAsyncComponent(() => import('./components/BlogTagInfo.vue'));
-const BlogList = defineAsyncComponent(() => import('./components/blogList.vue'));
+// const BlogList = defineAsyncComponent(() => import('./components/blogList.vue'));
 const BlogDetail = defineAsyncComponent(() => import('./components/blogDetail.vue'));
 
 // 定义变量内容

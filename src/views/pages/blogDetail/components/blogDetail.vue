@@ -34,7 +34,7 @@
           </div>
         </div>
         <div class="blog-content">
-          <TuiViewer ref="tuiViewer"/>
+          <MDPreview :content="state.blogDetail.content"/>
         </div>
       </div>
 
@@ -53,19 +53,21 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, nextTick, ref, computed} from 'vue';
+import {defineAsyncComponent, onMounted, reactive, nextTick, computed} from 'vue';
 import Empty from '/@/components/Empty.vue'
 import FavateBtn from '/@/components/FavateBtn.vue'
 import UMessageInput from '/@/components/UMessageInput.vue'
 import Api from "/@/api/api"
 import Request from "/@/api/request"
 import { showNotify, showDialog } from 'vant';
-import TuiViewer from '/@/components/TuiViewer.vue';
 import blogCalendar from '/@/assets/svg/blog-calendar.svg';
 import blogTag from '/@/assets/svg/blog-tag.svg';
 import { appStore } from '/@/stores/appStore'
 const mainStore = appStore()
 const userInfo = mainStore.userInfo
+
+// 引入组件
+const MDPreview = defineAsyncComponent(() => import('/@/components/MDPreview.vue'));
 
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['onDetailLoad']);
@@ -81,7 +83,6 @@ const props = defineProps({
 	}
 });
 
-const tuiViewer = ref();
 const state = reactive({
   blogDetail:'' as any,
   // 字数
@@ -143,10 +144,6 @@ const getBlogDetail = () => {
                         .length;
       // 计算阅读时间
       state.readTime = Math.round(state.wordNum / 400) + "分钟"
-      // 显示内容
-      setTimeout(() => {
-        tuiViewer.value.setMarkdown(res.content)      
-      }, 200);
     }
   })
   .catch(res =>{
