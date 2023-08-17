@@ -20,10 +20,9 @@
 		<!-- 博客目录 -->
 		<div class="blog-toc">
 			<div class="blog-toc-title flex-center-start">
-				<!-- <svg-icon icon-class="blog-toc" style="margin-left:8px"/> -->
+				<img :src="blogToc" style="margin-left:12px; width: 14px; height: 14px; filter: drop-shadow(10000px 0 0 var(--el-color-black)); transform: translate(-10000px);"/>
 				<div style="margin-left:10px">目录</div>
 			</div>
-			<!-- <div class="toc" id="toc"></div> -->
 			<MdCatalog editorId="md-preview-id" :scrollElement="scrollElement" :theme="isDarkTheme()?'dark':'light'" />
 		</div>
 	</div>
@@ -31,13 +30,14 @@
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent, onMounted, reactive, ref} from 'vue';
+import { defineAsyncComponent, onMounted, reactive} from 'vue';
 import { useRoute, useRouter } from "vue-router"
 import { showNotify} from 'vant';
 import Api from "/@/api/api"
 import Request from "/@/api/request"
 import { MdCatalog } from 'md-editor-v3';
 import { appStore } from '/@/stores/appStore'
+import blogToc from '/@/assets/svg/blog-toc.svg';
 
 // 引入组件
 const Navbar = defineAsyncComponent(() => import('/@/components/layout/navbar/index.vue'));

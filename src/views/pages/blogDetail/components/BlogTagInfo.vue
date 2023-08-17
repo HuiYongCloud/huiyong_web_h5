@@ -70,6 +70,7 @@ const changeTagInfo = (tagId: String)=>{
       min-height: 40px;
 
       &:hover{
+        color: var(--el-color-primary);
         background-color: rgba(var(--el-color-primary-rgb), .1);
       }
 
@@ -83,8 +84,8 @@ const changeTagInfo = (tagId: String)=>{
     }
 
     .info-item-active{
-      border-left: 3px solid #3386ff;
-      // background: #e3e8f0;
+      border-left: 3px solid var(--el-color-primary);
+      color: var(--el-color-primary);
       background-color: rgba(var(--el-color-primary-rgb), .1);
     }
   }

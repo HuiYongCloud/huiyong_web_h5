@@ -16,8 +16,8 @@ import {reactive} from 'vue';
 const props = defineProps({
 	// 宽
 	width: {
-		type: Number,
-		default: () => '',
+		type: [Number, String],
+		default: () => 0,
 	},
   // 高
   height: {
@@ -59,7 +59,7 @@ const click = ()=>{
 
   &:hover, &:active{
     border-color: #555666;
-    color:white !important;
+    color:var(--el-color-black) !important;
   }
 
   .favate-btn-back{

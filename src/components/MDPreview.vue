@@ -1,17 +1,16 @@
 <template>
-	<div>
-		<MdPreview 
-			editorId="md-preview-id"
-			:theme="isDarkTheme()?'dark':'light'" 
-			:modelValue="props.content"
-			previewTheme="github"
-			codeTheme="github" />
-	</div>
+	<MdPreview 
+		editorId="md-preview-id"
+		:theme="isDarkTheme()?'dark':'light'" 
+		:modelValue="props.content"
+		previewTheme="github"
+		codeTheme="github" />
 </template>
 
 <script setup lang="ts">
+import { reactive} from 'vue';
 import { appStore } from '/@/stores/appStore'
-import { MdPreview, config} from 'md-editor-v3';
+import { MdPreview, MdCatalog, config} from 'md-editor-v3';
 import 'md-editor-v3/lib/preview.css';
 import highlight from 'highlight.js';
 import 'highlight.js/styles/github-dark.css';
@@ -24,13 +23,13 @@ import MarkdownItMark from 'markdown-it-mark';
 
 const mainStore = appStore()
 const isDarkTheme = () => {
-  let isDark = false;
+  	let isDark = false;
 	if(mainStore.theme){
 		isDark = mainStore.theme === 'dark'
 	}else{
 		isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
 	}
-  return isDark;
+  	return isDark;
 }
 
 config({

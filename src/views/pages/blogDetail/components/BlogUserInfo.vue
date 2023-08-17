@@ -33,9 +33,9 @@
         </div>
       </div>
 
-      <div class="focus-btn" v-if="!isRootBlog && props.detail">
-        <favate-btn v-if="props.detail.focusId" text="取消关注" @click="cancelFocus"/>
-        <favate-btn v-if="!props.detail.focusId" text="关注博主" @click="addFocus"/>
+      <div style="padding-top: 24px;" v-if="!isRootBlog && props.detail">
+        <favate-btn width="100%" :height="30" :size="13" v-if="props.detail.focusId" text="取消关注" @click="cancelFocus"/>
+        <favate-btn width="100%" :height="30" :size="13" v-if="!props.detail.focusId" text="关注博主" @click="addFocus"/>
       </div>
     </div>
 
@@ -47,9 +47,9 @@
         <div class="user-name-box flex-start-between">
           <div class="user-name-top flex-center-start">
             <div class="user-name">{{props.detail.userName}}</div>
-            <div class="focus-btn" v-if="!isRootBlog && props.detail">
-              <favate-btn v-if="props.detail.focusId" text="取消关注" @click="cancelFocus"/>
-              <favate-btn v-if="!props.detail.focusId" text="关注博主" @click="addFocus"/>
+            <div class="ml10" v-if="!isRootBlog && props.detail">
+              <favate-btn :width="75" :height="20" :size="12" v-if="props.detail.focusId" text="取消关注" @click="cancelFocus"/>
+              <favate-btn :width="75" :height="20" :size="12" v-if="!props.detail.focusId" text="关注博主" @click="addFocus"/>
             </div>
           </div>
           
@@ -185,10 +185,6 @@ const toBlogUser = ()=>{
       }
     }
   }
-
-  .focus-btn{
-    margin-top: 24px;
-  }
 }
 
 .root-info-mobile{
@@ -204,7 +200,6 @@ const toBlogUser = ()=>{
     width: 100vw;
     font-size: 14px;
     padding: 10px;
-    background-color: white;
     display: inline-block;
 
     .user-info {
@@ -216,7 +211,7 @@ const toBlogUser = ()=>{
         .user-name-top{
 
           .user-name{
-            color: #000000;
+            color: var(--el-color-black);
             margin-left: 12px;
             font-size: 15px;
             line-height: 15px;
@@ -257,24 +252,18 @@ const toBlogUser = ()=>{
             margin: 0 2px 0 12px;    
 
             .info-title{
-              color: #222226;
+              color: var(--el-color-black);
               letter-spacing: 1px;
               font-size: 12px;
             }
 
             .info-value{
-              color: #4a4d52;
+              color: var(--el-text-color-regular);
               font-size: 12px;
             }
           }
         }         
       }
-    }
-
-    .focus-btn{
-      width: 80px;
-      margin-top: 0dp;
-      margin-left: 10px;
     }
   }
 }
