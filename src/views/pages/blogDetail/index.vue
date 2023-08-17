@@ -13,19 +13,35 @@
 		<!-- 文章列表 -->
 		<!-- <BlogList v-if="state.isShowBlogDetail == false" :tagId="state.tagId"/> -->
 	</div>
+
+	<div class="blog-info-right">
+		<Navbar/>
+
+		<!-- 博客目录 -->
+		<div class="blog-toc">
+			<div class="blog-toc-title flex-center-start">
+				<!-- <svg-icon icon-class="blog-toc" style="margin-left:8px"/> -->
+				<div style="margin-left:10px">目录</div>
+			</div>
+			<!-- <div class="toc" id="toc"></div> -->
+		</div>
+	</div>
 </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, ref} from 'vue';
+import { defineAsyncComponent, onMounted, reactive, ref} from 'vue';
 import { useRoute, useRouter } from "vue-router"
 import { showNotify} from 'vant';
 import Api from "/@/api/api"
 import Request from "/@/api/request"
-import BlogUserInfo from './components/BlogUserInfo.vue';
-import BlogTagInfo from './components/BlogTagInfo.vue';
-import BlogList from './components/blogList.vue'
-import BlogDetail from './components/blogDetail.vue';
+
+// 引入组件
+const Navbar = defineAsyncComponent(() => import('/@/components/layout/navbar/index.vue'));
+const BlogUserInfo = defineAsyncComponent(() => import('./components/BlogUserInfo.vue'));
+const BlogTagInfo = defineAsyncComponent(() => import('./components/BlogTagInfo.vue'));
+const BlogList = defineAsyncComponent(() => import('./components/blogList.vue'));
+const BlogDetail = defineAsyncComponent(() => import('./components/blogDetail.vue'));
 
 // 定义变量内容
 const route = useRoute();

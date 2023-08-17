@@ -4,9 +4,6 @@
     <!-- 博客详情 -->
     <div class="blog-detail-page">
       <h1 class="blog-title">{{state.blogDetail.title}}</h1>
-      <div class="like-blog-box" v-if="state.blogDetail.isFavorite != null">
-        <FavateBtn :text="!state.blogDetail || state.blogDetail.isFavorite == false ? '收藏文章':'取消收藏'" @click="favorite"/>
-      </div>
 
       <div v-if="state.blogDetail && !state.blogDetail.blogCode && state.blogDetail.content">
         <div class="blog-info-box flex-center-start">
@@ -31,6 +28,10 @@
           <div class="item-status-num">{{state.wordNum}}字</div>    
           <div class="item-status-dot"/>
 					<div class="item-status-num">大概{{state.readTime}}</div>    
+
+          <div style="margin-left: 15px;" v-if="!isRootBlog && state.blogDetail.content">
+            <FavateBtn :width="75" :height="20" :size="12" :text="!state.blogDetail || state.blogDetail.isFavorite == false ? '收藏文章':'取消收藏'" @click="favorite"/>
+          </div>
         </div>
         <div class="blog-content">
           <TuiViewer ref="tuiViewer"/>
@@ -48,20 +49,11 @@
         <UMessageInput mode="bottomLine" :font-size="40" :width="50" @finish="priCodeRes"/>
       </div>
     </div>
-
-    <!-- 博客目录 -->
-    <div class="blog-toc" :class="{'blog-toc-show': true}">
-      <div class="blog-toc-title flex-center-start">
-        <!-- <svg-icon icon-class="blog-toc" style="margin-left:8px"/> -->
-        <div style="margin-left:10px">目录</div>
-      </div>
-      <!-- <div class="toc" id="toc"></div> -->
-    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, nextTick, ref} from 'vue';
+import { onMounted, reactive, nextTick, ref, computed} from 'vue';
 import Empty from '/@/components/Empty.vue'
 import FavateBtn from '/@/components/FavateBtn.vue'
 import UMessageInput from '/@/components/UMessageInput.vue'
@@ -71,9 +63,15 @@ import { showNotify, showDialog } from 'vant';
 import TuiViewer from '/@/components/TuiViewer.vue';
 import blogCalendar from '/@/assets/svg/blog-calendar.svg';
 import blogTag from '/@/assets/svg/blog-tag.svg';
+import { appStore } from '/@/stores/appStore'
+const mainStore = appStore()
+const userInfo = mainStore.userInfo
 
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['onDetailLoad']);
+const isRootBlog = computed(() => {
+	return userInfo && userInfo.userId && userInfo.userId === state.blogDetail.userId;
+});
 // 定义父组件传过来的值
 const props = defineProps({
 	// 博客id
@@ -87,7 +85,7 @@ const tuiViewer = ref();
 const state = reactive({
   blogDetail:'' as any,
   // 字数
-  wordNum: '',
+  wordNum: 0,
   // 阅读时间
   readTime:'',
 
@@ -99,7 +97,6 @@ const state = reactive({
   imagePreview: false,
   showImage:'',
 });
-
 
 // 收藏、取消收藏
 const favorite = () => {
@@ -131,13 +128,25 @@ const getBlogDetail = () => {
   Request.post(Api.Blog_Detail, { blogId: props.blogId, priCode : state.priCode})
   .then((res:any) =>{      
     state.blogDetail = res
+    // 回调显示博客内容
     emit('onDetailLoad', {userId: res.userId, tagId: res.tagId});
-
     // 如果有文章，则可以查看
     if(res.content){
+
+      // 滑动到顶部
+      document.documentElement.scrollTop = 0   
+
+      // 统计文章字数
+      state.wordNum = res.content.replace(/<\/?[^>]*>/g, "")
+                        .replace(/[|]*\n/, "")
+                        .replace(/&npsp;/gi, "")
+                        .length;
+      // 计算阅读时间
+      state.readTime = Math.round(state.wordNum / 400) + "分钟"
+      // 显示内容
       setTimeout(() => {
-      tuiViewer.value.setMarkdown(res.content)      
-    }, 200);
+        tuiViewer.value.setMarkdown(res.content)      
+      }, 200);
     }
   })
   .catch(res =>{
@@ -162,7 +171,6 @@ onMounted(() => {
 
   // 博客详情 
   .blog-detail-page{
-    background: white;
     width: 60vw;
     min-width: 500px;
     min-height: calc(100vh - 30px);
@@ -182,7 +190,7 @@ onMounted(() => {
     }
 
     .blog-title{
-      color: #000;
+      color: var(--el-color-black);
       font-size: 24px;
       font-weight: bold;
       padding: 12px 24px;
@@ -190,11 +198,11 @@ onMounted(() => {
     }
 
     .blog-info-box{
-      color: #999aaa;
+      // color: #999aaa;
       padding: 0px 24px 12px;
 
 			.item-status-num{
-				color: #999aaa;
+				// color: #999aaa;
 				font-size: 12px;
 			}
 
@@ -202,7 +210,7 @@ onMounted(() => {
 				height: 3px;
 				width: 3px;
 				border-radius: 50%;
-				background-color: #555666;
+				background-color: var(--el-text-color-regular);
 				margin: 0 8px;
 			}
     }
@@ -213,37 +221,6 @@ onMounted(() => {
       line-height: 2;
       padding: 12px 24px;
     }
-
-    .like-blog-box{
-      padding: 12px 24px;
-      width: 150px;
-    }
-  }
-
-  // 博客目录
-  .blog-toc{
-    width: 15vw;
-    min-width: 200px;
-    min-height: 300px;
-    position: sticky;
-    top: 10px;
-    background:white;
-    margin-left: 10px;
-    padding:10px ;
-    overflow: hidden;
-    display: none;
-
-    .blog-toc-title{
-      font-size: 16px;
-      color: #2c2c2c;
-      margin-bottom: 10px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-  }
-
-  .blog-toc-show{
-    display: block;
   }
 }
 
