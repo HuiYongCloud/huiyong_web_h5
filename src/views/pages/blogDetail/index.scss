@@ -18,28 +18,17 @@
 
   .blog-info-right{
     width: 15vw;
+    height: 100vh;
     min-width: 200px;
     position: sticky;
     top: 0;
+    // border-left: 1px solid var(--el-border-color-light, #ebeef5);
 
     // 博客目录
-    .blog-toc{
-      width: 15vw;
-      min-width: 200px;
-      min-height: 300px;
-      top: 10px;
-      margin-left: 10px;
-      padding:10px ;
-      overflow: hidden;
-      display: block;
-      // border: 1px solid var(--el-border-color-light, #ebeef5);
-
-      .blog-toc-title{
-        font-size: 16px;
-        margin-bottom: 10px;
-        font-weight: bold;
-        letter-spacing: 1px;
-      }
+    .blog-toc-title{
+      white-space: nowrap;
+      font-size: 15px;
+      font-weight: bold;
     }
   }
 }
@@ -57,6 +46,10 @@
     .blog-content-page{
       width: 100vw;
       margin: 0px;
+    }
+
+    .blog-info-right{
+      display: none;
     }
   }
 }

@@ -40,33 +40,39 @@
     </div>
 
     <div class="root-info-mobile">
-      <div class="user-info flex">
-        <div @click="toBlogUser">
-          <avatar :size="45" :src="props.detail.userImage"/>
+      <div class="flex-center-between">
+        <div class="user-info flex">
+          <div @click="toBlogUser">
+            <avatar :size="45" :src="props.detail.userImage"/>
+          </div>
+          <div class="user-name-box flex-start-between">
+            <div class="user-name-top flex-center-start">
+              <div class="user-name">{{props.detail.userName}}</div>
+              <div class="ml10" v-if="!isRootBlog && props.detail">
+                <favate-btn :width="75" :height="20" :size="12" v-if="props.detail.focusId" text="取消关注" @click="cancelFocus"/>
+                <favate-btn :width="75" :height="20" :size="12" v-if="!props.detail.focusId" text="关注博主" @click="addFocus"/>
+              </div>
+            </div>
+            
+            <div class="blog-info flex">
+              <div class="info-item flex-center-start">
+                <div class="info-title">访问：</div>
+                <div class="info-value">{{props.detail.blogReadNum || 0}}</div>
+              </div>
+              <div class="info-item flex-center-start">
+                <div class="info-title">文章：</div>
+                <div class="info-value">{{props.detail.blogNum || 0}}</div>
+              </div>
+              <div class="info-item flex-center-start">
+                <div class="info-title">关注：</div>
+                <div class="info-value">{{props.detail.focusNum || 0}}</div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="user-name-box flex-start-between">
-          <div class="user-name-top flex-center-start">
-            <div class="user-name">{{props.detail.userName}}</div>
-            <div class="ml10" v-if="!isRootBlog && props.detail">
-              <favate-btn :width="75" :height="20" :size="12" v-if="props.detail.focusId" text="取消关注" @click="cancelFocus"/>
-              <favate-btn :width="75" :height="20" :size="12" v-if="!props.detail.focusId" text="关注博主" @click="addFocus"/>
-            </div>
-          </div>
-          
-          <div class="blog-info flex">
-            <div class="info-item flex-center-start">
-              <div class="info-title">访问：</div>
-              <div class="info-value">{{props.detail.blogReadNum || 0}}</div>
-            </div>
-            <div class="info-item flex-center-start">
-              <div class="info-title">文章：</div>
-              <div class="info-value">{{props.detail.blogNum || 0}}</div>
-            </div>
-            <div class="info-item flex-center-start">
-              <div class="info-title">关注：</div>
-              <div class="info-value">{{props.detail.focusNum || 0}}</div>
-            </div>
-          </div>
+
+        <div>
+          <img :src="blogToc" style="margin-right:15px; width: 20px; height: 20px; filter: drop-shadow(10000px 0 0 var(--el-color-black)); transform: translate(-10000px);"/>
         </div>
       </div>
     </div>
@@ -82,6 +88,8 @@ import Request from "/@/api/request"
 import { showNotify} from 'vant';
 import imgPig from '/@/assets/img/pig1.gif';
 import { appStore } from '/@/stores/appStore'
+import blogToc from '/@/assets/svg/blog-toc.svg';
+
 const mainStore = appStore()
 const userInfo = mainStore.userInfo
 

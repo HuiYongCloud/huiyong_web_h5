@@ -15,16 +15,16 @@
 	</div>
 
 	<div class="blog-info-right">
-		<Navbar/>
-
-		<!-- 博客目录 -->
-		<div class="blog-toc">
+		<div class="flex-center-between">
+			<!-- 博客目录 -->
 			<div class="blog-toc-title flex-center-start">
 				<img :src="blogToc" style="margin-left:12px; width: 14px; height: 14px; filter: drop-shadow(10000px 0 0 var(--el-color-black)); transform: translate(-10000px);"/>
 				<div style="margin-left:10px">目录</div>
 			</div>
-			<MdCatalog editorId="md-preview-id" :scrollElement="scrollElement" :theme="isDarkTheme()?'dark':'light'" />
+			<!-- 个人信息导航 -->
+			<Navbar/>
 		</div>
+		<MdCatalog editorId="md-preview-id" :scrollElement="scrollElement" :theme="isDarkTheme()?'dark':'light'" />
 	</div>
 </div>
 </template>
