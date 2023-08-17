@@ -111,8 +111,8 @@ const props = defineProps({
 });
 
 // 用于显示字符
-const charArr = computed(() => {return state.valueModel.split('');});
-const charArrLength = computed(() => {return state.valueModel.split('').length;});
+const charArr = computed(() => {return state.valueModel.split('');}) as any;
+const charArrLength = computed(() => {return charArr.length;});
 // 根据长度，循环输入框的个数，因为头条小程序数值不能用于v-for
 const loopCharArr = computed(() => {return new Array(props.maxlength);});
 
@@ -130,7 +130,7 @@ watch(
 );
 
 const state = reactive({
-	valueModel:'' as String,	
+	valueModel:'' as any,	
 });
 
 const emit = defineEmits(['change','finish']);
