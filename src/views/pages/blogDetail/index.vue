@@ -24,6 +24,7 @@
 				<div style="margin-left:10px">目录</div>
 			</div>
 			<!-- <div class="toc" id="toc"></div> -->
+			<MdCatalog editorId="md-preview-id" :scrollElement="scrollElement" :theme="isDarkTheme()?'dark':'light'" />
 		</div>
 	</div>
 </div>
@@ -35,6 +36,8 @@ import { useRoute, useRouter } from "vue-router"
 import { showNotify} from 'vant';
 import Api from "/@/api/api"
 import Request from "/@/api/request"
+import { MdCatalog } from 'md-editor-v3';
+import { appStore } from '/@/stores/appStore'
 
 // 引入组件
 const Navbar = defineAsyncComponent(() => import('/@/components/layout/navbar/index.vue'));
@@ -44,6 +47,17 @@ const BlogTagInfo = defineAsyncComponent(() => import('./components/BlogTagInfo.
 const BlogDetail = defineAsyncComponent(() => import('./components/blogDetail.vue'));
 
 // 定义变量内容
+const mainStore = appStore()
+const isDarkTheme = () => {
+  let isDark = false;
+	if(mainStore.theme){
+		isDark = mainStore.theme === 'dark'
+	}else{
+		isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+	}
+  return isDark;
+}
+const scrollElement = document.documentElement;
 const route = useRoute();
 const router = useRouter();
 const state = reactive({

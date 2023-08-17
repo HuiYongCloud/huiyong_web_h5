@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<MdPreview 
-			editorId="preview-only" 
+			editorId="md-preview-id"
 			:theme="isDarkTheme()?'dark':'light'" 
 			:modelValue="props.content"
 			previewTheme="github"
