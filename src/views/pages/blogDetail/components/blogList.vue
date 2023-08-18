@@ -71,6 +71,10 @@ const onClickTab = () => {
 
 // 博客列表
 const getBlogListByTagId= () => {
+  if(!props.tagId){
+    state.list = []
+    return
+  }
   state.tabActive = 0
   Request.post(Api.Blog_List_By_Tag_Id, {
     id: props.tagId

@@ -98,7 +98,7 @@ const logInSuccess = (res: any) => {
 
 const toPageTermsDetail = (id: string) => {
 	router.push({
-		path: '/termsDetail',
+		name: 'termsDetail',
 		query: {id: id}
 	})
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="root-tag show-in-pc">
+  <div class="root-tag" v-if="props.list && props.list.length > 0">
     <div class="tag-title">文章分类</div>
     <div class="tag-list-info">
       <div class="info-list">
