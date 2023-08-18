@@ -1,20 +1,16 @@
 <template>
   <div class="blog-list-box">
-    <div class="tab-box">
-        <div class="tab-title-box flex-center-start">
-          <div class="title-info" :class="{'title-info-active':state.status == 0}" @click="getBlogListByTagId()">博客列表</div>
-          <div class="title-info" :class="{'title-info-active':state.status == 1}" @click="getBlogFocusList()">Ta的关注</div>
-        </div>
-    </div>
+    <Tabs v-model:active="state.tabActive" shrink>
+      <Tab title="博客列表"/>
+      <Tab title="Ta的关注"/>
+    </Tabs>
 
     <!-- 列表 -->
-    <div v-if="state.list && state.list.length > 0" >
-      <div class="info-item" v-for="(item, index) in state.list" :key="index">
-        <!-- 博客列表 -->
-        <blog-list-item  v-if="state.status == 0" :item="item"/>
-        <!-- 关注列表 -->
-        <blog-user-focus-list-item  v-else-if="state.status == 1" :item="item" @cancelFocus="cancelFocus"/>
-      </div>
+    <div class="info-item" v-for="(item, index) in state.list" :key="index">
+      <!-- 博客列表 -->
+      <blog-list-item  v-if="state.tabActive == 0" :item="item"/>
+      <!-- 关注列表 -->
+      <blog-user-focus-list-item  v-else-if="state.tabActive == 1" :item="item" @cancelFocus="cancelFocus"/>
     </div>
 
     <!-- 空状态 -->
@@ -26,7 +22,7 @@
 import {defineAsyncComponent, watch, reactive, nextTick, onMounted} from 'vue';
 import Api from "/@/api/api"
 import Request from "/@/api/request"
-import { showNotify } from 'vant';
+import { Tabs, Tab, showNotify } from 'vant';
 
 const Empty = defineAsyncComponent(() => import('/@/components/Empty.vue'));
 const BlogListItem = defineAsyncComponent(() => import('./BlogListItem.vue'));
@@ -47,8 +43,8 @@ const props = defineProps({
 });
 
 const state = reactive({
+  tabActive : 0,
   list: null as any,
-  status : 0,
 });
 
 // 监听标签变更，更新列表
@@ -64,7 +60,7 @@ watch(
 
 // 博客列表
 const getBlogListByTagId= () => {
-  state.status = 0
+  state.tabActive = 0
   Request.post(Api.Blog_List_By_Tag_Id, {
     id: props.tagId
   })
@@ -77,7 +73,7 @@ const getBlogListByTagId= () => {
 
 //关注列表
 const getBlogFocusList = () => {
-  state.status = 1
+  state.tabActive = 1
   Request.post(Api.BLOG_FOCUS_LIST, {userId: props.blogUserId})
   .then((res: any) =>{ state.list = res})
   .catch(res =>{
@@ -100,54 +96,21 @@ const cancelFocus = (focusUserId: any) => {
 
 // 页面加载时
 onMounted(() => {
-	if(state.status == 0){
+	if(state.tabActive == 0){
 		// 博主信息
 		getBlogListByTagId()
-	}else if(state.status == 1){
+	}else if(state.tabActive == 1){
 		// 博主信息
 		getBlogFocusList()
 	}
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
 .blog-list-box{
-  width: 100%;
-
-  .tab-box{
-    user-select: none;
-    border-bottom: 1px solid var(--app-border-color);
-
-    // 博客列表
-    .tab-title-box{
-      padding: 0 24px;
-      height: 70px;
-      width: 100%;
-      animation: 0.2s appear;
-
-      @keyframes appear {
-        0% {
-          opacity: 0;
-        }
-      }
-
-      // 博客状态
-      .title-info{
-        font-size: 14px;
-        margin-right: 24px;
-        cursor: pointer;
-
-        &:hover, &:active{
-          color:var(--el-color-primary);
-        }
-      }
-
-      .title-info-active{
-        color:var(--el-color-primary);
-        font-weight: bold;
-      }
-    }
+  .van-tabs__nav{
+    background: transparent !important;
   }
 }
 </style>
