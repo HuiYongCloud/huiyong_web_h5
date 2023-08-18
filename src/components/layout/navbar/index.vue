@@ -18,9 +18,7 @@
 						<div class="menu-item flex-center-between" @click="toHome">首页</div>
 						<div class="menu-line"/>
 						<div class="menu-item flex-center-between" @click="toBlog">我的博客</div>
-						<div class="menu-line"/>
 						<div class="menu-item flex-center-between" @click="toAdmin">我的简历</div>
-						<div class="menu-line"/>
 						<div class="menu-item flex-center-between" @click="toAdmin">后台管理</div>
 						<div class="menu-line"/>
 						<div class="menu-item flex-center-between" @click="outLogin">退出登录</div>
@@ -96,7 +94,7 @@ const outLogin = () => {
 	}
 
 	.user-menu-list{
-		width: 160px;
+		width: 180px;
 		padding: 4px 0;
 		box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.12), 0 0.5px 1.5px 0 rgba(0, 0, 0, 0.08);
 		border: 1px solid var(--app-border-color);
@@ -138,10 +136,8 @@ const outLogin = () => {
 		}
 
 		.menu-line{
-			height: 1px;
-			background-color: #000;
-			opacity: .04;
-			margin: 4px 0;
+			border-top: 1px solid var(--app-border-color);
+			margin: 6px 0px;
 		}
 	}
 
