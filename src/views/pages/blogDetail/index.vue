@@ -83,7 +83,7 @@ const getBlogInfo = (userId: any) => {
 }
 
 const getTagList = (userId: any) => {
-	Request.post(Api.BLOG_TAG_INFO_LIST, {
+	Request.post(Api.Blog_Tag_List, {
 		userId: userId
 	}).then((res:any) =>{
 		state.tagList = res
@@ -92,12 +92,16 @@ const getTagList = (userId: any) => {
 	})
 }
 
-const getTagDetail = (id: any) => {
-	state.tagId = id
+const getTagUserId = (tagId: any) => {
+	state.tagId = tagId
 	state.isShowBlogDetail == false
-	Request.post(Api.Terms_Detail, {
-		id: id
-	}).then((res:any) =>{
+	Request.post(Api.Get_Tag_User_Id, {
+		id: tagId
+	}).then((userId:any) =>{
+		// 博主信息
+		getBlogInfo(userId)
+		// 标签列表
+		getTagList(userId);
 	}).catch((res:any) =>{
 		showNotify({ type: 'danger', message: res.message });
 	})
@@ -121,7 +125,7 @@ onMounted(() => {
 		// 标签列表
 		getTagList(route.query.userId);
 	} else if(route.query.tagId){
-		getTagDetail(route.query.tagId)
+		getTagUserId(route.query.tagId)
 	} else if(route.query.blogId){
 		state.blogId = route.query.blogId
 		state.isShowBlogDetail = true
