@@ -1,6 +1,6 @@
 <template>
   <div class="blog-list-box">
-    <Tabs v-model:active="state.tabActive" shrink>
+    <Tabs v-model:active="state.tabActive" shrink @click-tab="onClickTab">
       <Tab title="博客列表"/>
       <Tab title="Ta的关注"/>
     </Tabs>
@@ -58,6 +58,17 @@ watch(
 	}
 );
 
+const onClickTab = () => {
+  state.list = null
+  if(state.tabActive == 0){
+		// 博主信息
+		getBlogListByTagId()
+	}else if(state.tabActive == 1){
+		// 博主信息
+		getBlogFocusList()
+	}
+}
+
 // 博客列表
 const getBlogListByTagId= () => {
   state.tabActive = 0
@@ -96,13 +107,7 @@ const cancelFocus = (focusUserId: any) => {
 
 // 页面加载时
 onMounted(() => {
-	if(state.tabActive == 0){
-		// 博主信息
-		getBlogListByTagId()
-	}else if(state.tabActive == 1){
-		// 博主信息
-		getBlogFocusList()
-	}
+  onClickTab()
 });
 </script>
 

@@ -11,7 +11,7 @@
 		<!-- 博客详情 -->
 		<BlogDetail v-if="state.isShowBlogDetail === true" :blogId="state.blogId" @onDetailLoad="onDetailLoad"/>
 		<!-- 文章列表 -->
-		<BlogList v-if="state.isShowBlogDetail == false" :tagId="state.tagId"/>
+		<BlogList v-if="state.isShowBlogDetail == false" :tagId="state.tagId" :blogUserId="state.blogUserId"/>
 	</div>
 
 	<div class="blog-info-right">
@@ -61,7 +61,7 @@ const scrollElement = document.documentElement;
 const route = useRoute();
 const router = useRouter();
 const state = reactive({
-	userId:'' as any,	
+	blogUserId:'' as any,	
 	tagId:'' as any,
 	blogId:'' as any,
 	blogCode: 0,
@@ -72,9 +72,9 @@ const state = reactive({
 	isShowBlogDetail: '' as any,
 });
 
-const getBlogInfo = (userId: any) => {
-	state.userId = userId
-	Request.post(Api.BLOG_INFO_DETAIL, {userId: userId})
+const getBlogInfo = (blogUserId: any) => {
+	state.blogUserId = blogUserId
+	Request.post(Api.BLOG_INFO_DETAIL, {userId: blogUserId})
 	.then((res:any) =>{
 		state.blogInfo = res
 	}).catch((res:any) =>{
@@ -82,9 +82,9 @@ const getBlogInfo = (userId: any) => {
 	})
 }
 
-const getTagList = (userId: any) => {
+const getTagList = () => {
 	Request.post(Api.Blog_Tag_List, {
-		userId: userId
+		userId: state.blogUserId
 	}).then((res:any) =>{
 		state.tagList = res
 	}).catch((res:any) =>{
@@ -101,17 +101,7 @@ const getTagUserId = (tagId: any) => {
 		// 博主信息
 		getBlogInfo(userId)
 		// 标签列表
-		getTagList(userId);
-	}).catch((res:any) =>{
-		showNotify({ type: 'danger', message: res.message });
-	})
-}
-
-const getBlogListByTagId = (tagId: any) => {
-	Request.post(Api.Blog_List_By_Tag_Id, {
-		id: tagId
-	}).then((res:any) =>{
-		console.log(res)
+		getTagList();
 	}).catch((res:any) =>{
 		showNotify({ type: 'danger', message: res.message });
 	})
@@ -119,7 +109,6 @@ const getBlogListByTagId = (tagId: any) => {
 
 const changeTagInfo = (tagId: any) => {
 	state.tagId = tagId
-	getBlogListByTagId(tagId)
 }
 
 const onDetailLoad = (data: any) => {
@@ -129,7 +118,7 @@ const onDetailLoad = (data: any) => {
 	// 博主信息
 	getBlogInfo(data.userId);
 	// 标签列表
-	getTagList(data.userId);
+	getTagList();
 }
 
 // 页面加载时
@@ -138,12 +127,10 @@ onMounted(() => {
 		// 博主信息
 		getBlogInfo(route.query.userId)
 		// 标签列表
-		getTagList(route.query.userId);
+		getTagList();
 	} else if(route.query.tagId){
 		// 标签博主
 		getTagUserId(route.query.tagId)
-		// 标签博客列表
-		getBlogListByTagId(route.query.tagId)
 	} else if(route.query.blogId){
 		state.blogId = route.query.blogId
 		state.isShowBlogDetail = true

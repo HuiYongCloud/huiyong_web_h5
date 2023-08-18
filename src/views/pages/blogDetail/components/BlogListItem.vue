@@ -41,7 +41,7 @@ const props = defineProps({
 .blog-list-item{
 	position: relative;
 	border-bottom: 1px solid var(--app-border-color);
-	padding: 16px 24px;
+	padding: 16px;
 	cursor: pointer;
 	flex-direction: column;
 	&:hover, &:active{
@@ -86,7 +86,7 @@ const props = defineProps({
 
 		.item-bottom-left{
 			.item-status-num{
-				color: #999aaa;
+				color: var(--app-item-sub);
 				font-size: 12px;
 			}
 
@@ -94,21 +94,21 @@ const props = defineProps({
 				height: 3px;
 				width: 3px;
 				border-radius: 50%;
-				background-color: #555666;
+				background-color: var(--app-item-sub);
 				margin: 0 8px;
 			}
 		}
 
 		.item-bottom-right{
 			.item-control{
-				color: #999aaa;
+				color: var(--app-item-sub);
 				font-size: 12px;
 				padding-left: 20px;
 				cursor: pointer;
 				transition: color 0.1s;
 
 				&:hover, &:active{
-					color: #222226;
+					color: var(--el-color-primary);
 					font-weight: bold;
 				}
 			}

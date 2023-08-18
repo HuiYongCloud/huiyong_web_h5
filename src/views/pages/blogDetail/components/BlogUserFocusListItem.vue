@@ -30,11 +30,11 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .focus-list-item{
-  border-bottom: 1px solid #f0f2f5;
-	padding: 16px 24px;
+	border-bottom: 1px solid var(--app-border-color);
+	padding: 16px;
 	cursor: pointer;
 	&:hover, &:active{
-		background-color:#f9fafb;
+		background-color: rgba(var(--el-color-primary-rgb), .1);
 	}
 
 	// 博主信息
@@ -47,7 +47,7 @@ const props = defineProps({
 			margin-left: 12px;
 
 			.user-name{
-				color: #555666;
+				color: var(--app-item-title);
 				margin-bottom: 5px;
 				font-size: 15px;
 				letter-spacing: 2px;
@@ -56,7 +56,7 @@ const props = defineProps({
 
 			.blog-info-box{
 				.item-status-num{
-					color: #999aaa;
+					color: var(--app-item-sub);
 					font-size: 12px;
 				}
 
@@ -64,7 +64,7 @@ const props = defineProps({
 					height: 3px;
 					width: 3px;
 					border-radius: 50%;
-					background-color: #555666;
+					background-color: var(--app-item-sub);
 					margin: 0 8px;
 				}
 			}
@@ -72,14 +72,14 @@ const props = defineProps({
 	}
 
 	.item-control{
-		color: #999aaa;
+		color: var(--app-item-sub);
 		font-size: 12px;
 		padding: 0 10px;
 		cursor: pointer;
 		transition: color 0.1s;
 
 		&:hover, &:active{
-			color: #222226;
+			color: var(--el-color-primary);
 			font-weight: bold;
 		}
 	}
