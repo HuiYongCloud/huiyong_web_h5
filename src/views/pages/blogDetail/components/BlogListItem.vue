@@ -40,12 +40,12 @@ const props = defineProps({
 <style lang="scss" scoped>
 .blog-list-item{
 	position: relative;
-  	border-bottom: 1px solid #f0f2f5;
+	border-bottom: 1px solid var(--app-border-color);
 	padding: 16px 24px;
 	cursor: pointer;
 	flex-direction: column;
 	&:hover, &:active{
-		background-color:#edf0f5;
+		background-color: rgba(var(--el-color-primary-rgb), .1);
 	}
 
 	.item-top-box{
@@ -71,14 +71,13 @@ const props = defineProps({
 		}
 
 		.item-title{
-			font-size: 15px;
-			color: #555666;
-			font-weight: bold;
+			color: var(--app-item-title);
+			font-size: 14px;
 		}
 
 		.item-time{
 			font-size: 12px;
-			color: #999999;
+			color: var(--app-item-sub);
 		}
 	}
 

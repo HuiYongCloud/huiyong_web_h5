@@ -132,7 +132,7 @@ const cancelFocus = ()=>{
   font-size: 14px;
   padding: 16px;
   margin-bottom: 8px;
-  border: 1px solid var(--el-border-color-light, #ebeef5);
+  border: 1px solid var(--app-border-color);
 
   .user-info {
 
@@ -252,13 +252,13 @@ const cancelFocus = ()=>{
             margin: 0 2px 0 12px;    
 
             .info-title{
-              color: var(--el-color-black);
+              color: var(--app-item-title);
               letter-spacing: 1px;
               font-size: 12px;
             }
 
             .info-value{
-              color: var(--el-text-color-regular);
+              color: var(--app-item-sub);
               font-size: 12px;
             }
           }

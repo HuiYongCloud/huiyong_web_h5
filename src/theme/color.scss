@@ -1,5 +1,20 @@
 // element样式，勿改动
+:root {
+    --app-bg-color: #010409;
+    --app-item-title: #E6EDF3;
+    --app-item-sub: #E6EDF3;
+    --app-border-color: #30363d;
+}
 
+[data-theme='dark'] {
+    --app-bg-color: #010409;
+    --app-item-title: #E6EDF3;
+    --app-item-sub: #7d8590;
+    --app-border-color: #30363d;
+}
+
+
+// element样式，勿改动
 :root {
     --el-color-white: #ffffff;
     --el-color-black: #000000;

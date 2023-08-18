@@ -46,7 +46,7 @@ const changeTagInfo = (tagId: String)=>{
 
 .root-tag{
   font-size: 14px;
-  border: 1px solid var(--el-border-color-light, #ebeef5);
+  border: 1px solid var(--app-border-color);
 
   .tag-title {
     background-color: var(--el-color-primary-dark-2);
@@ -76,11 +76,11 @@ const changeTagInfo = (tagId: String)=>{
       }
 
       .info-title{
-        color: var(--el-menu-text-color);
+        color: var(--app-item-title);
       }
 
       .info-value{
-        color: var(--el-text-color-secondary);
+        color: var(--app-item-sub);
       }
     }
 

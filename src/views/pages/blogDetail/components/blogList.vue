@@ -117,7 +117,7 @@ onMounted(() => {
 
   .tab-box{
     user-select: none;
-    border-bottom: 1px solid var(--el-border-color-light, #ebeef5);
+    border-bottom: 1px solid var(--app-border-color);
 
     // 博客列表
     .tab-title-box{

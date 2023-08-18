@@ -50,7 +50,7 @@ const click = ()=>{
 <style lang="scss" scoped>
 @import '/@/theme/media.scss';
 .favate-btn{
-  border: 1px solid var(--el-border-color-light, #ebeef5);
+  border: 1px solid var(--app-border-color);
   text-align: center;
   cursor: pointer;
   position: relative;
