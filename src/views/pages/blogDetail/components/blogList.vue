@@ -1,25 +1,20 @@
 <template>
   <div class="blog-list-box">
-    <div class="top-box">
-      <div class="top-status-box flex-center-between">
-        <div class="status-left flex-center-start">
-          <div class="status-info status-pointer">列表</div>
-          <div class="status-info status-pointer">关注</div>
+    <div class="tab-box">
+        <div class="tab-title-box flex-center-start">
+          <div class="title-info" :class="{'title-info-active':state.status == 0}" @click="getBlogListByTagId()">博客列表</div>
+          <div class="title-info" :class="{'title-info-active':state.status == 1}" @click="getBlogFocusList()">Ta的关注</div>
         </div>
-      </div>
     </div>
 
     <!-- 列表 -->
     <div v-if="state.list && state.list.length > 0" >
-        <div class="info-item" v-for="(item, index) in state.list" :key="index">
-          <!-- 博客列表 -->
-          <blog-list-item :item="item" />
-        </div>
-
+      <div class="info-item" v-for="(item, index) in state.list" :key="index">
+        <!-- 博客列表 -->
+        <blog-list-item  v-if="state.status == 0" :item="item"/>
         <!-- 关注列表 -->
-        <div class="info-item" v-for="(item, index) in state.list" :key="index">
-          <blog-user-focus-list-item :item="item" @cancelFocus="cancelFocus"/>
-        </div>
+        <blog-user-focus-list-item  v-else-if="state.status == 1" :item="item" @cancelFocus="cancelFocus"/>
+      </div>
     </div>
 
     <!-- 空状态 -->
@@ -28,37 +23,32 @@
 </template>
 
 <script setup lang="ts">
-import {defineAsyncComponent, watch, reactive, nextTick, computed} from 'vue';
+import {defineAsyncComponent, watch, reactive, nextTick, onMounted} from 'vue';
 import Api from "/@/api/api"
 import Request from "/@/api/request"
-import Empty from '/@/components/Empty.vue'
-import BlogListItem from './BlogListItem.vue';
-import BlogUserFocusListItem from './BlogUserFocusListItem.vue';
 import { showNotify } from 'vant';
+
+const Empty = defineAsyncComponent(() => import('/@/components/Empty.vue'));
+const BlogListItem = defineAsyncComponent(() => import('./BlogListItem.vue'));
+const BlogUserFocusListItem = defineAsyncComponent(() => import('./BlogUserFocusListItem.vue'));
 
 // 定义父组件传过来的值
 const props = defineProps({
-	// 博客id
-	blogId: {
-		type: String,
-		default: () => '',
-	},
-  // 博主id
-	blogUserId: {
+  // 标签id
+	tagId: {
 		type: String,
 		default: () => '',
 	},
   // 标签id
-	tagId: {
+  blogUserId: {
 		type: String,
 		default: () => '',
 	},
 });
 
 const state = reactive({
-  list:[],
-  // 博客状态，0：列表 5:关注列表
-  status : '0',
+  list: null as any,
+  status : 0,
 });
 
 // 监听标签变更，更新列表
@@ -67,39 +57,31 @@ watch(
 	(value) => {
 		nextTick(() => {
       // 标签变更，获取列表
-      getBlogListByStatus(0)
+      getBlogListByTagId()
 		})
 	}
 );
 
-//关注列表，状态5
-const getBlogFocusList = (status: any) => {
-  if(state.status != status){
-    state.list = []
-  }
-  state.status = status
-  Request.post(Api.BLOG_FOCUS_LIST, {userId: props.blogUserId})
-  .then((res: any) =>{ 
-    state.list = res
+// 博客列表
+const getBlogListByTagId= () => {
+  state.status = 0
+  Request.post(Api.Blog_List_By_Tag_Id, {
+    id: props.tagId
   })
+  .then((res : any) =>{ state.list = res})
   .catch(res =>{
+    state.list = []
     showNotify({ type: 'danger', message: res.message });
   })
 }
 
-// 博客列表，状态：0，1，2，3，4
-const getBlogListByStatus= (status: any) => {
-  if(state.status != status){
-    state.list = []
-  }
-  state.status = status
-  Request.post(Api.Blog_List_By_Tag_Id, {
-    id: props.blogUserId
-  })
-  .then((res : any) =>{ 
-    state.list = res
-  })
+//关注列表
+const getBlogFocusList = () => {
+  state.status = 1
+  Request.post(Api.BLOG_FOCUS_LIST, {userId: props.blogUserId})
+  .then((res: any) =>{ state.list = res})
   .catch(res =>{
+    state.list = []
     showNotify({ type: 'danger', message: res.message });
   })
 }
@@ -116,64 +98,54 @@ const cancelFocus = (focusUserId: any) => {
   })
 }
 
+// 页面加载时
+onMounted(() => {
+	if(state.status == 0){
+		// 博主信息
+		getBlogListByTagId()
+	}else if(state.status == 1){
+		// 博主信息
+		getBlogFocusList()
+	}
+});
 </script>
 
 <style lang="scss" scoped>
 
 .blog-list-box{
   width: 100%;
-  min-width: 500px;
-  min-height: calc(100vh - 26px);
 
-  .top-box{
+  .tab-box{
     user-select: none;
     border-bottom: 1px solid var(--el-border-color-light, #ebeef5);
 
     // 博客列表
-    .top-status-box{
+    .tab-title-box{
       padding: 0 24px;
       height: 70px;
       width: 100%;
+      animation: 0.2s appear;
 
-      .status-left{
-        // 标签内容
-        .tag-box{
-          position: relative;
-          animation: 0.2s appear;
-
-          .tag-close{
-            font-size: 16px;
-            color: #AAAAAA;
-            cursor: pointer;
-          }
-
-          &:hover, &:active{
-            .tag-close{
-              color: #409EFF;
-            }
-          }
-
-          @keyframes appear {
-            0% {
-              opacity: 0;
-            }
-          }
+      @keyframes appear {
+        0% {
+          opacity: 0;
         }
+      }
 
-        // 博客状态
-        .status-info{
-          font-size: 14px;
-          color: #999999;
-          margin-right: 24px;
-        }
+      // 博客状态
+      .title-info{
+        font-size: 14px;
+        margin-right: 24px;
+        cursor: pointer;
 
-        .status-pointer{
-          cursor: pointer;
+        &:hover, &:active{
+          color:var(--el-color-primary);
         }
+      }
 
-        .status-select{
-          color: #303133;
-        }
+      .title-info-active{
+        color:var(--el-color-primary);
+        font-weight: bold;
       }
     }
   }

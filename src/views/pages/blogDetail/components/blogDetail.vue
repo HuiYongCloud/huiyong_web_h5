@@ -54,9 +54,6 @@
 
 <script setup lang="ts">
 import {defineAsyncComponent, onMounted, reactive, nextTick, computed} from 'vue';
-import Empty from '/@/components/Empty.vue'
-import FavateBtn from '/@/components/FavateBtn.vue'
-import UMessageInput from '/@/components/UMessageInput.vue'
 import Api from "/@/api/api"
 import Request from "/@/api/request"
 import { showNotify, showDialog } from 'vant';
@@ -68,6 +65,9 @@ const userInfo = mainStore.userInfo
 
 // 引入组件
 const MDPreview = defineAsyncComponent(() => import('/@/components/MDPreview.vue'));
+const Empty = defineAsyncComponent(() => import('/@/components/Empty.vue'));
+const FavateBtn = defineAsyncComponent(() => import('/@/components/FavateBtn.vue'));
+const UMessageInput = defineAsyncComponent(() => import('/@/components/UMessageInput.vue'));
 
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['onDetailLoad']);
@@ -174,7 +174,7 @@ onMounted(() => {
   .blog-detail-page{
     width: 60vw;
     min-width: 500px;
-    min-height: calc(100vh - 30px);
+    // min-height: calc(100vh - 30px);
 
     .blog-pricode-box{
       flex: 1;
@@ -199,11 +199,9 @@ onMounted(() => {
     }
 
     .blog-info-box{
-      // color: #999aaa;
       padding: 0px 24px 12px;
 
 			.item-status-num{
-				// color: #999aaa;
 				font-size: 12px;
 			}
 
