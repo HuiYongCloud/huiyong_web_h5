@@ -107,7 +107,7 @@ const addFocus = ()=>{
   .then( res =>{
     props.detail.focusId = res
     props.detail.focusNum = props.detail.focusNum + 1
-    showNotify({ message: "关注成功！" })
+    showNotify({ type: 'primary', message: "关注成功！" })
   })
   .catch(res =>{showNotify({ type: 'danger', message: res.message })})
 }
@@ -117,7 +117,7 @@ const cancelFocus = ()=>{
   .then( _ =>{ 
     props.detail.focusId = ''
     props.detail.focusNum = props.detail.focusNum - 1
-    showNotify({ message: "已取消关注！" })
+    showNotify({ type: 'primary', message: "已取消关注！" })
   })
   .catch(res =>{showNotify({ type: 'danger', message: res.message })})
 }

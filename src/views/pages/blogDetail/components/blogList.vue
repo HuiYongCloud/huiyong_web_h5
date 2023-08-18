@@ -8,9 +8,17 @@
     <!-- 列表 -->
     <div class="info-item" v-for="(item, index) in state.list" :key="index">
       <!-- 博客列表 -->
-      <blog-list-item  v-if="state.tabActive == 0" :item="item" :blogUserId="props.blogUserId" @openBlogDetail="openBlogDetail"/>
+      <blog-list-item  
+        v-if="state.tabActive == 0" 
+        :item="item" 
+        :blogUserId="props.blogUserId" 
+        @openBlogDetail="openBlogDetail"/>
       <!-- 关注列表 -->
-      <blog-user-focus-list-item  v-else-if="state.tabActive == 1" :item="item" @cancelFocus="cancelFocus"/>
+      <blog-user-focus-list-item  
+        v-else-if="state.tabActive == 1" 
+        :item="item" 
+        :blogUserId="props.blogUserId" 
+        @cancelFocus="cancelFocus"/>
     </div>
 
     <!-- 空状态 -->
@@ -104,7 +112,7 @@ const cancelFocus = (focusUserId: any) => {
   Request.post(Api.BLOG_FOCUS_CANCEL, { userId: focusUserId})
   .then( _ =>{ 
     state.list = state.list.filter((item : any) => item.focusUserId != focusUserId)
-    showNotify({ message: "已取消关注！" });
+    showNotify({ type: 'primary', message: "已取消关注！" });
   })
   .catch(res =>{
     showNotify({ type: 'danger', message: res.message });

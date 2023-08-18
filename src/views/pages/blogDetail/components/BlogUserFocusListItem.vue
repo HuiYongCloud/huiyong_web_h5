@@ -13,14 +13,30 @@
 			</div>
 		</div>			
 		<!-- 取消关注 -->
-		<div class="item-control">取消关注</div>
+		<div class="item-control" v-if="isRootBlog">取消关注</div>
 	</div>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
+import { appStore } from '/@/stores/appStore'
 import Avatar from '/@/components/Avatar.vue'
+
+const mainStore = appStore()
+const userInfo = mainStore.userInfo
+
+const isRootBlog = computed(() => {
+	return userInfo && userInfo.userId && userInfo.userId === props.blogUserId;
+});
+
 // 定义父组件传过来的值
 const props = defineProps({
+	// 博主id
+	blogUserId:{
+		type: String,
+		default: () => "",
+	},
+		
   	// 标签id
   	item: {
 		type: Object,
