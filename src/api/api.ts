@@ -20,8 +20,7 @@ export const Api = {
 
 	// 博客
 	Blog_Detail:          	Api_Client + '/blog/n/detail',               // 博客详情
-	Blog_List_By_Tag_Id:  	Api_Client + '/blog/n/blogListByTagId',      // 博客列表【分类id获取】
-	Blog_List_by_user_id: 	Api_Client + '/blog/n/blogListByUserId',     // 博客列表【博主id获取】
+	Blog_List_By_Tag_Id:  	Api_Client + '/blog/n/blogListByTagId',      // 博客列表
 	Get_Tag_User_Id:   		Api_Client + '/blogTag/n/getTagUserId',   	 // 标签用户id
 	Blog_Tag_List:   		Api_Client + '/blogTag/n/tagList',   		 // 标签列表
 

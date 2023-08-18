@@ -2,9 +2,7 @@
   <div v-if="props.detail">
     <div class="root-info-pc">
       <div class="user-info flex-center-start">
-        <div style="cursor: pointer;" @click="toBlogUser">
-          <avatar :size="45" :src="props.detail.userImage"/>
-        </div>
+        <avatar :size="45" :src="props.detail.userImage"/>
         <div>
           <div class="user-name">{{props.detail.userName}}</div>
           <div class="user-code-year-box flex-center-center">
@@ -42,9 +40,7 @@
     <div class="root-info-mobile">
       <div class="flex-center-between">
         <div class="user-info flex">
-          <div @click="toBlogUser">
-            <avatar :size="45" :src="props.detail.userImage"/>
-          </div>
+          <avatar :size="45" :src="props.detail.userImage"/>
           <div class="user-name-box flex-start-between">
             <div class="user-name-top flex-center-start">
               <div class="user-name">{{props.detail.userName}}</div>
@@ -124,10 +120,6 @@ const cancelFocus = ()=>{
     showNotify({ message: "已取消关注！" })
   })
   .catch(res =>{showNotify({ type: 'danger', message: res.message })})
-}
-
-const toBlogUser = ()=>{
-  location.href = '/blogDetail?userId=' + props.detail.blogUserId
 }
 </script>
 

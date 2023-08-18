@@ -11,7 +11,7 @@
 		<!-- 博客详情 -->
 		<BlogDetail v-if="state.isShowBlogDetail === true" :blogId="state.blogId" @onDetailLoad="onDetailLoad"/>
 		<!-- 文章列表 -->
-		<!-- <BlogList v-if="state.isShowBlogDetail == false" :tagId="state.tagId"/> -->
+		<BlogList v-if="state.isShowBlogDetail == false" :tagId="state.tagId"/>
 	</div>
 
 	<div class="blog-info-right">
@@ -43,8 +43,8 @@ import blogToc from '/@/assets/svg/blog-toc.svg';
 const Navbar = defineAsyncComponent(() => import('/@/components/layout/navbar/index.vue'));
 const BlogUserInfo = defineAsyncComponent(() => import('./components/BlogUserInfo.vue'));
 const BlogTagInfo = defineAsyncComponent(() => import('./components/BlogTagInfo.vue'));
-// const BlogList = defineAsyncComponent(() => import('./components/blogList.vue'));
-const BlogDetail = defineAsyncComponent(() => import('./components/blogDetail.vue'));
+const BlogList = defineAsyncComponent(() => import('./components/BlogList.vue'));
+const BlogDetail = defineAsyncComponent(() => import('./components/BlogDetail.vue'));
 
 // 定义变量内容
 const mainStore = appStore()
@@ -107,8 +107,19 @@ const getTagUserId = (tagId: any) => {
 	})
 }
 
+const getBlogListByTagId = (tagId: any) => {
+	Request.post(Api.Blog_List_By_Tag_Id, {
+		id: tagId
+	}).then((res:any) =>{
+		console.log(res)
+	}).catch((res:any) =>{
+		showNotify({ type: 'danger', message: res.message });
+	})
+}
+
 const changeTagInfo = (tagId: any) => {
 	state.tagId = tagId
+	getBlogListByTagId(tagId)
 }
 
 const onDetailLoad = (data: any) => {
@@ -129,7 +140,10 @@ onMounted(() => {
 		// 标签列表
 		getTagList(route.query.userId);
 	} else if(route.query.tagId){
+		// 标签博主
 		getTagUserId(route.query.tagId)
+		// 标签博客列表
+		getBlogListByTagId(route.query.tagId)
 	} else if(route.query.blogId){
 		state.blogId = route.query.blogId
 		state.isShowBlogDetail = true

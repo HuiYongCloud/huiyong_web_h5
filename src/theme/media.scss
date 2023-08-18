@@ -13,3 +13,10 @@ $sm: 768px;
 $md: 992px;
 $lg: 1200px;
 $xl: 1920px;
+
+// 平板移动端禁止显示滚动条
+@media screen and (max-width: $lg) {
+	::-webkit-scrollbar {
+		display: none !important;
+	}
+}
