@@ -5,7 +5,7 @@
     <div class="blog-detail-page">
       <h1 class="blog-title">{{state.blogDetail.title}}</h1>
 
-      <div v-if="state.blogDetail && !state.blogDetail.blogCode && state.blogDetail.content">
+      <div v-if="state.blogDetail && state.blogDetail.blogCode == 200 && state.blogDetail.content">
         <div class="blog-info-box flex-center-start">
           <div class="flex-center-start">
             <img :src="blogTag" style="margin-right:8px; width: 12px; height: 10px; filter: drop-shadow(10000px 0 0 #999aaa); transform: translate(-10000px);"/>
