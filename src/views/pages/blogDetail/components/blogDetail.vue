@@ -40,7 +40,7 @@
 
       <!-- 101：私密，不能通过权限码观看 -->
       <div v-else-if="state.blogDetail && state.blogDetail.blogCode == 101">
-        <Empty tip="博主私密文章，不允许访问！"/>
+        <Empty tip="博主私密文章"/>
       </div>
       
       <!-- 102：私密，可通过权限码观看 -->

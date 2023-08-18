@@ -8,7 +8,7 @@
         <Button plain type="primary" to="/blogDetail?userId=U202111250003" class="ml10">博主详情</Button>
         <Button plain type="primary" to="/blogDetail?blogId=202302010001" class="ml10">博客详情【公开】</Button>
         <Button plain type="primary" to="/blogDetail?blogId=202112150005" class="ml10">博客详情【私密】</Button>
-        <Button plain type="primary" to="/blogDetail?userId=U202111250003" class="ml10">博主详情</Button>
+        <Button plain type="primary" to="/blogDetail?tagId=202303070001" class="ml10">标签详情</Button>
         <Button plain type="primary" to="/404" class="ml10">4 0 4</Button>
         <Button plain type="primary" to="/404" class="ml10">4 0 4</Button>
       </div>
