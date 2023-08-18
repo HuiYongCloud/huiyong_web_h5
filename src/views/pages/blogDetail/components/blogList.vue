@@ -8,7 +8,7 @@
     <!-- 列表 -->
     <div class="info-item" v-for="(item, index) in state.list" :key="index">
       <!-- 博客列表 -->
-      <blog-list-item  v-if="state.tabActive == 0" :item="item"/>
+      <blog-list-item  v-if="state.tabActive == 0" :item="item" :blogUserId="props.blogUserId"/>
       <!-- 关注列表 -->
       <blog-user-focus-list-item  v-else-if="state.tabActive == 1" :item="item" @cancelFocus="cancelFocus"/>
     </div>

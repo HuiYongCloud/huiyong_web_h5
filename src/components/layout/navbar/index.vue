@@ -17,6 +17,10 @@
 						</div>
 						<div class="menu-item flex-center-between" @click="toHome">首页</div>
 						<div class="menu-line"/>
+						<div class="menu-item flex-center-between" @click="toAdmin">我的博客</div>
+						<div class="menu-line"/>
+						<div class="menu-item flex-center-between" @click="toAdmin">我的简历</div>
+						<div class="menu-line"/>
 						<div class="menu-item flex-center-between" @click="toAdmin">后台管理</div>
 						<div class="menu-line"/>
 						<div class="menu-item flex-center-between" @click="outLogin">退出登录</div>
@@ -65,6 +69,8 @@ const outLogin = () => {
 </script>
 
 <style scoped lang="scss">
+@import '/@/theme/media.scss';
+
 .layout-nav-bar {
 	width: 100%;
 
@@ -91,7 +97,8 @@ const outLogin = () => {
 		width: 160px;
 		padding: 4px 0;
 		box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.12), 0 0.5px 1.5px 0 rgba(0, 0, 0, 0.08);
-		background: white;
+		border: 1px solid var(--app-border-color);
+		background: #161b22;
 		border-radius: 3px;
 		overflow: hidden;
 		margin: 2px 16px 16px;
@@ -106,7 +113,7 @@ const outLogin = () => {
 
 			.menu-user-name{
 				margin-left: 10px;
-				color: #202d40;
+				color: var(--app-item-title);
 				font-size: 15px;
 				white-space: nowrap;
 				overflow: hidden;
@@ -118,22 +125,13 @@ const outLogin = () => {
 			line-height: 32px;
 			height: 32px;
 			padding: 0 16px;
-			color: #202d40;
+			color: var(--app-item-title);
 			font-size: 14px;
 			transition: all .3s ease;
 			cursor: pointer;
 
 			&:hover{
-				background: #f5f7fa;
-			}
-
-			.switch-btn{
-				margin-right: -10px;
-				transform: scale(.6);
-			}
-
-			.menu-svg{
-				color: #bdc0c6;
+				background-color: rgba(var(--el-color-primary-rgb), .1);
 			}
 		}
 

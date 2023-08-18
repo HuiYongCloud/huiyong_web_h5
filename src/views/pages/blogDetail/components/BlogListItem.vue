@@ -3,8 +3,8 @@
 		<div class="item-top-box flex-start-between">
 			<span>
 				<span class="item-title" >{{item.title}}</span>
-				<span v-if="item.openStatus == 0" class="open-status-0">公开</span>
-				<span v-if="item.openStatus == 1" class="open-status-1">私密</span>
+				<span v-if="isRootBlog && item.openStatus == 0" class="open-status-0 ml10">公开</span>
+				<span v-if="isRootBlog && item.openStatus == 1" class="open-status-1 ml10">私密</span>
 			</span>
 			<div class="item-time" >{{item.createTime}}</div>
 		</div>
@@ -19,7 +19,6 @@
 			</div>
 
 			<div class="item-bottom-right flex-center-start">
-				<!-- 公开 -->
 				<div class="item-control">分享</div>
 			</div>
 		</div>
@@ -27,10 +26,26 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
+import { appStore } from '/@/stores/appStore'
+
+const mainStore = appStore()
+const userInfo = mainStore.userInfo
+
+const isRootBlog = computed(() => {
+	return userInfo && userInfo.userId && userInfo.userId === props.blogUserId;
+});
+
 // 定义父组件传过来的值
 const props = defineProps({
-  	// 标签id
-  	item: {
+	// 博主id
+	blogUserId:{
+		type: String,
+		default: () => "",
+	},
+
+  // 标签id
+  item: {
 		type: Object,
 		default: () => null,
 	},
@@ -110,26 +125,6 @@ const props = defineProps({
 				&:hover, &:active{
 					color: var(--el-color-primary);
 					font-weight: bold;
-				}
-			}
-		}
-	}
-}
-
-@media screen and (max-width: 1023px) {
-	.blog-list-item{
-		padding: 10px;
-
-		.item-top-box{
-			.item-title{
-				font-size: 14px;
-			}
-		}
-
-		.item-bottom{
-			.item-bottom-right{
-				.item-control{
-					color: #666666;
 				}
 			}
 		}
