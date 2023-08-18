@@ -4,7 +4,7 @@
 	<!-- 右侧导航 -->
 	<div class="blog-info-left">
 		<BlogUserInfo  :detail="state.blogInfo"/>
-		<BlogTagInfo :list="state.tagList" :tagId="state.tagId"/>
+		<BlogTagInfo :list="state.tagList" :tagId="state.tagId" @changeTagInfo="changeTagInfo"/>
 	</div>
 
 	<div class="blog-content-page">
@@ -105,6 +105,10 @@ const getTagUserId = (tagId: any) => {
 	}).catch((res:any) =>{
 		showNotify({ type: 'danger', message: res.message });
 	})
+}
+
+const changeTagInfo = (tagId: any) => {
+	state.tagId = tagId
 }
 
 const onDetailLoad = (data: any) => {

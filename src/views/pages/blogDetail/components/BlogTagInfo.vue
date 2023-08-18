@@ -63,11 +63,12 @@ const changeTagInfo = (tagId: String)=>{
 
   .info-list{
     .info-item {
-      padding: 5px 15px;
+      padding: 5px 12px;
       cursor: pointer;
       transition: all .01s;
       position: relative;
       min-height: 40px;
+      border-left: 3px solid transparent;
 
       &:hover{
         color: var(--el-color-primary);
