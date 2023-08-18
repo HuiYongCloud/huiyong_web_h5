@@ -4,14 +4,18 @@
 	<!-- 右侧导航 -->
 	<div class="blog-info-left">
 		<BlogUserInfo  :detail="state.blogInfo"/>
-		<BlogTagInfo :list="state.tagList" :tagId="state.tagId" @changeTagInfo="changeTagInfo"/>
+		<BlogTagInfo :list="state.tagList" :tagId="state.tagId" @changeTagInfo="openTagInfo"/>
 	</div>
 
 	<div class="blog-content-page">
 		<!-- 博客详情 -->
 		<BlogDetail v-if="state.isShowBlogDetail === true" :blogId="state.blogId" @onDetailLoad="onDetailLoad"/>
 		<!-- 文章列表 -->
-		<BlogList v-if="state.isShowBlogDetail == false" :tagId="state.tagId" :blogUserId="state.blogUserId"/>
+		<BlogList 
+			v-if="state.isShowBlogDetail == false" 
+			:tagId="state.tagId" 
+			:blogUserId="state.blogUserId"
+			@openBlogDetail="openBlogDetail"/>
 	</div>
 
 	<div class="blog-info-right">
@@ -30,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent, onMounted, reactive} from 'vue';
+import { defineAsyncComponent, onMounted, onUnmounted, reactive} from 'vue';
 import { useRoute, useRouter } from "vue-router"
 import { showNotify} from 'vant';
 import Api from "/@/api/api"
@@ -87,6 +91,9 @@ const getTagList = () => {
 		userId: state.blogUserId
 	}).then((res:any) =>{
 		state.tagList = res
+		if(!state.tagId && state.tagList && state.tagList.length > 0){
+			state.tagId = state.tagList[0].tagId
+		}
 	}).catch((res:any) =>{
 		showNotify({ type: 'danger', message: res.message });
 	})
@@ -107,10 +114,6 @@ const getTagUserId = (tagId: any) => {
 	})
 }
 
-const changeTagInfo = (tagId: any) => {
-	state.tagId = tagId
-}
-
 const onDetailLoad = (data: any) => {
 	// 详情标签id
 	state.tagId = data.tagId
@@ -119,6 +122,33 @@ const onDetailLoad = (data: any) => {
 	getBlogInfo(data.userId);
 	// 标签列表
 	getTagList();
+}
+
+const openTagInfo = (tagId: any) => {
+	state.tagId = tagId
+	state.isShowBlogDetail = false
+
+	// 变更路径
+	router.push({
+		name: 'blogDetail',
+		query: {tagId: tagId}
+	})
+}
+
+const openBlogDetail = (blogId: any) => {
+	state.blogId = blogId
+	state.isShowBlogDetail = true
+
+	// 变更路径
+	router.push({
+		name: 'blogDetail',
+		query: {blogId: blogId}
+	})
+}
+
+// 返回时刷新页面
+const backRefresh = ()=> {
+	window.location.reload();
 }
 
 // 页面加载时
@@ -132,10 +162,19 @@ onMounted(() => {
 		// 标签博主
 		getTagUserId(route.query.tagId)
 	} else if(route.query.blogId){
-		state.blogId = route.query.blogId
-		state.isShowBlogDetail = true
+		openBlogDetail(route.query.blogId)
 	}
+
+	// 监听返回
+	// 由于上面router.push是当前页面，所以返回时，页面并没有刷新，这里手动调用刷新
+	window.addEventListener('popstate', backRefresh)
 });
+
+// 页面卸载
+onUnmounted(() => {
+	// 移除监听返回
+	window.removeEventListener('popstate', backRefresh)
+})
     
 </script>
 

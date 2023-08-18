@@ -8,7 +8,7 @@
     <!-- 列表 -->
     <div class="info-item" v-for="(item, index) in state.list" :key="index">
       <!-- 博客列表 -->
-      <blog-list-item  v-if="state.tabActive == 0" :item="item" :blogUserId="props.blogUserId"/>
+      <blog-list-item  v-if="state.tabActive == 0" :item="item" :blogUserId="props.blogUserId" @openBlogDetail="openBlogDetail"/>
       <!-- 关注列表 -->
       <blog-user-focus-list-item  v-else-if="state.tabActive == 1" :item="item" @cancelFocus="cancelFocus"/>
     </div>
@@ -28,6 +28,8 @@ const Empty = defineAsyncComponent(() => import('/@/components/Empty.vue'));
 const BlogListItem = defineAsyncComponent(() => import('./BlogListItem.vue'));
 const BlogUserFocusListItem = defineAsyncComponent(() => import('./BlogUserFocusListItem.vue'));
 
+// 定义子组件向父组件传值/事件
+const emit = defineEmits(['openBlogDetail']);
 // 定义父组件传过来的值
 const props = defineProps({
   // 标签id
@@ -107,6 +109,11 @@ const cancelFocus = (focusUserId: any) => {
   .catch(res =>{
     showNotify({ type: 'danger', message: res.message });
   })
+}
+
+// 打开博客详情
+const openBlogDetail = (blogId: String) => {
+	emit('openBlogDetail', blogId);
 }
 
 // 页面加载时

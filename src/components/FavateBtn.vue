@@ -69,7 +69,7 @@ const click = ()=>{
     bottom: 0px;
     right: 0px;    
     background: var(--el-color-black);
-    transform: translateX(-100%);
+    transform: translateX(-101%);
     transition: all 0.3s;
   }
 

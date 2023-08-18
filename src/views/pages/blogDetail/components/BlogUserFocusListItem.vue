@@ -1,5 +1,5 @@
 <template>
-	<div class="focus-list-item flex-end-between">
+	<div class="focus-list-item flex-end-between" @click="openBlogUser(item.userId)">
 		<!-- 博主信息 -->
 		<div class="user-info flex">
 			<avatar :size="45" :src="item.userImage"/>
@@ -27,6 +27,10 @@ const props = defineProps({
 		default: () => null,
 	},
 });
+
+const openBlogUser = (blogUserId: String) => {
+	location.href = `/blogDetail?userId=${blogUserId}`
+}
 </script>
 
 <style lang="scss" scoped>

@@ -1,5 +1,5 @@
 <template>
-	<div class="blog-list-item flex">
+	<div class="blog-list-item flex" @click="openBlogDetail(item.blogId)">
 		<div class="item-top-box flex-start-between">
 			<span>
 				<span class="item-title" >{{item.title}}</span>
@@ -18,7 +18,7 @@
 				<div class="item-status-num">收藏 {{item.favoriteNum || 0}}</div>                  
 			</div>
 
-			<div class="item-bottom-right flex-center-start">
+			<div class="item-bottom-right flex-center-start" @click.stop="shareBlog(item.blogId)">
 				<div class="item-control">分享</div>
 			</div>
 		</div>
@@ -36,6 +36,9 @@ const isRootBlog = computed(() => {
 	return userInfo && userInfo.userId && userInfo.userId === props.blogUserId;
 });
 
+// 定义子组件向父组件传值/事件
+const emit = defineEmits(['openBlogDetail']);
+
 // 定义父组件传过来的值
 const props = defineProps({
 	// 博主id
@@ -44,12 +47,20 @@ const props = defineProps({
 		default: () => "",
 	},
 
-  // 标签id
-  item: {
+	// 标签id
+	item: {
 		type: Object,
 		default: () => null,
 	},
 });
+
+const shareBlog = (blogId: String) => {
+
+}
+// 打开博客详情
+const openBlogDetail = (blogId: any) => {
+	emit('openBlogDetail', blogId);
+}
 </script>
 
 <style lang="scss" scoped>
