@@ -4,13 +4,24 @@
     <div class="flex-center-center mt50" style="flex-direction: column;">
       <h1>Home</h1>
       <div class="flex mt30">
-        <Button plain type="primary" to="/login">去登录</Button>
+        <Button plain type="primary" to="/login">登录</Button>
+        <Button plain type="primary" to="/register" class="ml10">注册</Button>
+      </div>
+
+      <div class="flex mt30">
+        <Button plain type="primary" to="/401" class="ml10">401</Button>
+        <Button plain type="primary" to="/404" class="ml10">404</Button>
+      </div>
+
+      <div class="flex mt30">
         <Button plain type="primary" to="/blogDetail?userId=U202111250003" class="ml10">博主详情</Button>
         <Button plain type="primary" to="/blogDetail?blogId=202302010001" class="ml10">博客详情【公开】</Button>
         <Button plain type="primary" to="/blogDetail?blogId=202112150005" class="ml10">博客详情【私密】</Button>
         <Button plain type="primary" to="/blogDetail?tagId=202303070001" class="ml10">标签详情</Button>
-        <Button plain type="primary" to="/404" class="ml10">4 0 4</Button>
-        <Button plain type="primary" to="/404" class="ml10">4 0 4</Button>
+      </div>
+
+      <div class="flex mt30">
+        <Button plain type="primary" to="/resume?userId=U202111250003" class="ml10">简历</Button>
       </div>
     </div>
   </div>

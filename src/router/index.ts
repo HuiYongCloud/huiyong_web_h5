@@ -38,10 +38,10 @@ const routes: RouteRecordRaw[] = [
         meta: { title: '博客详情' }
     },
     { 
-        path: '/blogOwner', 
-        name: 'blogOwner', 
-        component: () => import('/@/views/pages/blogOwner/index.vue')  ,
-        meta: { title: '博主信息' }
+        path: '/resume', 
+        name: 'resume', 
+        component: () => import('/@/views/pages/resume/index.vue')  ,
+        meta: { title: '简历信息' }
     },
 ]
 
