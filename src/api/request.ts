@@ -13,16 +13,15 @@ const service : AxiosInstance = axios.create({
   // 使Session的Token跨域不失效
   withCredentials: true,                 
   timeout: 10000,
-  headers: { 
-    'Content-Type': 'application/json' ,
-    'client': 'h5',
-    'token': mainStore.userInfo.token,
-  },
 })
 
 // 添加请求拦截器
 service.interceptors.request.use(
-  (config) => {
+  config => {
+    // 在请求发送前做的操作
+    config.headers['Content-Type'] = "application/json"
+    config.headers['client'] = "h5"
+    config.headers['token'] = mainStore.userInfo.token
     return config
   },
   (error) => {
@@ -32,7 +31,7 @@ service.interceptors.request.use(
 
 // 添加响应拦截器
 service.interceptors.response.use(
-  (response) => {
+  response => {
     // 获取协议内容
     const res = response.data
     switch(res.code){
