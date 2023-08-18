@@ -40,12 +40,12 @@
 
       <!-- 101：私密，不能通过权限码观看 -->
       <div v-else-if="state.blogDetail && state.blogDetail.blogCode == 101">
-        <Empty tip="当前为博主私密文章"/>
+        <Empty tip="博主私密文章，不允许访问！"/>
       </div>
       
       <!-- 102：私密，可通过权限码观看 -->
       <div v-else-if="state.blogDetail && state.blogDetail.blogCode == 102" class="blog-pricode-box flex-center-center">
-        <div class="blog-pricode-tip">当前为博主私密文章，若查看需输入正确的权限码！</div>
+        <div class="blog-pricode-tip">博主私密文章，请输入权限码！</div>
         <UMessageInput mode="bottomLine" :font-size="40" :width="50" @finish="priCodeRes"/>
       </div>
     </div>
@@ -130,7 +130,11 @@ const getBlogDetail = () => {
   .then((res:any) =>{      
     state.blogDetail = res
     // 回调显示博客内容
-    emit('onDetailLoad', {userId: res.userId, tagId: res.tagId});
+    emit('onDetailLoad', {
+      userId: res.userId, 
+      tagId: res.tagId,
+      blogCode: res.blogCode
+    });
     // 如果有文章，则可以查看
     if(res.content){
 

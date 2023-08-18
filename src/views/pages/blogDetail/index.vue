@@ -17,7 +17,7 @@
 	<div class="blog-info-right">
 		<div class="flex-center-between">
 			<!-- 博客目录 -->
-			<div class="blog-toc-title flex-center-start">
+			<div class="blog-toc-title flex-center-start" v-show="state.blogCode == '200'">
 				<img :src="blogToc" style="margin-left:12px; width: 14px; height: 14px; filter: drop-shadow(10000px 0 0 var(--el-color-black)); transform: translate(-10000px);"/>
 				<div style="margin-left:10px">目录</div>
 			</div>
@@ -64,6 +64,7 @@ const state = reactive({
 	userId:'' as any,	
 	tagId:'' as any,
 	blogId:'' as any,
+	blogCode: '',
 
 	blogInfo: null as any,
 	tagList: [] as any,

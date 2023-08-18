@@ -96,12 +96,12 @@ const props = defineProps({
 	// 激活样式
 	activeColor: {
 		type: String,
-		default: '#161823'
+		default: 'var(--el-color-black)'
 	},
 	// 未激活的样式
 	inactiveColor: {
 		type: String,
-		default: '#161823'
+		default: 'var(--el-color-black)'
 	},
 	// 输入框的大小，单位px，宽等于高
 	width: {
@@ -111,8 +111,8 @@ const props = defineProps({
 });
 
 // 用于显示字符
-const charArr = computed(() => {return state.valueModel.split('');}) as any;
-const charArrLength = computed(() => {return charArr.length;});
+const charArr = computed(() => {return String(state.valueModel).split("");});
+const charArrLength = computed(() => {return String(state.valueModel).split("").length;});
 // 根据长度，循环输入框的个数，因为头条小程序数值不能用于v-for
 const loopCharArr = computed(() => {return new Array(props.maxlength);});
 
@@ -130,7 +130,7 @@ watch(
 );
 
 const state = reactive({
-	valueModel:'' as any,	
+	valueModel: "",	
 });
 
 const emit = defineEmits(['change','finish']);
@@ -149,6 +149,10 @@ const changeInput = (e: any) => {
 
 <style scoped lang="scss">
 @import '/@/theme/media.scss';
+
+.u-char-box {
+	text-align: center;
+
 	@keyframes breathe-in {
 		0% {
 			opacity: 0.3;
@@ -160,9 +164,7 @@ const changeInput = (e: any) => {
 			opacity: 0.3;
 		}
 	}
-	.u-char-box {
-		text-align: center;
-	}
+
 	.u-char-flex {
 		flex-wrap: wrap;
 		position: relative;
@@ -180,12 +182,12 @@ const changeInput = (e: any) => {
 	}
 	.u-char-item {
 		position: relative;
-		width: 80px;
-		height: 80px;
+		width: 100px;
+		height: 100px;
 		margin: 10px 10px;
 		font-size: 60px;
 		font-weight: bold;
-		color: #161823;
+		color: var(--el-color-black);
 		line-height: 90px;
 	}
 	.u-middle-line {
@@ -217,8 +219,8 @@ const changeInput = (e: any) => {
 		transform: translate(-50%, -50%);
 		width: 2px;
 		height: 40px;
-		background: #161823;
-		animation: twinkling 1.5s infinite both;
+		background: var(--el-color-black);
+		animation: breathe-in 2s infinite both;
 	}
 	.u-animation-breathe {
 		animation-name: breathe-in;
@@ -229,7 +231,7 @@ const changeInput = (e: any) => {
 	}
 	.u-middle-line {
 		height: 4px;
-		background: #000000;
+		background: var(--el-color-black);
 		width: 80%;
 		position: absolute;
 		border-radius: 2px;
@@ -242,7 +244,7 @@ const changeInput = (e: any) => {
 	}
 	.u-bottom-line {
 		height: 4px;
-		background: #000000;
+		background: var(--el-color-black);
 		width: 80%;
 		position: absolute;
 		border-radius: 2px;
@@ -251,18 +253,37 @@ const changeInput = (e: any) => {
 		transform: translate(-50%);
 	}
 
-@media screen and (max-width: $lg) {
-	.u-char-box{
-		.u-char-flex{
-			.u-char-item{
-				width: 50px;
-				height: 50px;
-				font-size: 30px;
-			}
+}
 
-			.u-placeholder-line{
-				height: 30px;
-			}
+/* 页面宽度大于375px小于768px
+------------------------------- */
+@media screen and (min-width: $us) and (max-width: $sm) {
+	.u-char-box{
+		.u-char-item{
+			width: 50px;
+			height: 50px;
+			font-size: 20px;
+			margin: 6px;
+		}
+
+		.u-placeholder-line{
+			height: 20px;
+		}
+	}
+}
+
+/* 页面宽度大于768px小于1200px
+------------------------------- */
+@media screen and (min-width: $sm) {
+	.u-char-box{
+		.u-char-item{
+			width: 100px;
+			height: 100px;
+			font-size: 30px;
+		}
+
+		.u-placeholder-line{
+			height: 30px;
 		}
 	}
 }
