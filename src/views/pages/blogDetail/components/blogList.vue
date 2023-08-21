@@ -1,6 +1,6 @@
 <template>
   <div class="blog-list-box">
-    <Tabs v-model:active="state.tabActive" shrink @click-tab="onClickTab">
+    <Tabs v-model:active="state.tabActive" shrink @click-tab="onChangeTab">
       <Tab title="博客列表"/>
       <Tab title="Ta的收藏"/>
       <Tab title="Ta的关注"/>
@@ -70,7 +70,7 @@ watch(
 	}
 );
 
-const onClickTab = () => {
+const onChangeTab = () => {
   state.list = null
   getListByTabActive(state.tabActive)
 }
