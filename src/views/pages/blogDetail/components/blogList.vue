@@ -2,6 +2,7 @@
   <div class="blog-list-box">
     <Tabs v-model:active="state.tabActive" shrink @click-tab="onClickTab">
       <Tab title="博客列表"/>
+      <Tab title="Ta的收藏"/>
       <Tab title="Ta的关注"/>
     </Tabs>
 
@@ -9,13 +10,13 @@
     <div class="info-item" v-for="(item, index) in state.list" :key="index">
       <!-- 博客列表 -->
       <blog-list-item  
-        v-if="state.tabActive == 0" 
+        v-if="state.tabActive == 0 || state.tabActive == 1" 
         :item="item" 
         :blogUserId="props.blogUserId" 
         @openBlogDetail="openBlogDetail"/>
       <!-- 关注列表 -->
       <blog-user-focus-list-item  
-        v-else-if="state.tabActive == 1" 
+        v-else-if="state.tabActive == 2" 
         :item="item" 
         :blogUserId="props.blogUserId" 
         @cancelFocus="cancelFocus"/>
@@ -63,44 +64,49 @@ watch(
 	(value) => {
 		nextTick(() => {
       // 标签变更，获取列表
-      getBlogListByTagId()
+      state.list = null
+      getListByTabActive(0)
 		})
 	}
 );
 
 const onClickTab = () => {
-  state.list = null
-  if(state.tabActive == 0){
-		// 博主信息
-		getBlogListByTagId()
-	}else if(state.tabActive == 1){
-		// 博主信息
-		getBlogFocusList()
-	}
+  getListByTabActive(state.tabActive)
 }
 
 // 博客列表
-const getBlogListByTagId= () => {
-  if(!props.tagId){
-    state.list = []
-    return
+const getListByTabActive= (tabActive: any) => {
+  if(state.tabActive != tabActive){
+    state.tabActive = tabActive
+    state.list = null
   }
-  state.tabActive = 0
-  Request.post(Api.Blog_List_By_Tag_Id, {
-    id: props.tagId
-  })
-  .then((res : any) =>{ state.list = res})
-  .catch(res =>{
-    state.list = []
-    showNotify({ type: 'danger', message: res.message });
-  })
-}
 
-//关注列表
-const getBlogFocusList = () => {
-  state.tabActive = 1
-  Request.post(Api.BLOG_FOCUS_LIST, {userId: props.blogUserId})
-  .then((res: any) =>{ state.list = res})
+  let url = '';
+  let params = null;
+
+  switch(state.tabActive){
+    // 博客列表
+    case 0: 
+      if(!props.tagId){
+        state.list = null
+        return
+      }
+      url = Api.Blog_List_By_Tag_Id;
+    break;
+    // 收藏列表
+    case 1: url = Api.Blog_Like_List; break;
+    // 关注列表
+    case 2: url = Api.BLOG_FOCUS_LIST; break;
+  }
+
+  switch(state.tabActive){
+    case 0: params = {id: props.tagId}; break;
+    case 1: params = {userId: props.blogUserId}; break;
+    case 2: params = {userId: props.blogUserId}; break;
+  }
+
+  Request.post(url, params)
+  .then((res : any) =>{ state.list = res})
   .catch(res =>{
     state.list = []
     showNotify({ type: 'danger', message: res.message });
