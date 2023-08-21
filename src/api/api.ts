@@ -1,17 +1,18 @@
 
 const Api_Client = '/api-client'
+const Api_UUA 	 = '/api-uua'
 export const Api = {
 
 	/**
 	 * 验证码
 	 */
-	Get_Login_Code:     	'/api-uua/uua/n/getLoginCode',          // 获取登录验证码	
+	Get_Login_Code:     	Api_UUA + '/uua/n/getLoginCode',          	// 获取登录验证码	
     
 	/**
 	 * Auth 
 	 */
-	Login_Password:       	'/api-uua/uua/n/loginByPassword',       // 登录【密码】
-	Login_Email_Code:       '/api-uua/uua/n/loginByCode',       	// 登录【验证码】
+	Login_Password:       	Api_UUA + '/uua/n/loginByPassword',       	// 登录【密码】
+	Login_Email_Code:       Api_UUA + '/uua/n/loginByCode',       		// 登录【验证码】
 
 	/**
 	 * 服务条款 
