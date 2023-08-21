@@ -1,6 +1,6 @@
 <template>
   <div class="blog-list-box">
-    <Tabs v-model:active="state.tabActive" shrink @click-tab="onChangeTab">
+    <Tabs v-model:active="state.tabActive" shrink @change="onChangeTab">
       <Tab title="博客列表"/>
       <Tab title="Ta的收藏"/>
       <Tab title="Ta的关注"/>
@@ -133,7 +133,7 @@ const openBlogDetail = (blogId: String) => {
 
 // 页面加载时
 onMounted(() => {
-  onClickTab()
+  onChangeTab()
 });
 </script>
 
