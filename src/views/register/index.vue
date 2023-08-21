@@ -92,7 +92,7 @@
     </div>
 
     <!-- 邀请码 -->
-    <!-- <invite-code @finish="finishinviteCode"/> -->
+    <invite-code @finish="finishinviteCode"/>
   </div>
 </template>
 
@@ -100,7 +100,7 @@
 import { defineAsyncComponent, onMounted, onUnmounted, reactive, ref, nextTick} from 'vue';
 import Avatar from '/@/components/Avatar.vue'
 import { Field, Button } from 'vant';
-// import InviteCode from './components/InviteCode.vue'
+import InviteCode from './components/InviteCode.vue'
 // import OssUtils from "@/utils/ossUtils.js"
 let interval;
 
