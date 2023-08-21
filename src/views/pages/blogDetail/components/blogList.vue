@@ -71,6 +71,7 @@ watch(
 );
 
 const onClickTab = () => {
+  state.list = null
   getListByTabActive(state.tabActive)
 }
 
