@@ -14,6 +14,12 @@ export const Api = {
 	 */
 	Login_Password:       	Api_UUA + '/uua/n/loginByPassword',       	// 登录【密码】
 	Login_Email_Code:       Api_UUA + '/uua/n/loginByCode',       		// 登录【验证码】
+	UUA_Register:       	Api_UUA + '/uua/n/register',       			// 用户注册
+
+	/**
+	 * 腾讯Oss
+	 */
+	TC_OSS_Secret: 			Api_Client + '/tencentOss/n/secret',       	// 用户注册
 
 	/**
 	 * 服务条款

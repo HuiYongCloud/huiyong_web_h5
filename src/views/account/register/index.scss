@@ -2,6 +2,11 @@
     flex-direction: column;
     margin-top: 25vh;
 
+    input:-webkit-autofill{
+      -webkit-box-shadow: 0 0 0px 1000px var(--app-color-bg) inset;
+      -webkit-text-fill-color: var(--el-input-text-color,var(--el-text-color-regular)) !important;
+    }    
+
     .van-field__label{
       width: 60px;
       margin-right: 50px;

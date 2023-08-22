@@ -33,7 +33,7 @@
 
       <!-- 注册、登录按钮 -->
       <div style="width: 360px;" class="auth-group register-btn flex-center-start">
-        <Button type="primary" class="reg-button" round @click="register" :loading="state.registerLoading">立即注册</Button>
+        <Button type="primary" class="reg-button" round @click="register">立即注册</Button>
 
         <span class="to-login flex-center-start">
           <span>已有账号？&nbsp; </span>
@@ -43,7 +43,7 @@
     </div>
 
     <!-- 邀请码 -->
-    <!-- <invite-code @finish="finishinviteCode"/> -->
+    <invite-code @finish="finishinviteCode"/>
   </div>
 </template>
 
@@ -54,10 +54,11 @@ import { useRoute, useRouter } from "vue-router"
 import { Field, Button, showNotify} from 'vant';
 import Api from "/@/api/api"
 import Request from "/@/api/request"
-import InviteCode from './components/InviteCode.vue'
+import { appStore } from "/@/stores/appStore";
 
 const ThemeSwitch = defineAsyncComponent(() => import('/@/components/theme-switch/index.vue'));
-
+const InviteCode = defineAsyncComponent(() => import('./components/InviteCode.vue'));
+const mainStore = appStore()
 const route = useRoute();
 const router = useRouter();
 
@@ -69,14 +70,11 @@ const state = reactive({
 		disabled: false,
 	},
 
-  registerLoading: false,
-  invateCode:'',
-
-  userName:'Better',
-  email:'1026946613@qq.com',
+  userName:'',
+  email:'',
   smsCode:'',
   password:'',
-  inviteCode:'1881',
+  inviteCode:'',
   userAvatar: "",
 
   // 头像更换
@@ -86,8 +84,6 @@ const state = reactive({
   userImage:"",
   avatarIndex: null as any,
   avatarList : [
-    // "https://img.huiyong.online/userImage/avatar1.gif",
-    // "https://img.huiyong.online/userImage/avatar2.gif",
     "https://img.huiyong.online/userImage/avatar4.gif",
     "https://img.huiyong.online/userImage/avatar6.gif",
     "https://img.huiyong.online/userImage/avatar7.gif",
@@ -137,12 +133,43 @@ const getRegCode = () => {
 };
 
 const finishinviteCode = (code: any) => {
-  state.invateCode = code
+  state.inviteCode = code
 }
 
 const register = () => {
-  router.push({name: 'home'})
+  Request.post(Api.UUA_Register, {
+    userName: state.userName,
+		email: state.email,
+    code: state.smsCode,
+    password: state.password,
+    userImage: state.userImage,
+    inviteCode: state.inviteCode
+	}).then((res: any) =>{
+    clearTimer();
+    // 存储用户信息
+    mainStore.userInfo = res
+    // 登录成功操作页面
+    toMainPage()
+	}).catch((res: any) =>{
+		// 提示失败
+		state.codeBtn.codeLoading = false;
+		showNotify({ type: 'danger', message: res.message });
+	})
 }
+
+// 登录成功后的跳转
+const toMainPage = () => {
+	// 登录成功，跳到转首页
+	// 如果是复制粘贴的路径，非首页/登录页，那么登录成功后重定向到对应的路径中
+	if (route.query?.redirect) {
+		router.push({
+			path: <string>route.query?.redirect,
+			query: Object.keys(<string>route.query?.params).length > 0 ? JSON.parse(<string>route.query?.params) : '',
+		});
+	} else {
+		router.push('/');
+	}
+};
 
 const toLogin = () => {
   router.push({name: 'login'})
@@ -155,6 +182,10 @@ onMounted(() => {
     state.userImage = state.avatarList[state.avatarIndex]
 	})
 });
+
+onUnmounted(() => {
+  clearTimer()
+})
 </script>
 
 <style lang="scss">
