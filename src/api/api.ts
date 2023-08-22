@@ -7,6 +7,7 @@ export const Api = {
 	 * 验证码
 	 */
 	Get_Login_Code:     	Api_UUA + '/uua/n/getLoginCode',          	// 获取登录验证码	
+	Get_Reg_Code:     		Api_UUA + '/uua/n/getRegisterCode',         // 获取注册验证码	
     
 	/**
 	 * Auth 

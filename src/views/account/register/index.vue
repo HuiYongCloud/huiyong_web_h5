@@ -1,23 +1,30 @@
 <template>
   <div >
+    <ThemeSwitch :sticky="true"/>
     <!-- 注册 -->
     <div class="user-register-page flex-center-start">
       <div style="width: 360px;">
         <Field v-model="state.userName" label="用户名" placeholder="输入用户名" />
-        <Field v-model="state.email" label="邮箱" placeholder="输入邮箱" />
-        <Field v-model="state.smsCode" label="验证码" placeholder="输入验证码" >
+        <Field v-model="state.email" label="邮箱" type="email" placeholder="输入邮箱"/>
+        <Field v-model="state.smsCode" type="number" label="验证码" placeholder="输入验证码" >
           <template #button>
-            <Button size="small" type="primary">发送验证码</Button>
+            <Button 
+              size="small" 
+              type="primary" 
+              :loading="state.codeBtn.codeLoading" 
+              :disabled="state.codeBtn.disabled"
+              @click="getRegCode"
+            >{{state.codeBtn.getCodeBtn}}</Button>
           </template>
         </Field>
-        <Field v-model="state.password" label="密码" placeholder="设置密码" />
+        <Field v-model="state.password" label="密码" type="password" placeholder="设置密码"/>
         <Field v-model="state.userImage" label="头像" placeholder="输入用户名" >
           <template #input>
             <div class="flex-center-start">
-              <avatar :size="60" :src="state.userImage" v-if="state.invateCode"/>
-              <div class="select-img flex-center-center">
+              <avatar :size="60" :src="state.userImage"/>
+              <div class="select-img ml10 flex-center-center">
                 <input type="file" class="upload-file" accept=".jpg, .jpeg, .png, .gif"/>
-                <el-button type="text" size="small" :loading="state.imageLoading">{{state.imageLoadingStr}}</el-button>
+                <Button size="small" :loading="state.imageLoading">{{state.imageLoadingStr}}</Button>
               </div>
             </div>
           </template>
@@ -44,86 +51,97 @@
 import { defineAsyncComponent, onMounted, onUnmounted, reactive, ref, nextTick} from 'vue';
 import Avatar from '/@/components/Avatar.vue'
 import { useRoute, useRouter } from "vue-router"
-import { Field, Button } from 'vant';
+import { Field, Button, showNotify} from 'vant';
+import Api from "/@/api/api"
+import Request from "/@/api/request"
 import InviteCode from './components/InviteCode.vue'
-// import OssUtils from "@/utils/ossUtils.js"
-let interval;
+
+const ThemeSwitch = defineAsyncComponent(() => import('/@/components/theme-switch/index.vue'));
 
 const route = useRoute();
 const router = useRouter();
 
 const state = reactive({
+	codeBtn:{
+		leftTime: 0,
+		getCodeBtn: '发送验证码',
+		codeLoading: false,
+		disabled: false,
+	},
+
   registerLoading: false,
-  isInviteSuccess: false,
-      invateCode:'',
+  invateCode:'',
 
-      userName:'',
-      email:'',
-      smsCode:'',
-      password:'',
-      inviteCode:'',
-      userAvatar: "",
+  userName:'Better',
+  email:'1026946613@qq.com',
+  smsCode:'',
+  password:'',
+  inviteCode:'1881',
+  userAvatar: "",
 
-      passwordEnalble: false,
-      regEmailSuccess: false,
+  // 头像更换
+  imageLoading: false,
+  imageLoadingStr: "更换头像",
 
-      getCodeBtnCountDown: false,
-      getCodeBtnText:"立即获取",
-
-      // 头像更换
-      imageLoading: false,
-      imageLoadingStr: "更换头像",
-
-      userImage:"",
-      avatarPop: false,
-      avatarIndex: null as any,
-      avatarList : [
-        // "https://img.huiyong.online/userImage/avatar1.gif",
-        // "https://img.huiyong.online/userImage/avatar2.gif",
-        "https://img.huiyong.online/userImage/avatar4.gif",
-        "https://img.huiyong.online/userImage/avatar6.gif",
-        "https://img.huiyong.online/userImage/avatar7.gif",
-        "https://img.huiyong.online/userImage/avatar8.gif",
-        "https://img.huiyong.online/userImage/avatar9.gif",
-      ],
-
-      emailAllEnd:[
-        {value : "@qq.com"},
-        {value : "@163.com"},
-        {value : "@sina.com"},
-        {value : "@sina.cn"},
-        {value : "@sohu.com"},
-        {value : "@126.com"},
-        {value : "@139.com"},
-        {value : "@189.cn"},
-        {value : "@outlook.com"},
-        {value : "@hotmail.com"},
-        {value : "@foxmail.com"},
-        {value : "@21cn.com"},
-        {value : "@aliyun.com"},
-        {value : "@vip.163.com"},
-        {value : "@vip.126.com"},
-        {value : "@188.com"},
-        {value : "@live.cn"},
-        {value : "@gmail.com"},
-        {value : "@yahoo.com"},
-        {value : "@yeah.com"}
-      ]
+  userImage:"",
+  avatarIndex: null as any,
+  avatarList : [
+    // "https://img.huiyong.online/userImage/avatar1.gif",
+    // "https://img.huiyong.online/userImage/avatar2.gif",
+    "https://img.huiyong.online/userImage/avatar4.gif",
+    "https://img.huiyong.online/userImage/avatar6.gif",
+    "https://img.huiyong.online/userImage/avatar7.gif",
+    "https://img.huiyong.online/userImage/avatar8.gif",
+    "https://img.huiyong.online/userImage/avatar9.gif",
+  ]
 });
 
+// 倒计时
+let ticker = null as any
+const startTimer = () => {
+	state.codeBtn.disabled = true,
+	state.codeBtn.leftTime = 60;
+	state.codeBtn.getCodeBtn = `${state.codeBtn.leftTime}秒`
+	ticker = setInterval(() => {
+		--state.codeBtn.leftTime;
+		if (state.codeBtn.leftTime <= 0) {
+			state.codeBtn.leftTime = 0;
+			clearTimer();
+			state.codeBtn.getCodeBtn = '发送验证码'
+			state.codeBtn.disabled = false;
+		} else {
+			state.codeBtn.getCodeBtn = `${state.codeBtn.leftTime}秒`
+		}
+	}, 1000);
+}
+
+// 结束倒计时
+const clearTimer = () => {
+	clearInterval(ticker);
+    ticker = null;
+}
+
+// 获取验证码
+const getRegCode = () => {
+	state.codeBtn.codeLoading = true;
+	Request.post(Api.Get_Reg_Code, {
+		email: state.email
+	}).then((res: any) =>{
+		state.codeBtn.codeLoading = false;
+		startTimer();
+	}).catch((res: any) =>{
+		// 提示失败
+		state.codeBtn.codeLoading = false;
+		showNotify({ type: 'danger', message: res.message });
+	})
+};
+
 const finishinviteCode = (code: any) => {
-  state.isInviteSuccess = true
   state.invateCode = code
 }
 
-const selectImage = (index: any) => {
-  state.avatarIndex = index
-  state.avatarPop = false
-  state.userImage = state.avatarList[state.avatarIndex]
-}
-
 const register = () => {
-
+  router.push({name: 'home'})
 }
 
 const toLogin = () => {

@@ -7,7 +7,8 @@
 					<Button 
 						size="small" 
 						type="primary"
-						:loading="state.loginBtn.loginLoading" 
+						:loading="state.codeBtn.codeLoading" 
+						:disabled="state.codeBtn.disabled"
 						@click="getLoginCode">{{state.codeBtn.getCodeBtn}}</Button>
 				</template>
 			</Field>
@@ -36,18 +37,12 @@ const state = reactive({
 		getCodeBtn: '发送验证码',
 		codeLoading: false,
 		disabled: true,
-	},
-
-	loginBtn:{
-		loginLoading: false,
-		disabled: true,
 	}
 });
 
 // 倒计时
 let ticker = null as any
 const startTimer = () => {
-	state.loginBtn.disabled = false,
 	state.codeBtn.disabled = true,
 	state.codeBtn.leftTime = 60;
 	state.codeBtn.getCodeBtn = `${state.codeBtn.leftTime}秒`
@@ -85,33 +80,9 @@ const getLoginCode = () => {
 	})
 };
 
-// 登录
-const onLogin = () => {
-	if (state.codeBtn.codeLoading) {
-		return
-	}
-	state.loginBtn.loginLoading = true;
-	Request.post(Api.Login_Email_Code, {
-		email: state.ruleForm.email,
-		code: state.ruleForm.code
-	}).then((res:any) =>{
-		state.loginBtn.loginLoading = false;
-		emit('logInSuccess', res);
-	}).catch((res:any) =>{
-		// 提示失败
-		state.loginBtn.loginLoading = false;
-		showNotify({ type: 'danger', message: res.message });
-	})
-};
-
 // 页面销毁时，销毁倒计时
 onUnmounted(() => {
 	clearTimer()
-});
-
-// 暴露变量
-defineExpose({
-	onLogin,
 });
 
 </script>
