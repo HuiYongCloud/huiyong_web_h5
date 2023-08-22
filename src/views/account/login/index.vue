@@ -51,7 +51,7 @@
 <script setup lang="ts">
 import { defineAsyncComponent, onMounted, onUnmounted, reactive, ref, nextTick} from 'vue';
 import { useRoute, useRouter } from "vue-router"
-import { Form, Field, showNotify, Button} from 'vant';
+import { Button} from 'vant';
 import { Tab, Tabs, Icon } from 'vant';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { NextLoading } from '/@/components/loading/loading';
@@ -71,8 +71,8 @@ import svg11 from '/@/assets/login/11.svg';
 import { appStore } from "/@/stores/appStore";
 
 // 引入组件
-const Account = defineAsyncComponent(() => import('/@/views/login/component/account.vue'));
-const Email = defineAsyncComponent(() => import('/@/views/login/component/email.vue'));
+const Account = defineAsyncComponent(() => import('./component/account.vue'));
+const Email = defineAsyncComponent(() => import('./component/email.vue'));
 const ThemeSwitch = defineAsyncComponent(() => import('/@/components/theme-switch/index.vue'));
 
 const loginByEmailPassword = ref()
@@ -97,10 +97,7 @@ const logInSuccess = (res: any) => {
 }
 
 const toPageTermsDetail = (id: string) => {
-	router.push({
-		name: 'termsDetail',
-		query: {id: id}
-	})
+	router.push({name: 'termsDetail',query: {id: id}})
 }
 
 // 登录成功后的跳转
@@ -118,7 +115,7 @@ const toMainPage = () => {
 };
 
 const toRegPage = () => {
-    router.push({path: '/register'})
+    router.push({name: 'register'})
 }
 
 const onLogin = () => {

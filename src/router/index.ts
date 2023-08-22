@@ -14,13 +14,13 @@ const routes: RouteRecordRaw[] = [
     { 
         path: '/login', 
         name: 'login', 
-        component: () => import('/@/views/login/index.vue')  ,
+        component: () => import('/@/views/account/login/index.vue')  ,
         meta: { title: '登录' }
     },
     { 
         path: '/register', 
         name: 'register', 
-        component: () => import('/@/views/register/index.vue')  ,
+        component: () => import('/@/views/account/register/index.vue')  ,
         meta: { title: '注册' }
     },
 
@@ -79,21 +79,20 @@ const router: Router = createRouter(options)
 router.beforeEach((to, from, next) => {
     const mainStore = appStore()
     const userInfo = mainStore.userInfo
-    if (to.path === '/login') {
+    const token_403 = mainStore.token_403
+
+    if (token_403 === '403'){
+        mainStore.userInfo = ''
+        mainStore.token_403 = ''
+        next(`/login?redirect=${to.path}&params=${JSON.stringify(to.query ? to.query : to.params)}`);
+    }else if (userInfo.userId && to.path === '/login'){
+        NextLoading.start();
+        next('/home');
+        NextLoading.done(1000);
+    }else {
+        NextLoading.start();
         next();
-	}else{
-        if (!userInfo.userId) {
-            next(`/login?redirect=${to.path}&params=${JSON.stringify(to.query ? to.query : to.params)}`);
-			mainStore.userInfo = ''
-		} else if (userInfo.userId && to.path === '/login') {
-		    NextLoading.start();
-            next('/home');
-            NextLoading.done(1000);
-		} else {
-            NextLoading.start();
-			next();
-            NextLoading.done(1000);
-		}
+        NextLoading.done(1000);
     }
 })
 

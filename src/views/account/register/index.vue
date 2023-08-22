@@ -17,67 +17,11 @@
               <avatar :size="60" :src="state.userImage" v-if="state.invateCode"/>
               <div class="select-img flex-center-center">
                 <input type="file" class="upload-file" accept=".jpg, .jpeg, .png, .gif"/>
-                <el-button type="text" size="small" :loading="state.imageLoading">{{state.imageLoadingStr}}</el-button>
+                <!-- <el-button type="text" size="small" :loading="state.imageLoading">{{state.imageLoadingStr}}</el-button> -->
               </div>
             </div>
           </template>
         </Field>
-
-        <!-- 用户名 -->
-        <!-- <div class="input-box flex-center-start">
-          <div class="input-title">用户名</div>
-          <el-input id="accounts" v-model="state.userName" placeholder="输入用户名" clearable></el-input>
-        </div> -->
-
-        <!-- 邮箱 -->
-        <!-- <div class="input-box flex-center-start">
-          <div class="input-title">邮箱</div>
-          <el-autocomplete 
-            type="email" 
-            v-model="state.email" 
-            placeholder="输入邮箱" 
-            clearable 
-            :fetch-suggestions="queryEamil"
-            @blur="regEmail()" 
-            @input="regEmail()"/>
-        </div> -->
-
-        <!-- 验证码 -->
-        <!-- <div class="input-box flex-center-start">
-          <div class="input-title">验证码</div>
-          <el-input :disabled="!regEmailSuccess" v-model="smsCode" maxlength="4" placeholder="输入验证码">
-            <el-button 
-              :disabled="!regEmailSuccess || getCodeBtnCountDown" 
-              slot="suffix" 
-              type="primary" 
-              size="mini" 
-              plain 
-              @click="getSmsCode"
-              >{{getCodeBtnText}}</el-button>
-          </el-input>
-        </div> -->
-
-        <!-- 密码 -->
-        <!-- <div class="input-box flex-center-start">
-          <div class="input-title">密码</div>
-          <el-input 
-            id="password"
-            :disabled="email.length <= 0 || smsCode.length != 4" 
-            v-model="password" 
-            placeholder="设置密码" 
-            show-password 
-            clearable></el-input>
-        </div> -->
-
-        <!-- 头像 -->
-        <!-- <div class="input-box flex-center-start">
-          <div class="input-title">头像</div>
-          <avatar :size="60" :src="state.userImage" v-if="state.invateCode"/>
-          <div class="select-img flex-center-center">
-            <input type="file" class="upload-file" @change="addImage($event)" accept=".jpg, .jpeg, .png, .gif"/>
-            <el-button type="text" size="small" :loading="state.imageLoading">{{state.imageLoadingStr}}</el-button>
-          </div>
-        </div> -->  
       </div>
 
       <!-- 注册、登录按钮 -->
@@ -86,7 +30,7 @@
 
         <span class="to-login flex-center-start">
           <span>已有账号？&nbsp; </span>
-          <nuxt-link style="color : #409EFF" to="/userLogin">去登录</nuxt-link>
+          <span class="cursor-pointer ml10" style="color: var(--van-primary-color);" @click="toLogin()">去登录</span>
         </span>
       </div>
     </div>
@@ -99,10 +43,14 @@
 <script setup lang="ts">
 import { defineAsyncComponent, onMounted, onUnmounted, reactive, ref, nextTick} from 'vue';
 import Avatar from '/@/components/Avatar.vue'
+import { useRoute, useRouter } from "vue-router"
 import { Field, Button } from 'vant';
 import InviteCode from './components/InviteCode.vue'
 // import OssUtils from "@/utils/ossUtils.js"
 let interval;
+
+const route = useRoute();
+const router = useRouter();
 
 const state = reactive({
   registerLoading: false,
@@ -176,6 +124,10 @@ const selectImage = (index: any) => {
 
 const register = () => {
 
+}
+
+const toLogin = () => {
+  router.push({name: 'login'})
 }
 
 // 页面加载时

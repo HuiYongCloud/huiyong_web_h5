@@ -60,8 +60,7 @@ const outLogin = () => {
 	).then(() => {
 		// 清除缓存
 		mainStore.userInfo = ''
-		// 使用 reload 时，不需要调用 resetRoute() 重置路由
-		window.location.reload();
+		router.push('/login')
 	}).catch(() => {
 	});
 }

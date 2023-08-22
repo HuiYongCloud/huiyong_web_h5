@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, reactive, watch} from 'vue';
+import { computed, onMounted, reactive, watch, nextTick} from 'vue';
 
 /**
  * messageInput 验证码输入框
@@ -70,7 +70,7 @@ const props = defineProps({
 	},
 	// 预置值
 	value: {
-		type: [String, Number],
+		type: String,
 		default: ''
 	},
 	// 当前激活输入item，是否带有呼吸效果
@@ -110,30 +110,18 @@ const props = defineProps({
 	},
 });
 
+const state = reactive({
+	valueModel: "" as String,	
+});
+
+const emit = defineEmits(['change','finish']);
+
 // 用于显示字符
 const charArr = computed(() => {return String(state.valueModel).split("");});
 const charArrLength = computed(() => {return String(state.valueModel).split("").length;});
 // 根据长度，循环输入框的个数，因为头条小程序数值不能用于v-for
 const loopCharArr = computed(() => {return new Array(props.maxlength);});
 
-// 监听路由的变化，切换主题时，变更地图样式
-watch(
-	() => props.value,
-	(value) => {
-		nextTick(() => {
-			// 转为字符串
-			value = String(value);
-			// 超出部分截掉
-			state.valueModel = value.substring(0, props.maxlength);
-		})
-	}
-);
-
-const state = reactive({
-	valueModel: "",	
-});
-
-const emit = defineEmits(['change','finish']);
 const changeInput = (e: any) => {
 	if (String(state.valueModel).length < props.maxlength) {
 		emit('change', state.valueModel);
@@ -145,6 +133,15 @@ const changeInput = (e: any) => {
 		state.valueModel = String(state.valueModel).substring(0, props.maxlength);
 	}
 }
+
+const setValue = (value : String) => {
+	state.valueModel = value
+}
+
+// 暴露变量
+defineExpose({
+	setValue,
+});
 </script>
 
 <style scoped lang="scss">

@@ -1,39 +1,42 @@
 <template>
-  <div class="invite-code-input flex-center-center" :class="{'slide-out-top':state.isLeft}">
+  <div class="invite-code-input flex-center-center" :class="{'slide-out-top':state.check}">
     <div class="invite-title">欢迎加入，填写邀请码</div>
-    <u-message-input mode="bottomLine" @finish="finish"/>
-
+    <UMessageInput ref="uMessageInputRef" mode="bottomLine" :value="state.value" @finish="finish"/>
     <div class="no-invite-tip">个人时间有限，没有时间监管博客内容，暂不开放获取邀请码，谢谢！</div>
     <!-- <div class="no-invite-tip">没有邀请码？可邮件1026946613@qq.com申请！</div> -->
   </div>
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent, onMounted, onUnmounted, reactive, ref, nextTick} from 'vue';
-import UMessageInput from '/@/components/UMessageInput.vue'
+import { defineAsyncComponent, reactive, ref} from 'vue';
+import Api from "/@/api/api"
+import Request from "/@/api/request"
+import { showDialog } from 'vant';
+
+const UMessageInput = defineAsyncComponent(() => import('/@/components/UMessageInput.vue'));
+// 定义子组件向父组件传值/事件
+const emit = defineEmits(['finish']);
+const uMessageInputRef = ref();
 
 const state = reactive({
-  value:'',
-      isInit: false,
-      isLeft: false,
+  value:'123',
+  check: false,
 })
 
-// 页面加载时
-onMounted(() => {
-	nextTick(() => {
-    state.isInit = true;
-	})
-});
-
-const finish = (value) => {
-  // this.$axios.post(Api.INVITE_CHECK, {inviteCode: value}).then( res =>{
-  //   this.$emit('finish', value);
-  //   this.isLeft = true;
-  // }).catch(res =>{
-  //   // 提示失败
-  //   this.$message.warning(res.message);
-  //   this.value = ""
-  // })
+const finish = (value: String) => {
+  Request.post(Api.INVITE_CHECK, {inviteCode: value})
+  .then( _ =>{
+    emit('finish', value);
+    state.check = true;
+  }).catch(res =>{
+    // 提示失败
+    showDialog({
+      title: '提示',
+      message: res.message,
+      theme: 'round-button',
+    }).then(() => {});
+    uMessageInputRef.value.setValue("")
+  })
 }
 </script>
 
