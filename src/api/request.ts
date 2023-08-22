@@ -3,12 +3,9 @@
  * 处理请求、响应错误信息
  */
 import axios, { AxiosInstance } from 'axios';
-import { useRoute, useRouter } from "vue-router"
 import { showDialog } from 'vant';
 import { appStore } from "/@/stores/appStore";
 const mainStore = appStore()
-const route = useRoute();
-// const router = useRouter();
 
 // 创建实例
 const service : AxiosInstance = axios.create({

@@ -3,7 +3,6 @@
     <div class="invite-title">欢迎加入，填写邀请码</div>
     <UMessageInput ref="uMessageInputRef" mode="bottomLine" :value="state.value" @finish="finish"/>
     <div class="no-invite-tip">个人时间有限，没有时间监管博客内容，暂不开放获取邀请码，谢谢！</div>
-    <!-- <div class="no-invite-tip">没有邀请码？可邮件1026946613@qq.com申请！</div> -->
   </div>
 </template>
 
@@ -80,7 +79,7 @@ const finish = (value: String) => {
     transform: translateY(0);
   }
   100% {
-    transform: translateY(-1000px);
+    transform: translateY(-100%);
   }
 }
 

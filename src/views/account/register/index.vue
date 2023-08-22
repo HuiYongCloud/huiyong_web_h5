@@ -17,7 +17,7 @@
               <avatar :size="60" :src="state.userImage" v-if="state.invateCode"/>
               <div class="select-img flex-center-center">
                 <input type="file" class="upload-file" accept=".jpg, .jpeg, .png, .gif"/>
-                <!-- <el-button type="text" size="small" :loading="state.imageLoading">{{state.imageLoadingStr}}</el-button> -->
+                <el-button type="text" size="small" :loading="state.imageLoading">{{state.imageLoadingStr}}</el-button>
               </div>
             </div>
           </template>
@@ -36,7 +36,7 @@
     </div>
 
     <!-- 邀请码 -->
-    <invite-code @finish="finishinviteCode"/>
+    <!-- <invite-code @finish="finishinviteCode"/> -->
   </div>
 </template>
 
