@@ -4,9 +4,9 @@
     <!-- 注册 -->
     <div class="user-register-page flex-center-start">
       <div style="width: 360px;">
-        <Field v-model="state.userName" label="用户名" placeholder="输入用户名" />
-        <Field v-model="state.email" label="邮箱" type="email" placeholder="输入邮箱"/>
-        <Field v-model="state.smsCode" type="number" label="验证码" placeholder="输入验证码" >
+        <Field v-model="state.userName" label="用户名" placeholder="输入用户名" autocomplete="off"/>
+        <Field v-model="state.email" label="邮箱" type="email" placeholder="输入邮箱" autocomplete="off"/>
+        <Field v-model="state.smsCode" type="number" label="验证码" placeholder="输入验证码" autocomplete="off">
           <template #button>
             <Button 
               size="small" 
@@ -17,14 +17,14 @@
             >{{state.codeBtn.getCodeBtn}}</Button>
           </template>
         </Field>
-        <Field v-model="state.password" label="密码" type="password" placeholder="设置密码"/>
+        <Field v-model="state.password" label="密码" type="password" placeholder="设置密码" autocomplete="off"/>
         <Field v-model="state.userImage" label="头像" placeholder="输入用户名" >
           <template #input>
             <div class="flex-center-start">
               <avatar :size="60" :src="state.userImage"/>
-              <div class="select-img ml10 flex-center-center">
-                <input type="file" class="upload-file" accept=".jpg, .jpeg, .png, .gif"/>
-                <Button size="small" :loading="state.imageLoading">{{state.imageLoadingStr}}</Button>
+              <div class="ml10">
+                <Button size="small" :loading="state.imageLoading" @click="clickUploadFile">{{state.imageLoadingStr}}</Button>
+                <input type="file" ref="uploadFileRef" style="display:none" @change="changeImage($event)" accept=".jpg, .jpeg, .png, .gif, .webp"/>
               </div>
             </div>
           </template>
@@ -54,6 +54,7 @@ import { useRoute, useRouter } from "vue-router"
 import { Field, Button, showNotify} from 'vant';
 import Api from "/@/api/api"
 import Request from "/@/api/request"
+import OssUtils from "/@/utils/ossUtils"
 import { appStore } from "/@/stores/appStore";
 
 const ThemeSwitch = defineAsyncComponent(() => import('/@/components/theme-switch/index.vue'));
@@ -61,6 +62,7 @@ const InviteCode = defineAsyncComponent(() => import('./components/InviteCode.vu
 const mainStore = appStore()
 const route = useRoute();
 const router = useRouter();
+const uploadFileRef = ref();
 
 const state = reactive({
 	codeBtn:{
@@ -74,7 +76,7 @@ const state = reactive({
   email:'',
   smsCode:'',
   password:'',
-  inviteCode:'',
+  inviteCode:'1881',
   userAvatar: "",
 
   // 头像更换
@@ -91,6 +93,39 @@ const state = reactive({
     "https://img.huiyong.online/userImage/avatar9.gif",
   ]
 });
+
+/**
+ * 编辑admin头像
+ * 
+ */
+const clickUploadFile = () => {
+	uploadFileRef.value.click()
+}
+const changeImage = (event: any) => {
+	if(event.target.files && event.target.files.length > 0){
+		// 要上传的文件
+		let imageFile = event.target.files[0]
+		let key = "adminUserImage/" + mainStore.userInfo.adminId + "/" + new Date().getTime() + imageFile.name
+		OssUtils.upImage(key, imageFile, {
+			error: (res: any) => { 
+				state.imageLoading = false
+				state.imageLoadingStr = "更换头像"
+        showNotify({ type: 'danger', message: res });
+			},
+			
+			success: (_: any) => {
+				state.imageLoading = false
+				state.imageLoadingStr = "更换头像"
+				state.userImage = "https://img.huiyong.online/" + key
+			},
+			
+			progress: (progress: any) => {
+				state.imageLoading = true
+				state.imageLoadingStr = parseFloat(progress) * 100 + "%"
+			}
+		})
+	}
+}
 
 // 倒计时
 let ticker = null as any
@@ -178,7 +213,7 @@ const toLogin = () => {
 // 页面加载时
 onMounted(() => {
 	nextTick(() => {
-    state.avatarIndex = Math.round(Math.random()* state.avatarList.length) - 1;
+    state.avatarIndex = Math.floor((Math.random()*state.avatarList.length));
     state.userImage = state.avatarList[state.avatarIndex]
 	})
 });

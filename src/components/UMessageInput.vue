@@ -1,7 +1,7 @@
 <template>
 	<div class="u-char-box">
 		<div class="u-char-flex flex-start-center">
-			<input v-model="state.valueModel" type="number" autofocus :maxlength="maxlength" class="u-input" @input="changeInput"/>
+			<input v-model="state.valueModel" type="number" autofocus autocomplete="off" :maxlength="maxlength" class="u-input" @input="changeInput"/>
 			<div v-for="(item, index) in loopCharArr" :key="index">
 				<div :class="[breathe && charArrLength == index ? 'u-breathe' : '', 'u-char-item flex-center-center',
 				charArrLength === index && mode == 'box' ? 'u-box-active' : '',

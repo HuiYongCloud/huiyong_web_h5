@@ -2,7 +2,7 @@
   <div class="invite-code-input flex-center-center" :class="{'slide-out-top':state.check}">
     <div class="invite-title">欢迎加入，填写邀请码</div>
     <UMessageInput ref="uMessageInputRef" mode="bottomLine" :value="state.value" @finish="finish"/>
-    <div class="no-invite-tip">个人时间有限，没有时间监管博客内容，暂不开放获取邀请码，谢谢！</div>
+    <div class="no-invite-tip">个人时间有限，暂不开放获取邀请码，谢谢！</div>
   </div>
 </template>
 
