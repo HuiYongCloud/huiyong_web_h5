@@ -12,7 +12,6 @@
     "axios": "^1.4.0",
     "cos-js-sdk-v5": "^1.4.20",
     "cropperjs": "^1.5.13",
-    "highlight.js": "^11.8.0",
     "markdown-it-mark": "^3.0.1",
     "md-editor-v3": "^4.3.0",
     "pinia": "^2.1.4",
