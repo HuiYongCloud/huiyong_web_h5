@@ -12,13 +12,8 @@ import { reactive} from 'vue';
 import { appStore } from '/@/stores/appStore'
 import { MdPreview, MdCatalog, config} from 'md-editor-v3';
 import 'md-editor-v3/lib/preview.css';
-import highlight from 'highlight.js';
-import 'highlight.js/styles/github-dark.css';
-import katex from 'katex';
-import 'katex/dist/katex.min.css';
 import Cropper from 'cropperjs';
 import 'cropperjs/dist/cropper.css';
-import mermaid from 'mermaid';
 import MarkdownItMark from 'markdown-it-mark';
 
 const mainStore = appStore()
@@ -37,18 +32,9 @@ config({
 		mdit.use(MarkdownItMark);
 	},
 	editorExtensions: {
-		highlight: {
-			instance: highlight,
-		},
-		katex: {
-			instance: katex
-		},
 		cropper: {
 			instance: Cropper
 		},
-		mermaid: {
-			instance: mermaid
-		}
 	}
 });
 
