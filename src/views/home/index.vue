@@ -1,31 +1,53 @@
 <template>
-  <div class="page-home h100">
-    <Navbar/>
-    <div class="flex-center-center mt50" style="flex-direction: column;">
-      <h1>Home</h1>
-      <div class="flex mt30">
-        <Button plain type="primary" to="/login">登录</Button>
-        <Button plain type="primary" to="/register" class="ml10">注册</Button>
+  <div class="page-home h100 flex-center-center" style="flex-direction: column;">
+    <div class="home-title">Hui Yong</div>
+    <div class="flex-center-center" style="margin: 0 50px; width: calc(100% - 100px); flex-direction: column;">
+      <div class="search-input  mt50 w100" :class="{'search-input-focus': state.inputFocus}">
+        <input 
+          class="input-class"
+          type="text" 
+          autofocus 
+          autocomplete="off"
+          id="searchSugrec"
+          placeholder="搜索"
+          @focus="state.inputFocus = true"
+          v-model="state.seachKey" />
       </div>
 
-      <div class="flex mt30">
-        <Button plain type="primary" to="/401" class="ml10">401</Button>
-        <Button plain type="primary" to="/404" class="ml10">404</Button>
-      </div>
+      <img class="home-back-img" style="margin-top: 100px;" :src="homeBack">
 
-      <div class="flex mt30">
-        <Button plain type="primary" to="/resume?userId=U202111250003" class="ml10">简历</Button>
-      </div>
     </div>
+
   </div>
   
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent} from 'vue';
-import { Button } from 'vant';
+import { defineAsyncComponent, onMounted, onUnmounted, reactive, ref, nextTick} from 'vue';
+import homeBack from '/@/assets/img/home-back.webp';
 // 引入组件
 const Navbar = defineAsyncComponent(() => import('/@/components/layout/navbar/index.vue'));
+
+const state = reactive({
+  seachKey: "",
+  inputFocus: false
+})
+
+const searchListener = (event: any) => {
+  if(event.srcElement.id != 'searchSugrec'){
+    state.inputFocus = false
+  }
+}
+
+onMounted(()=> {
+	nextTick(() => {
+    document.body.addEventListener('click', searchListener, true);
+  })
+})
+
+onUnmounted(()=> {
+  document.body.removeEventListener('click', searchListener);
+})
 
 </script>
 

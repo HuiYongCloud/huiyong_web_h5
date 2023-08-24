@@ -1,25 +1,45 @@
 .page-home {
-
-  .count{
-    color: var(--el-color-black);
+  .home-title{
+    font-size: 35px;
+    color: var(--app-item-title);
+    letter-spacing: 1px;
   }
 
-  h1 {
-    font-size: 3.2em;
-    line-height: 1.1;
-    color: var(--el-color-black);
+  .search-input-focus {
+    border-color: var(--el-color-primary);
+    outline: none;
+    box-shadow: var(--el-color-primary) 0px 0px 0px 1px inset;
   }
-  
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
+
+  .search-input{
+    min-width: 300px;
+    max-width: 600px;
+    height: 40px;
+    padding: 0 10px;
+    border: 1px solid var(--app-border-color);
+    border-radius: 6px;
+
+    input {
+      width: 100%;
+      height: 100%;
+      font-size: 14px;
+      color: var(--app-item-title);
+      background-color: transparent;
+      border: none;
+      
+      &::placeholder{
+        color: var(--app-item-sub);
+      }
+
+      &:focus{
+        outline:none;
+        box-shadow: none;
+      }
+    }
   }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  .logo.vue:hover {
-    filter: drop-shadow(0 0 2em #42b883aa);
+
+  .home-back-img{
+    width: 100%;
+    max-width: 800px;
   }
 }
