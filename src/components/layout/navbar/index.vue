@@ -47,7 +47,7 @@ const state = reactive({
 const ThemeSwitch = defineAsyncComponent(() => import('/@/components/theme-switch/index.vue'));
 
 // 首页
-const toHome = ()=> router.push('/home')
+const toHome = ()=> router.push('/')
 // 博客
 const toBlog = ()=> location.href = `/blogDetail?userId=${mainStore.userInfo.userId}`
 // 管理后台

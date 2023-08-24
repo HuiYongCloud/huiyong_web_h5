@@ -4,10 +4,8 @@ import { appStore } from "/@/stores/appStore";
 
 // 页面配置
 const routes: RouteRecordRaw[] = [
-    { path: '/', redirect: '/home' },
     { 
-        path: '/home', 
-        name: 'home', 
+        path: '/', 
         component: () => import('/@/views/home/index.vue') ,
         meta: { title: '首页' }
     },
@@ -87,7 +85,7 @@ router.beforeEach((to, from, next) => {
         next(`/login?redirect=${to.path}&params=${JSON.stringify(to.query ? to.query : to.params)}`);
     }else if (userInfo.userId && to.path === '/login'){
         NextLoading.start();
-        next('/home');
+        next('/');
         NextLoading.done(1000);
     }else {
         NextLoading.start();

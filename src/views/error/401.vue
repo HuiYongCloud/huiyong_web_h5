@@ -3,7 +3,7 @@
     <div class="flex-center-center" style="flex-direction: column;">
       <h1>404</h1>
       <div class="mt20 font16">暂无权限</div>
-      <Button to="/home" class="mt50" plain type="primary">去首页</Button>
+      <Button to="/" class="mt50" plain type="primary">去首页</Button>
     </div>
   </div>
 </template>

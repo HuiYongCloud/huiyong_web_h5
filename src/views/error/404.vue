@@ -4,7 +4,7 @@
       <h1>404</h1>
       <div class="mt20 font16">从前有座山，山上有座庙。</div>
 			<div class="mt10 font16">庙里的页面，现在找不到。</div>
-      <Button to="/home" class="mt50" plain type="primary">去首页</Button>
+      <Button to="/" class="mt50" plain type="primary">去首页</Button>
     </div>
   </div>
 </template>
