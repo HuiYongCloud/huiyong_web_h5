@@ -1,5 +1,9 @@
 <template>
   <div class="page-home h100 flex-center-center" style="flex-direction: column;">
+    <div style="position: absolute; top: 0; right: 0;">
+      <Navbar/>
+    </div>
+
     <div class="home-title">Hui Yong</div>
     <div class="flex-center-center" style="margin: 0 50px; width: calc(100% - 100px); flex-direction: column;">
       <div class="search-input  mt50 w100" :class="{'search-input-focus': state.inputFocus}">
@@ -15,11 +19,8 @@
       </div>
 
       <img class="home-back-img" style="margin-top: 100px;" :src="homeBack">
-
     </div>
-
   </div>
-  
 </template>
 
 <script setup lang="ts">

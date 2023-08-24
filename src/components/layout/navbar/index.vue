@@ -72,6 +72,7 @@ const outLogin = () => {
 
 .layout-nav-bar {
 	width: 100%;
+	z-index: 100;
 
 	.user-header{
 		border-radius: 50%;
