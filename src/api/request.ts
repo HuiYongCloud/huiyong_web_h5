@@ -12,7 +12,7 @@ const service : AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   // 使Session的Token跨域不失效
   withCredentials: true,                 
-  timeout: 10000,
+  timeout: 20000,
 })
 
 // 添加请求拦截器
