@@ -5,7 +5,6 @@
 import axios, { AxiosInstance } from 'axios';
 import { showDialog } from 'vant';
 import { appStore } from "/@/stores/appStore";
-const mainStore = appStore()
 
 // 创建实例
 const service : AxiosInstance = axios.create({
@@ -21,7 +20,7 @@ service.interceptors.request.use(
     // 在请求发送前做的操作
     config.headers['Content-Type'] = "application/json"
     config.headers['client'] = "h5"
-    config.headers['token'] = mainStore.userInfo.token
+    config.headers['token'] = appStore().userInfo.token
     return config
   },
   (error) => {
@@ -42,12 +41,12 @@ service.interceptors.response.use(
       // 登录失效
       case 403:        
         // 过期或者账号已在别处登录
-        if(mainStore.userInfo != null){
+        if(appStore().userInfo != null){
           // 清除浏览器全部临时缓存
-          mainStore.userInfo = ''
+          appStore().userInfo = ''
           showDialog({title: '提示', message:res.message,})
             .then(() => {
-              mainStore.token_403 = '403'
+              appStore().token_403 = '403'
               window.location.reload();
             });
         }
