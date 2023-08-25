@@ -4,6 +4,8 @@
       <Navbar/>
     </div>
 
+    <Footer/>
+
     <div class="home-title">Hui Yong</div>
     <div class="flex-center-center" style="margin: 0 50px; width: calc(100% - 100px); flex-direction: column;">
       <div class="search-input  mt50 w100" :class="{'search-input-focus': state.inputFocus}">
@@ -28,6 +30,7 @@ import { defineAsyncComponent, onMounted, onUnmounted, reactive, ref, nextTick} 
 import homeBack from '/@/assets/img/home-back.webp';
 // 引入组件
 const Navbar = defineAsyncComponent(() => import('/@/components/layout/navbar/index.vue'));
+const Footer = defineAsyncComponent(() => import('/@/components/layout/footer/index.vue'));
 
 const state = reactive({
   seachKey: "",

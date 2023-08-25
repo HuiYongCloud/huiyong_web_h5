@@ -1,25 +1,30 @@
 <template>
-	<div class="layout-footer pb15">
-		<div class="layout-footer-warp">
-			<div>vue-next-admin，Made by lyt with ❤️</div>
-			<div class="mt5">深圳市 xxx 公司版权所有</div>
+	<div class="layout-footer flex-center-center">
+		<div class="flex-center-start mb20 ml30" style="font-size: 12px; color: var(--app-item-sub);">
+			<div style="letter-spacing: 1px;">HuiYong, © 2023</div>
+			<div class="text-info" @click="toLink">赣ICP备20008193号</div>
 		</div>
 	</div>
 </template>
 
-<script setup lang="ts" name="layoutFooter">
-// 此处需有内容（注释也得），否则缓存将失败
+<script setup lang="ts">
+const toLink = () => window.open("https://beian.miit.gov.cn/", '_blank')
 </script>
 
 <style scoped lang="scss">
 .layout-footer {
 	width: 100%;
-	display: flex;
-	&-warp {
-		margin: auto;
-		color: var(--el-text-color-secondary);
-		text-align: center;
-		animation: error-num 0.3s ease;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+
+	.text-info{
+		margin-left: 20px;
+		cursor: pointer;
+		&:hover{
+			color: var(--el-color-primary);
+		}
 	}
 }
 </style>
