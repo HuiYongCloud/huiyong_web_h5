@@ -15,6 +15,8 @@
 			<img :src="loginBg" class="login-left-waves" />
 		</div>
 		<div class="login-right">
+			<Footer/>
+
 			<div class="login-right-warp flex-center-center">
 				<span class="login-right-warp-one"></span>
 				<span class="login-right-warp-two"></span>
@@ -71,6 +73,7 @@ import svg11 from '/@/assets/login/11.svg';
 import { appStore } from "/@/stores/appStore";
 
 // 引入组件
+const Footer = defineAsyncComponent(() => import('/@/components/layout/footer/index.vue'));
 const Account = defineAsyncComponent(() => import('./component/account.vue'));
 const Email = defineAsyncComponent(() => import('./component/email.vue'));
 const ThemeSwitch = defineAsyncComponent(() => import('/@/components/theme-switch/index.vue'));
