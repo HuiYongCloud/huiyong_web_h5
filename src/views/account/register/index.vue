@@ -17,7 +17,7 @@
             >{{state.codeBtn.getCodeBtn}}</Button>
           </template>
         </Field>
-        <Field v-model="state.password" label="密码" type="password" placeholder="设置密码" autocomplete="off"/>
+        <Field v-model="state.password" label="密码" id="new_user_password" name="new_user[password]" type="password" autocomplete="new-password" placeholder="设置密码"/>
         <Field v-model="state.userImage" label="头像" placeholder="输入用户名" >
           <template #input>
             <div class="flex-center-start">
