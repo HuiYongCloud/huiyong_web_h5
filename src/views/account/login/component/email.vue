@@ -80,6 +80,24 @@ const getLoginCode = () => {
 	})
 };
 
+// 登录
+const onLogin = () => {
+	Request.post(Api.Login_Email_Code, {
+		email: state.ruleForm.email,
+		code: state.ruleForm.code
+	}).then((res:any) =>{
+		emit('logInSuccess', res);
+	}).catch((res:any) =>{
+		// 提示失败
+		showNotify({ type: 'danger', message: res.message });
+	})
+};
+
+// 暴露变量
+defineExpose({
+	onLogin
+});
+
 // 页面销毁时，销毁倒计时
 onUnmounted(() => {
 	clearTimer()

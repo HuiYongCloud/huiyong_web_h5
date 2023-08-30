@@ -18,7 +18,6 @@ const emit = defineEmits(['logInSuccess']);
 
 // 定义变量内容
 const state = reactive({
-	loginLoading: false,
 	isShowPassword: false,
 	ruleForm: {
 		email: '',
@@ -28,16 +27,13 @@ const state = reactive({
 
 // 登录
 const onLogin = () => {
-	state.loginLoading = true;
 	Request.post(Api.Login_Password, {
 		email: state.ruleForm.email,
 		password: state.ruleForm.password
 	}).then((res:any) =>{
-		state.loginLoading = false;
 		emit('logInSuccess', res);
 	}).catch((res:any) =>{
 		// 提示失败
-		state.loginLoading = false;
 		showNotify({ type: 'danger', message: res.message });
 	})
 };
