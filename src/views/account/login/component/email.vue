@@ -36,7 +36,7 @@ const state = reactive({
 		leftTime: 0,
 		getCodeBtn: '发送验证码',
 		codeLoading: false,
-		disabled: true,
+		disabled: false,
 	}
 });
 
