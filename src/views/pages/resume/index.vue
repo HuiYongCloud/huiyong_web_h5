@@ -1,6 +1,6 @@
 <template>
   <div class="page-resume-detail flex-center-center">
-    <div style="position: absolute; top: 0; right: 0;">
+    <div style="position: absolute; top: 0; right: 0; z-index: 100;">
       <Navbar/>
     </div>
 	

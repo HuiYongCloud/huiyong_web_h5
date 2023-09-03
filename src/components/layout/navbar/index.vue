@@ -39,7 +39,23 @@
 			<Popup 
 				v-model:show="state.showDrawer"  
 				position="right"
-  				:style="{ width: '30%', height: '100%', }">内容</Popup>
+  				:style="{ width: '30%', height: '100%', }">
+				  <div class="user-menu-list">
+					<div class="user-info flex-center-start">
+						<div class="menu-user-image">
+							<VanImage round class="user-header" :src="mainStore.userInfo.userImage"/>
+						</div>
+						<div class="menu-user-name">{{mainStore.userInfo.userName}}</div>
+					</div>
+					<div class="menu-item flex-center-between" @click="toHome">首页</div>
+					<div class="menu-line"/>
+					<div class="menu-item flex-center-between" @click="toBlog">我的博客</div>
+					<div class="menu-item flex-center-between" @click="toResume">我的简历</div>
+					<div class="menu-item flex-center-between" @click="toAdmin">后台管理</div>
+					<div class="menu-line"/>
+					<div class="menu-item flex-center-between" @click="outLogin">退出登录</div>
+				</div> 
+			</Popup>
 		</div>
 	</div>
 </template>
@@ -187,6 +203,51 @@ const outLogin = () => {
 	width: 65px;
 	height: 65px;
 	z-index: 100;
+
+	.user-menu-list{
+		width: 100%;
+		background: var(--app-color-bg);
+		border-radius: 3px;
+		overflow: hidden;
+		margin: 2px 0px 16px;
+
+		.user-info{
+			padding: 0 16px;
+			margin: 16px 0;
+
+			.menu-user-image{
+				width: 40px;
+			}
+
+			.menu-user-name{
+				margin-left: 10px;
+				color: var(--app-item-title);
+				font-size: 16px;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
+
+		.menu-item{
+			line-height: 48px;
+			height: 48px;
+			padding: 0 16px;
+			color: var(--app-item-title);
+			font-size: 16px;
+			transition: all .3s ease;
+			cursor: pointer;
+
+			&:hover{
+				background-color: rgba(var(--el-color-primary-rgb), .1);
+			}
+		}
+
+		.menu-line{
+			border-top: 1px solid var(--el-border-color-light, #ebeef5);
+			margin: 6px 0px;
+		}
+	}	
 }
 
 @media screen and (max-width: $lg) {
