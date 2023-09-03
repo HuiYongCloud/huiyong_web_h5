@@ -2,7 +2,7 @@
 	<div class="layout-nav-bar flex-center-end">
 		<ThemeSwitch/>
 		<div class="flex-center-center pl20 pr15 pt12 pb12" v-if="mainStore.userInfo" @mouseover="state.isSelectUser = true" @mouseleave="state.isSelectUser = false">
-			<img class="user-header" :src="mainStore.userInfo.userImage">
+			<VanImage round class="user-header" :src="mainStore.userInfo.userImage"/>
 			<div class="user-name pl5">{{mainStore.userInfo.userName}}</div>
 			<Icon class="ml5" name="arrow-down" />
 
@@ -11,7 +11,7 @@
 					<div class="user-menu-list" v-if="state.isSelectUser">
 						<div class="user-info flex-center-start">
 							<div class="menu-user-image">
-								<img class="user-header" :src="mainStore.userInfo.userImage"/>
+								<VanImage round class="user-header" :src="mainStore.userInfo.userImage"/>
 							</div>
 							<div class="menu-user-name">{{mainStore.userInfo.userName}}</div>
 						</div>
@@ -32,7 +32,7 @@
 <script setup lang="ts">
 import { defineAsyncComponent, reactive, ref} from 'vue';
 import { appStore } from '/@/stores/appStore'
-import { Icon } from 'vant';
+import { Icon, Image as VanImage } from 'vant';
 import { useRoute, useRouter } from 'vue-router';
 import { showConfirmDialog } from 'vant';
 
