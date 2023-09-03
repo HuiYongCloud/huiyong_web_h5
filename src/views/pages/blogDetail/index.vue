@@ -4,9 +4,7 @@
 
 			<!-- 个人信息导航 -->
 			<div style="position: absolute; top: 0; right: 0; z-index: 100;">
-				<Sticky>
-					<Navbar :sticky="true"/>
-				</Sticky>
+				<Sticky><Navbar :sticky="true"/></Sticky>
 			</div>
 
 			<!-- 右侧导航 -->
@@ -37,13 +35,15 @@
 				<MdCatalog editorId="md-preview-id" :scrollElement="scrollElement" :theme="isDarkTheme()?'dark':'light'" />
 			</div>
 		</div>
+
+		<BackTop/>
   	</div>
 </template>
 
 <script setup lang="ts">
 import { defineAsyncComponent, onMounted, onUnmounted, reactive} from 'vue';
 import { useRoute, useRouter } from "vue-router"
-import { showNotify, Sticky} from 'vant';
+import { showNotify, Sticky, BackTop } from 'vant';
 import Api from "/@/api/api"
 import Request from "/@/api/request"
 import { MdCatalog } from 'md-editor-v3';

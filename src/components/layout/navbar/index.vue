@@ -32,9 +32,14 @@
 		</div>
 
 		<div class="layout-nav-bar-mobile">
-			<div>
-				<img :src="blogToc" style="margin-right:15px; width: 20px; height: 20px; filter: drop-shadow(10000px 0 0 var(--el-color-black)); transform: translate(-10000px);"/>
+			<div class="h100 w100 flex-center-center" @click="state.showDrawer = !state.showDrawer">
+				<img :src="blogToc" style="width: 20px; height: 20px; filter: drop-shadow(10000px 0 0 var(--el-color-black)); transform: translate(-10000px);"/>
 			</div>
+
+			<Popup 
+				v-model:show="state.showDrawer"  
+				position="right"
+  				:style="{ width: '30%', height: '100%', }">内容</Popup>
 		</div>
 	</div>
 </template>
@@ -42,7 +47,7 @@
 <script setup lang="ts">
 import { defineAsyncComponent, reactive, ref} from 'vue';
 import { appStore } from '/@/stores/appStore'
-import { Icon, Image as VanImage } from 'vant';
+import { Icon, Image as VanImage, Popup } from 'vant';
 import { useRoute, useRouter } from 'vue-router';
 import { showConfirmDialog } from 'vant';
 import blogToc from '/@/assets/svg/blog-toc.svg';
@@ -52,7 +57,8 @@ const route = useRoute();
 const router = useRouter();
 const mainStore = appStore()
 const state = reactive({
-	isSelectUser: false
+	isSelectUser: false,
+	showDrawer: false
 });
 // 引入组件
 const ThemeSwitch = defineAsyncComponent(() => import('/@/components/theme-switch/index.vue'));
@@ -112,7 +118,7 @@ const outLogin = () => {
 		padding: 4px 0;
 		box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.12), 0 0.5px 1.5px 0 rgba(0, 0, 0, 0.08);
 		border: 1px solid var(--el-border-color-light, #ebeef5);
-		background: var(--app-bg-color);
+		background: var(--app-color-bg);
 		border-radius: 3px;
 		overflow: hidden;
 		margin: 2px 16px 16px;
@@ -178,7 +184,8 @@ const outLogin = () => {
 }
 
 .layout-nav-bar-mobile {
-	width: 100%;
+	width: 65px;
+	height: 65px;
 	z-index: 100;
 }
 
@@ -201,4 +208,10 @@ const outLogin = () => {
 		display: none;
 	}
 }
+</style>
+
+<style>
+	.van-popup{
+		background: var(--app-color-bg);
+	}
 </style>
