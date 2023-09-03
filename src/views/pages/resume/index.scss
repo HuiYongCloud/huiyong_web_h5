@@ -4,5 +4,6 @@
   .resume-preview{
     max-width: 1024px;
     margin-bottom: 150px;
+    min-height: calc(100vh - 150px);
   }
 }
