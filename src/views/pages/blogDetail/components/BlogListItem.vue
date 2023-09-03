@@ -92,7 +92,7 @@ const openBlogDetail = (blogId: any) => {
 			border-radius: 2px;
 			color: #fc5531;
 			font-size: 12px;
-			background: #fff5f2;
+			background: rgba(103,187,85,.1);
 			margin-right: 10px;
 		}
 

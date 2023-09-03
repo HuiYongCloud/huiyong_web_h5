@@ -39,7 +39,7 @@
 			<Popup 
 				v-model:show="state.showDrawer"  
 				position="right"
-  				:style="{ width: '30%', height: '100%', }">
+  				:style="{ width: '240px', height: '100%', }">
 				  <div class="user-menu-list">
 					<div class="user-info flex-center-start">
 						<div class="menu-user-image">
@@ -173,7 +173,7 @@ const outLogin = () => {
 
 		.menu-line{
 			border-top: 1px solid var(--el-border-color-light, #ebeef5);
-			margin: 6px 0px;
+			margin: 4px 0px;
 		}
 	}
 
@@ -230,11 +230,11 @@ const outLogin = () => {
 		}
 
 		.menu-item{
-			line-height: 48px;
-			height: 48px;
+			line-height: 40px;
+			height: 40px;
 			padding: 0 16px;
 			color: var(--app-item-title);
-			font-size: 16px;
+			font-size: 14px;
 			transition: all .3s ease;
 			cursor: pointer;
 
