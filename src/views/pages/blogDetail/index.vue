@@ -1,42 +1,49 @@
 <template>
-  <div class="blog-detail-page flex-start-center">
+  	<div class="w100 flex-start-center">
+		<div style="position: relative;" class="blog-detail-page flex-start-center">
 
-	<!-- 右侧导航 -->
-	<div class="blog-info-left">
-		<BlogUserInfo  :detail="state.blogInfo"/>
-		<BlogTagInfo :list="state.tagList" :tagId="state.tagId" @changeTagInfo="openTagInfo"/>
-	</div>
-
-	<div class="blog-content-page">
-		<!-- 博客详情 -->
-		<BlogDetail v-if="state.isShowBlogDetail === true" :blogId="state.blogId" @onDetailLoad="onDetailLoad"/>
-		<!-- 文章列表 -->
-		<BlogList 
-			v-if="state.isShowBlogDetail == false" 
-			:tagId="state.tagId" 
-			:blogUserId="state.blogUserId"
-			@openBlogDetail="openBlogDetail"/>
-	</div>
-
-	<div class="blog-info-right">
-		<div class="flex-center-between">
-			<div class="blog-toc-title flex-center-start" v-show="state.blogCode == 200">
-				<img :src="blogToc" style="margin-left:12px; width: 14px; height: 14px; filter: drop-shadow(10000px 0 0 var(--el-color-black)); transform: translate(-10000px);"/>
-				<div style="margin-left:10px">目录</div>
-			</div>
 			<!-- 个人信息导航 -->
-			<Navbar/>
+			<div style="position: absolute; top: 0; right: 0; z-index: 100;">
+				<Sticky>
+					<Navbar :sticky="true"/>
+				</Sticky>
+			</div>
+
+			<!-- 右侧导航 -->
+			<div class="blog-info-left">
+				<BlogUserInfo  :detail="state.blogInfo"/>
+				<BlogTagInfo :list="state.tagList" :tagId="state.tagId" @changeTagInfo="openTagInfo"/>
+			</div>
+
+			<div class="blog-content-page">
+				<!-- 博客详情 -->
+				<BlogDetail v-if="state.isShowBlogDetail === true" :blogId="state.blogId" @onDetailLoad="onDetailLoad"/>
+				<!-- 文章列表 -->
+				<BlogList 
+					v-if="state.isShowBlogDetail == false" 
+					:tagId="state.tagId" 
+					:blogUserId="state.blogUserId"
+					@openBlogDetail="openBlogDetail"/>
+			</div>
+
+			<div class="blog-info-right">
+				<div class="flex-center-between">
+					<div class="blog-toc-title flex-center-start mt15" v-show="state.blogCode == 200">
+						<img :src="blogToc" style="margin-left:12px; width: 14px; height: 14px; filter: drop-shadow(10000px 0 0 var(--el-color-black)); transform: translate(-10000px);"/>
+						<div style="margin-left:10px">目录</div>
+					</div>
+				</div>
+				<!-- 博客目录 -->
+				<MdCatalog editorId="md-preview-id" :scrollElement="scrollElement" :theme="isDarkTheme()?'dark':'light'" />
+			</div>
 		</div>
-		<!-- 博客目录 -->
-		<MdCatalog editorId="md-preview-id" :scrollElement="scrollElement" :theme="isDarkTheme()?'dark':'light'" />
-	</div>
-</div>
+  	</div>
 </template>
 
 <script setup lang="ts">
 import { defineAsyncComponent, onMounted, onUnmounted, reactive} from 'vue';
 import { useRoute, useRouter } from "vue-router"
-import { showNotify} from 'vant';
+import { showNotify, Sticky} from 'vant';
 import Api from "/@/api/api"
 import Request from "/@/api/request"
 import { MdCatalog } from 'md-editor-v3';

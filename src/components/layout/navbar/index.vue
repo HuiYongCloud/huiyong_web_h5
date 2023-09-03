@@ -1,29 +1,39 @@
 <template>
-	<div class="layout-nav-bar flex-center-end">
-		<ThemeSwitch/>
-		<div class="flex-center-center pl20 pr15 pt12 pb12" v-if="mainStore.userInfo" @mouseover="state.isSelectUser = true" @mouseleave="state.isSelectUser = false">
-			<VanImage round class="user-header" :src="mainStore.userInfo.userImage"/>
-			<div class="user-name pl5">{{mainStore.userInfo.userName}}</div>
-			<Icon class="ml5" name="arrow-down" />
+	<div class="w100">
+		<div class="layout-nav-bar-pc">
+			<div class="flex-center-end">
+				<ThemeSwitch/>
+				<div class="flex-center-center pl20 pr15 pt12 pb12" v-if="mainStore.userInfo" @mouseover="state.isSelectUser = true" @mouseleave="state.isSelectUser = false">
+					<VanImage round class="user-header" :src="mainStore.userInfo.userImage"/>
+					<div class="user-name pl5">{{mainStore.userInfo.userName}}</div>
+					<Icon class="ml5" name="arrow-down" />
 
-			<div class="user-menu-box">
-				<transition name="slide-top">
-					<div class="user-menu-list" v-if="state.isSelectUser">
-						<div class="user-info flex-center-start">
-							<div class="menu-user-image">
-								<VanImage round class="user-header" :src="mainStore.userInfo.userImage"/>
-							</div>
-							<div class="menu-user-name">{{mainStore.userInfo.userName}}</div>
-						</div>
-						<div class="menu-item flex-center-between" @click="toHome">首页</div>
-						<div class="menu-line"/>
-						<div class="menu-item flex-center-between" @click="toBlog">我的博客</div>
-						<div class="menu-item flex-center-between" @click="toResume">我的简历</div>
-						<div class="menu-item flex-center-between" @click="toAdmin">后台管理</div>
-						<div class="menu-line"/>
-						<div class="menu-item flex-center-between" @click="outLogin">退出登录</div>
-					</div>  
-				</transition>
+					<div class="user-menu-box">
+						<transition name="slide-top">
+							<div class="user-menu-list" v-if="state.isSelectUser">
+								<div class="user-info flex-center-start">
+									<div class="menu-user-image">
+										<VanImage round class="user-header" :src="mainStore.userInfo.userImage"/>
+									</div>
+									<div class="menu-user-name">{{mainStore.userInfo.userName}}</div>
+								</div>
+								<div class="menu-item flex-center-between" @click="toHome">首页</div>
+								<div class="menu-line"/>
+								<div class="menu-item flex-center-between" @click="toBlog">我的博客</div>
+								<div class="menu-item flex-center-between" @click="toResume">我的简历</div>
+								<div class="menu-item flex-center-between" @click="toAdmin">后台管理</div>
+								<div class="menu-line"/>
+								<div class="menu-item flex-center-between" @click="outLogin">退出登录</div>
+							</div>  
+						</transition>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="layout-nav-bar-mobile">
+			<div>
+				<img :src="blogToc" style="margin-right:15px; width: 20px; height: 20px; filter: drop-shadow(10000px 0 0 var(--el-color-black)); transform: translate(-10000px);"/>
 			</div>
 		</div>
 	</div>
@@ -35,6 +45,7 @@ import { appStore } from '/@/stores/appStore'
 import { Icon, Image as VanImage } from 'vant';
 import { useRoute, useRouter } from 'vue-router';
 import { showConfirmDialog } from 'vant';
+import blogToc from '/@/assets/svg/blog-toc.svg';
 
 // 定义变量
 const route = useRoute();
@@ -73,7 +84,7 @@ const outLogin = () => {
 <style scoped lang="scss">
 @import '/@/theme/media.scss';
 
-.layout-nav-bar {
+.layout-nav-bar-pc {
 	width: 100%;
 	z-index: 100;
 
@@ -163,6 +174,31 @@ const outLogin = () => {
 		100% {
 			transform: translateY(-100%);
 		}
+	}
+}
+
+.layout-nav-bar-mobile {
+	width: 100%;
+	z-index: 100;
+}
+
+@media screen and (max-width: $lg) {
+	.layout-nav-bar-pc{
+		display: none;
+	}
+
+	.layout-nav-bar-mobile{
+		display: block;
+	}
+}
+
+@media screen and (min-width: $lg) {
+	.layout-nav-bar-pc{
+		display: block;
+	}
+
+	.layout-nav-bar-mobile{
+		display: none;
 	}
 }
 </style>

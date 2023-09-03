@@ -1,9 +1,10 @@
 @import '/@/theme/media.scss';
 
 .blog-detail-page{
+  width: 85%;
 
   .blog-info-left{
-    width: 15vw;
+    width: 17%;
     min-width: 200px;
     position: sticky;
     top: 0;
@@ -11,12 +12,12 @@
   }
 
   .blog-content-page{
-    width: 55vw;
+    width: auto;
     margin: 10px 0 0 10px;
   }
 
   .blog-info-right{
-    width: 15vw;
+    width: 17%;
     min-width: 200px;
     position: sticky;
     top: 0;
@@ -35,6 +36,7 @@
   .blog-detail-page {
     padding: 0px;
     display: block;
+    width: 100%;
 
     .blog-info-left{
       position: static;
