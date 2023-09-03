@@ -29,7 +29,7 @@
 
                         <div class="card-right-2 flex-center-center">
                             <div class="flex-center-start">
-                                <img :src="Location" :width="20">
+                                <img :src="Location" style="width: 18px; height: 18px; filter: drop-shadow(10000px 0 0 var(--el-color-black)); transform: translate(-10000px);">
                                 <div class="text-location">{{detail.userAddress||'地点'}}</div>
                             </div>
                         </div>
@@ -38,23 +38,23 @@
 
                 <div class="card-bottom flex-center-around">
                     <div class="flex-center-center" style="flex-direction: column;">
-                        <img :src="Email" :width="30">
+                        <img :src="Email" style="width: 25px; height: 25px; filter: drop-shadow(10000px 0 0 var(--el-color-black)); transform: translate(-10000px);">
                         <div class="card-bottom-text">{{detail.userEmail || '邮箱'}}</div>
                     </div>
 
                     <div class="flex-center-center" style="flex-direction: column;">
-                        <img :src="Wechat" :width="30">
+                        <img :src="Wechat" style=" width: 25px; height: 25px; filter: drop-shadow(10000px 0 0 var(--el-color-black)); transform: translate(-10000px);">
                         <div class="card-bottom-text">二维码</div>
                     </div>
 
                     <div class="flex-center-center" style="flex-direction: column;">
-                        <img :src="Phone" :width="30">
+                        <img :src="Phone" style="width: 25px; height: 25px; filter: drop-shadow(10000px 0 0 var(--el-color-black)); transform: translate(-10000px);">
                         <div class="card-bottom-text">{{detail.userMobile || '联系电话'}}</div>
                     </div>
                 </div>
             </div>
         </div>
-        <div style="padding: 0 10px;">
+        <div style="padding: 30px 10px 0px;">
             <MDPreview :content="detail.resumeContent"/>
         </div>
     </div>
@@ -119,25 +119,25 @@ const props = defineProps({
             margin-top: 15px;
             font-size: 24px;
             font-weight: bold;
-            color: white;
+            color: var(--app-item-title);
         }
 
         .sub-title{
             margin: 8px 0 100px;
             font-size: 14px;
-            color: #a6a6a6;
+            color: var(--app-item-sub);
         }
 
         .card-left{
             border-radius: 30px 0 0 0;
             width: 158px;
             height: 220px;
-            background-color: #13171c;
+            background-color: var(--app-resume-bg-color);
             margin-right: 6px;
 
             .resume-title{
                 font-size: 22px;
-                color: white;
+                color: var(--app-item-title);
                 writing-mode:vertical-lr;
                 letter-spacing: 15px;
             }
@@ -147,7 +147,7 @@ const props = defineProps({
             border-radius: 0 30px 0 0;
             width: 158px;
             height: 105px;
-            background-color: #13171c;
+            background-color: var(--app-resume-bg-color);
             margin-left: 6px;
             margin-bottom: 10px;
             position: relative;
@@ -163,12 +163,12 @@ const props = defineProps({
         .card-right-2{
             width: 158px;
             height: 105px;
-            background-color: #13171c;
+            background-color: var(--app-resume-bg-color);
             margin-left: 6px;
             
             .text-location{
                 font-size: 16px;
-                color: #ffffff;
+                color: var(--app-item-title);
                 margin-left: 5px;
                 letter-spacing: 2px;
             }
@@ -179,12 +179,12 @@ const props = defineProps({
             border-radius: 0  0 30px 30px;
             width: 328px;
             height: 100px;
-            background-color: #13171c;
+            background-color: var(--app-resume-bg-color);
 
             .card-bottom-text{
                 margin-top: 5px;
                 font-size: 12px;
-                color: #707479;
+                color: var(--app-item-sub);
             }
         }
     }

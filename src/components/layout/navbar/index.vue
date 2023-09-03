@@ -100,8 +100,8 @@ const outLogin = () => {
 		width: 180px;
 		padding: 4px 0;
 		box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.12), 0 0.5px 1.5px 0 rgba(0, 0, 0, 0.08);
-		border: 1px solid var(--app-border-color);
-		background: #161b22;
+		border: 1px solid var(--el-border-color-light, #ebeef5);
+		background: var(--app-bg-color);
 		border-radius: 3px;
 		overflow: hidden;
 		margin: 2px 16px 16px;
@@ -139,7 +139,7 @@ const outLogin = () => {
 		}
 
 		.menu-line{
-			border-top: 1px solid var(--app-border-color);
+			border-top: 1px solid var(--el-border-color-light, #ebeef5);
 			margin: 6px 0px;
 		}
 	}
