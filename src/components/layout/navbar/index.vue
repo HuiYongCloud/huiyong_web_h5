@@ -33,7 +33,7 @@
 
 		<div class="layout-nav-bar-mobile">
 			<div class="h100 w100 flex-center-center" @click="state.showDrawer = !state.showDrawer">
-				<img :src="blogToc" style="width: 20px; height: 20px; filter: drop-shadow(10000px 0 0 var(--el-color-black)); transform: translate(-10000px);"/>
+				<img :src="blogToc" style="width: 18px; height: 18px; filter: drop-shadow(10000px 0 0 var(--el-color-black)); transform: translate(-10000px);"/>
 			</div>
 
 			<Popup 
@@ -48,6 +48,17 @@
 						<div class="menu-user-name">{{mainStore.userInfo.userName}}</div>
 					</div>
 					<div class="menu-item flex-center-between" @click="toHome">首页</div>
+					<div class="menu-item flex-center-between" @click="toHome">
+						<div class="w100 flex-center-between">
+							<div>主题切换</div>
+							<Switch 
+								size="20" 
+								v-model="state.isDark" 
+								@change="changeSysTheme" 
+								active-color="#000000" 
+							/>
+						</div>
+					</div>
 					<div class="menu-line"/>
 					<div class="menu-item flex-center-between" @click="toBlog">我的博客</div>
 					<div class="menu-item flex-center-between" @click="toResume">我的简历</div>
@@ -61,9 +72,9 @@
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent, reactive, ref} from 'vue';
+import { defineAsyncComponent, onMounted, reactive, nextTick} from 'vue';
 import { appStore } from '/@/stores/appStore'
-import { Icon, Image as VanImage, Popup } from 'vant';
+import { Icon, Image as VanImage, Popup , Switch} from 'vant';
 import { useRoute, useRouter } from 'vue-router';
 import { showConfirmDialog } from 'vant';
 import blogToc from '/@/assets/svg/blog-toc.svg';
@@ -74,7 +85,8 @@ const router = useRouter();
 const mainStore = appStore()
 const state = reactive({
 	isSelectUser: false,
-	showDrawer: false
+	showDrawer: false,
+	isDark: false,
 });
 // 引入组件
 const ThemeSwitch = defineAsyncComponent(() => import('/@/components/theme-switch/index.vue'));
@@ -82,12 +94,28 @@ const ThemeSwitch = defineAsyncComponent(() => import('/@/components/theme-switc
 // 首页
 const toHome = ()=> router.push('/')
 // 博客
-const toBlog = ()=> location.href = `/blogDetail?userId=${mainStore.userInfo.userId}`
+const toBlog = ()=> router.push({
+		name: 'blogDetail',
+		query: {userId: mainStore.userInfo.userId}
+	})
 // 简历
-const toResume = () => location.href = `/resume?userId=${mainStore.userInfo.userId}`
+const toResume = () => router.push({
+		name: 'resume',
+		query: {userId: mainStore.userInfo.userId}
+	})
 // 管理后台
 const toAdmin = ()=> window.open("https://admin.huiyong.online/", '_blank')
 
+// 变更主题
+const changeSysTheme = () => {
+	let isDark = false;
+	if(mainStore.theme){
+		isDark = mainStore.theme === 'dark'
+	}else{
+		isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+	}
+	mainStore.theme = isDark ? 'light' : 'dark';
+}
 // 退出登录
 const outLogin = () => {
 	showConfirmDialog({
@@ -101,6 +129,23 @@ const outLogin = () => {
 	});
 }
 
+// 初始化主题色
+const onInitTheme = () => {
+	let isDark = false;
+	if(mainStore.theme){
+		isDark = mainStore.theme === 'dark'
+	}else{
+		isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+	}
+	state.isDark = isDark;
+}
+
+onMounted(() => {
+	nextTick(() => {
+		// 主题色
+		onInitTheme()
+	});
+});
 </script>
 
 <style scoped lang="scss">
@@ -236,11 +281,6 @@ const outLogin = () => {
 			color: var(--app-item-title);
 			font-size: 14px;
 			transition: all .3s ease;
-			cursor: pointer;
-
-			&:hover{
-				background-color: rgba(var(--el-color-primary-rgb), .1);
-			}
 		}
 
 		.menu-line{
