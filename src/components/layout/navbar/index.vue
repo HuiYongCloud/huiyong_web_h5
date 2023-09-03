@@ -18,7 +18,7 @@
 						<div class="menu-item flex-center-between" @click="toHome">首页</div>
 						<div class="menu-line"/>
 						<div class="menu-item flex-center-between" @click="toBlog">我的博客</div>
-						<div class="menu-item flex-center-between" @click="toAdmin">我的简历</div>
+						<div class="menu-item flex-center-between" @click="toResume">我的简历</div>
 						<div class="menu-item flex-center-between" @click="toAdmin">后台管理</div>
 						<div class="menu-line"/>
 						<div class="menu-item flex-center-between" @click="outLogin">退出登录</div>
@@ -50,8 +50,11 @@ const ThemeSwitch = defineAsyncComponent(() => import('/@/components/theme-switc
 const toHome = ()=> router.push('/')
 // 博客
 const toBlog = ()=> location.href = `/blogDetail?userId=${mainStore.userInfo.userId}`
+// 简历
+const toResume = () => location.href = `/resume?userId=${mainStore.userInfo.userId}`
 // 管理后台
 const toAdmin = ()=> window.open("https://admin.huiyong.online/", '_blank')
+
 // 退出登录
 const outLogin = () => {
 	showConfirmDialog({

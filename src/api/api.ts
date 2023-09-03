@@ -56,6 +56,11 @@ export const Api = {
 	/**
 	 * 邀请码
 	 */
-	INVITE_CHECK:       	Api_Client + '/invite/n/checkInvite',        // 邀请码检测可用
+	INVITE_CHECK:       	Api_Client + '/invite/n/checkInvite',         // 邀请码检测可用
+
+	/**
+	 * 简历详情
+	 */
+	Resume_Detail:       	Api_Client + '/resume/n/detail',        	  // 简历	
 }
 export default Api
