@@ -28,6 +28,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { appStore } from '/@/stores/appStore'
+import Api from "/@/api/api"
+import Request from "/@/api/request"
+import { Tabs, Tab, showNotify } from 'vant';
 
 const mainStore = appStore()
 const userInfo = mainStore.userInfo
@@ -55,8 +58,13 @@ const props = defineProps({
 });
 
 const shareBlog = (blogId: String) => {
-
+	Request.post(Api.Blog_Share, { blogId : blogId})
+	.then((res : any) =>{ })
+	.catch(res =>{
+		showNotify({ type: 'danger', message: res.message });
+	})
 }
+
 // 打开博客详情
 const openBlogDetail = (blogId: any) => {
 	emit('openBlogDetail', blogId);

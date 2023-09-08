@@ -34,6 +34,7 @@ export const Api = {
 	Blog_Like_List:  		Api_Client + '/blogLike/n/list',      		 // 博客收藏列表
 	Get_Tag_User_Id:   		Api_Client + '/blogTag/n/getTagUserId',   	 // 标签用户id
 	Blog_Tag_List:   		Api_Client + '/blogTag/n/tagList',   		 // 标签列表
+	Blog_Share:   			Api_Client + '/blog/n/getShareInfo',   	 // 分享博客
 
 	/**
 	 * 博客收藏
