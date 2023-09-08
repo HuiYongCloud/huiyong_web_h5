@@ -28,6 +28,7 @@
 						</transition>
 					</div>
 				</div>
+				<div v-else class="login-title pl10 pr10 pt12 pb12" @click="toLogin">去登录</div>
 			</div>
 		</div>
 
@@ -48,7 +49,7 @@
 						<div class="menu-user-name">{{mainStore.userInfo.userName}}</div>
 					</div>
 					<div class="menu-item flex-center-between" @click="toHome">首页</div>
-					<div class="menu-item flex-center-between" @click="toHome">
+					<div class="menu-item flex-center-between">
 						<div class="w100 flex-center-between">
 							<div>主题切换</div>
 							<Switch 
@@ -59,12 +60,16 @@
 							/>
 						</div>
 					</div>
-					<div class="menu-line"/>
-					<div class="menu-item flex-center-between" @click="toBlog">我的博客</div>
-					<div class="menu-item flex-center-between" @click="toResume">我的简历</div>
-					<div class="menu-item flex-center-between" @click="toAdmin">后台管理</div>
-					<div class="menu-line"/>
-					<div class="menu-item flex-center-between" @click="outLogin">退出登录</div>
+					<!-- 未登录 -->
+					<div class="menu-item flex-center-between" v-if="!mainStore.userInfo" @click="toLogin">去登录</div>
+
+					<!-- 已登录 -->
+					<div class="menu-line" v-if="mainStore.userInfo"/>
+					<div class="menu-item flex-center-between" v-if="mainStore.userInfo" @click="toBlog">我的博客</div>
+					<div class="menu-item flex-center-between" v-if="mainStore.userInfo" @click="toResume">我的简历</div>
+					<div class="menu-item flex-center-between" v-if="mainStore.userInfo" @click="toAdmin">后台管理</div>
+					<div class="menu-line" v-if="mainStore.userInfo"/>
+					<div class="menu-item flex-center-between" v-if="mainStore.userInfo" @click="outLogin">退出登录</div>
 				</div> 
 			</Popup>
 		</div>
@@ -93,6 +98,10 @@ const ThemeSwitch = defineAsyncComponent(() => import('/@/components/theme-switc
 
 // 首页
 const toHome = ()=> router.push('/')
+// 登录
+const toLogin = () => {
+	router.push(`/login?redirect=${route.path}&params=${JSON.stringify(route.query ? route.query : route.params)}`)
+}
 // 博客
 const toBlog = ()=> router.push({
 		name: 'blogDetail',
@@ -154,6 +163,15 @@ onMounted(() => {
 .layout-nav-bar-pc {
 	width: 100%;
 	z-index: 100;
+
+	.login-title{
+		cursor: pointer;
+		color: var(--el-color-info);
+
+		&:hover {
+			color: var(--el-color-primary) !important;
+		}
+	}
 
 	.user-header{
 		border-radius: 50%;
