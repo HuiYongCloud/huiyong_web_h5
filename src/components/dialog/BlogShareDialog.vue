@@ -44,7 +44,7 @@ defineExpose({
 });
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .share-content{
 	white-space: pre-line; 
 	line-height: 25px;

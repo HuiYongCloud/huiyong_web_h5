@@ -59,7 +59,7 @@ const BlogUserInfo = defineAsyncComponent(() => import('./components/BlogUserInf
 const BlogTagInfo = defineAsyncComponent(() => import('./components/BlogTagInfo.vue'));
 const BlogList = defineAsyncComponent(() => import('./components/BlogList.vue'));
 const BlogDetail = defineAsyncComponent(() => import('./components/BlogDetail.vue'));
-const BlogShareDialog = defineAsyncComponent(() => import('./components/BlogShareDialog.vue'));
+const BlogShareDialog = defineAsyncComponent(() => import('/@/components/dialog/BlogShareDialog.vue'));
 
 // 定义变量内容
 const mainStore = appStore()
