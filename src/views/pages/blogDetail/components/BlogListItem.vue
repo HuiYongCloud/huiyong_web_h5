@@ -18,7 +18,7 @@
 				<div class="item-status-num">收藏 {{item.favoriteNum || 0}}</div>                  
 			</div>
 
-			<div class="item-bottom-right flex-center-start" @click.stop="shareBlog(item.blogId)">
+			<div class="item-bottom-right flex-center-start" @click.stop="openBlogShare(item.blogId)">
 				<div class="item-control">分享</div>
 			</div>
 		</div>
@@ -26,11 +26,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed} from 'vue';
 import { appStore } from '/@/stores/appStore'
-import Api from "/@/api/api"
-import Request from "/@/api/request"
-import { Tabs, Tab, showNotify } from 'vant';
 
 const mainStore = appStore()
 const userInfo = mainStore.userInfo
@@ -40,7 +37,7 @@ const isRootBlog = computed(() => {
 });
 
 // 定义子组件向父组件传值/事件
-const emit = defineEmits(['openBlogDetail']);
+const emit = defineEmits(['openBlogShare','openBlogDetail']);
 
 // 定义父组件传过来的值
 const props = defineProps({
@@ -57,14 +54,10 @@ const props = defineProps({
 	},
 });
 
-const shareBlog = (blogId: String) => {
-	Request.post(Api.Blog_Share, { blogId : blogId})
-	.then((res : any) =>{ })
-	.catch(res =>{
-		showNotify({ type: 'danger', message: res.message });
-	})
+// 分享博客
+const openBlogShare = (blogId: any) => {
+	emit('openBlogShare', blogId);
 }
-
 // 打开博客详情
 const openBlogDetail = (blogId: any) => {
 	emit('openBlogDetail', blogId);

@@ -1,5 +1,6 @@
 <template>
   	<div class="w100 flex-start-center">
+		<BlogShareDialog ref="blogShareDialog"/>
 		<div style="position: relative;" class="blog-detail-page flex-start-center">
 
 			<!-- 个人信息导航 -->
@@ -21,8 +22,10 @@
 					v-if="state.isShowBlogDetail == false" 
 					:tagId="state.tagId" 
 					:blogUserId="state.blogUserId"
-					@openBlogDetail="openBlogDetail"/>
-			</div>
+					@openBlogDetail="openBlogDetail"
+					@openBlogShare="openBlogShare"
+					/>
+				</div>
 
 			<div class="blog-info-right">
 				<div class="flex-center-between">
@@ -41,7 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent, onMounted, onUnmounted, reactive} from 'vue';
+import { defineAsyncComponent, onMounted, onUnmounted, reactive, ref} from 'vue';
 import { useRoute, useRouter } from "vue-router"
 import { showNotify, Sticky, BackTop } from 'vant';
 import Api from "/@/api/api"
@@ -56,6 +59,7 @@ const BlogUserInfo = defineAsyncComponent(() => import('./components/BlogUserInf
 const BlogTagInfo = defineAsyncComponent(() => import('./components/BlogTagInfo.vue'));
 const BlogList = defineAsyncComponent(() => import('./components/BlogList.vue'));
 const BlogDetail = defineAsyncComponent(() => import('./components/BlogDetail.vue'));
+const BlogShareDialog = defineAsyncComponent(() => import('./components/BlogShareDialog.vue'));
 
 // 定义变量内容
 const mainStore = appStore()
@@ -71,6 +75,7 @@ const isDarkTheme = () => {
 const scrollElement = document.documentElement;
 const route = useRoute();
 const router = useRouter();
+const blogShareDialog = ref();
 const state = reactive({
 	blogUserId:'' as any,	
 	tagId:'' as any,
@@ -150,6 +155,17 @@ const openBlogDetail = (blogId: any) => {
 	router.push({
 		name: 'blogDetail',
 		query: {blogId: blogId}
+	})
+}
+
+const openBlogShare = (blogId: any) => {
+	console.log(2222, blogId)
+	Request.post(Api.Blog_Share, { blogId : blogId})
+	.then((res : any) =>{
+		blogShareDialog.value.openDialog(res);
+	})
+	.catch(res =>{
+		showNotify({ type: 'danger', message: res.message });
 	})
 }
 
