@@ -1,7 +1,6 @@
 <template>
 	<Dialog v-model:show="state.dialog.isShowDialog" :showConfirmButton="false" width="500">
 		<div class="flex-center-start mt50 mb40" style="flex-direction: column;">
-			<!-- <SvgIcon name="ele-CircleCheckFilled" style="color: #67c23a; font-size: 60px;"/> -->
 			<img :src="Success" style="width: 60px; height: 60px; filter: drop-shadow(10000px 0 0 #67c23a); transform: translate(-10000px);">
 			<div class="mt15 mb15" style="font-size: 20px;">复制分享链接成功</div>
 			<div class="share-content">{{state.shareContent}}</div>
