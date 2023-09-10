@@ -83,6 +83,9 @@ import { Icon, Image as VanImage, Popup , Switch} from 'vant';
 import { useRoute, useRouter } from 'vue-router';
 import { showConfirmDialog } from 'vant';
 import blogToc from '/@/assets/svg/blog-toc.svg';
+import Api from "/@/api/api"
+import Request from "/@/api/request"
+import { showNotify} from 'vant';
 
 // 定义变量
 const route = useRoute();
@@ -131,9 +134,14 @@ const outLogin = () => {
 		title: '提示',
 		message:'此操作将退出登录, 是否继续?'}
 	).then(() => {
-		// 清除缓存
-		mainStore.userInfo = ''
-		router.push('/login')
+		Request.post(Api.UUA_LoginOut)
+		.then((_) =>{
+			// 清除缓存
+			mainStore.userInfo = ''
+			router.push('/login')
+		}).catch((res:any) =>{
+			showNotify({ type: 'danger', message: res.message });
+		})
 	}).catch(() => {
 	});
 }
