@@ -49,6 +49,9 @@ const props = defineProps({
 </script>
 
 <style lang="scss">
+ul {
+    list-style-type: disc !important;
+}
 .md-editor{
 	background: transparent !important;
 }

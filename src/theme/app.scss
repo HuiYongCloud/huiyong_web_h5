@@ -21,16 +21,16 @@ body,
 	height: 100%;
 	font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB','Microsoft YaHei', '微软雅黑', Arial, sans-serif;
 	font-weight: 400;
-	-webkit-font-smoothing: antialiased;
-	-webkit-tap-highlight-color: transparent;
+	// -webkit-font-smoothing: antialiased;
+	// -webkit-tap-highlight-color: transparent;
 	background-color: var(--app-color-bg);
 	color: var(--el-text-color-primary);
 	font-size: 12px;
 	overflow-x: hidden;
+	overflow-y: auto;
 	// 主题色切换时的动效
 	transition: color .3s cubic-bezier(0.39, 0.58, 0.57, 1), background-color .3s cubic-bezier(0.39, 0.58, 0.57, 1);
 	
-	overflow-y: auto;
 	&:hover{
 		::-webkit-scrollbar-thumb{
 			background: rgba(144, 147, 153, 0.3);
