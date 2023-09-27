@@ -1,7 +1,7 @@
 <template>
 	<div class="u-char-box">
 		<div class="u-char-flex flex-start-center">
-			<input v-model="state.valueModel" type="number" autofocus autocomplete="off" :maxlength="maxlength" class="u-input" @input="changeInput"/>
+			<input v-model="state.valueModel" :type="type" autofocus autocomplete="off" :maxlength="maxlength" class="u-input" @input="changeInput"/>
 			<div v-for="(item, index) in loopCharArr" :key="index">
 				<div :class="[breathe && charArrLength == index ? 'u-breathe' : '', 'u-char-item flex-center-center',
 				charArrLength === index && mode == 'box' ? 'u-box-active' : '',
@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, reactive, watch, nextTick} from 'vue';
+import { computed, reactive} from 'vue';
 
 /**
  * messageInput 验证码输入框
@@ -58,6 +58,11 @@ const props = defineProps({
 		type: [Number],
 		default: 4
 	},
+	// 最大输入长度
+	type: {
+		type: String,
+		default: 'text'
+	},	
 	// 是否用圆点填充
 	dotFill: {
 		type: Boolean,

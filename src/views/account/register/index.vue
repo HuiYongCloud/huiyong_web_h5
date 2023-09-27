@@ -2,7 +2,7 @@
   <div >
     <ThemeSwitch :sticky="true"/>
     <!-- 注册 -->
-    <div class="user-register-page flex-center-start">
+    <div class="user-register-page flex-center-start" v-show="state.inviteCode">
       <div style="width: 360px;">
         <Field v-model="state.userName" label="用户名" placeholder="输入用户名" autocomplete="off"/>
         <Field v-model="state.email" label="邮箱" type="email" placeholder="输入邮箱" autocomplete="off"/>
@@ -76,7 +76,7 @@ const state = reactive({
   email:'',
   smsCode:'',
   password:'',
-  inviteCode:'1881',
+  inviteCode:'',
   userAvatar: "",
 
   // 头像更换
