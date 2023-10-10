@@ -3,8 +3,8 @@
 		<div class="item-top-box flex-start-between">
 			<span>
 				<span class="item-title" >{{item.title}}</span>
-				<span v-if="isRootBlog && item.openStatus == 0" class="open-status-0 ml10">公开</span>
-				<span v-if="isRootBlog && item.openStatus == 1" class="open-status-1 ml10">私密</span>
+				<span v-if="isRootBlog && item.openStatus == 0" class="open-status-0 ml10">私密</span>
+				<span v-if="isRootBlog && item.openStatus == 1" class="open-status-1 ml10">公开</span>
 			</span>
 			<div class="item-time" >{{item.createTime}}</div>
 		</div>
