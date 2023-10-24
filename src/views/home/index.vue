@@ -1,27 +1,125 @@
 <template>
-  <div class="page-home h100 flex-center-center" style="flex-direction: column;">
+  <div 
+    :class = "[state.seachKey ? 'flex-center-start' : 'flex-center-center']"
+    :style="{'padding-top': state.seachKey ? '50px' : '0px'}"
+    class="page-home h100" 
+    style="flex-direction: column;">
+    
+    <!-- 导航 -->
     <div style="position: absolute; top: 0; right: 0;">
       <Navbar/>
     </div>
 
-    <Footer/>
-
+    <!-- logo -->
     <div class="home-title">Hui Yong</div>
-    <div class="flex-center-center" style="margin: 0 50px; width: calc(100% - 100px); flex-direction: column;">
-      <div class="search-input  mt50 w100" :class="{'search-input-focus': state.inputFocus}">
+
+    <!-- 搜索 -->
+    <div class="flex-center-center" style="padding: 20px 0px;">
+      <div 
+        class="search-input" 
+        :class="{'search-input-focus': state.inputFocus}" 
+        style="width: calc(100vw - 50px); margin: 0 25px; ">
         <input 
           class="input-class"
           type="text" 
           autofocus 
           autocomplete="off"
-          id="searchSugrec"
+          id="searchInput"
           placeholder="搜索"
           @focus="state.inputFocus = true"
-          @keyup.enter="searchEnter"
+          v-on:input="onPullDownRefresh"
+          @keyup.enter="onPullDownRefresh"
           v-model="state.seachKey" />
       </div>
+    </div>
 
-      <img class="home-back-img" style="margin-top: 100px;" :src="homeBack">
+    <!-- 列表 -->
+    <div v-if="state.seachKey" style="margin-bottom: 50px;">
+      <VanPullRefresh v-model="state.reFreshing" @refresh="onPullDownRefresh">
+        <VanList
+          v-model:loading="state.listLoading"
+          v-model:error="state.loadError"
+          :finished="state.hasMore"
+          @load="onReachBottom">
+
+          <!-- item -->
+          <div v-for="(item, index) in state.list.data" :key="index">
+
+            <!-- 用户 -->
+            <div v-if="item.type == 'user'">
+              <!-- 用户分割线 -->
+              <VanDivider content-position="left" v-if="index == state.list.userFirstIndex">用户</VanDivider>
+              <div class="flex-start-start">
+                <VanImage round class="user-header" :src="item.userImage" style="height: 30px; width: 30px;"/>
+                <div class="item-user" style="margin-left: 10px;" >
+                  <div class="flex">
+                    <div v-html="item.userName"/>
+                    <div class="user-code-year-box flex-center-center">
+                      <img class="code-year-img" :src="imgPig">
+                      <span class="code-year">{{item.codeYear}}</span>
+                    </div>
+                  </div>
+
+                  <div class="flex-center-start" style="margin-top: 8px;">
+                      <div class="item-status-num">访问量 {{item.blogInfoReadNum || 0}}</div>
+                      <div class="item-status-dot"/>
+                      <div class="item-status-num">被关注 {{item.focusNum || 0}}</div>                         
+                      <div class="item-status-dot"/>
+                      <div class="item-status-num">文章 {{item.blogNum || 0}}</div>
+                      <div class="item-status-dot"/>
+                      <div class="item-status-num">被收藏 {{item.blogLikeNum || 0}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 博客 -->
+            <div v-if="item.type == 'blog'">
+              <!-- 博客分割线 -->
+              <VanDivider content-position="left" v-if="index == state.list.blogFirstIndex">博客</VanDivider>
+              <div class="blog-item">
+                <div class="item-blog flex">
+                  <div class="item-top-box flex-start-between">
+                    <span>
+                      <span class="item-title" v-html="item.title"></span>
+                      <span v-if="item.openStatus == 0" class="open-status-0 ml10">私密</span>
+                      <span v-if="item.openStatus == 1" class="open-status-1 ml10">公开</span>
+                    </span>
+                    <div class="item-time" >{{item.createTime}}</div>
+                  </div>
+
+                  <div class="item-bottom flex-center-between">
+                    <div class="item-bottom-left flex-center-start">
+                      <div class="item-status-num">阅读 {{item.readNum || 0}}</div>
+                      
+                      <!-- 收藏列表不显示收藏数 -->
+                      <div class="item-status-dot"/>
+                      <div class="item-status-num">收藏 {{item.favoriteNum || 0}}</div>                  
+                    </div>
+
+                    <div class="item-bottom-right flex-center-start">
+                      <div class="item-control">分享</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 底部 -->
+          <Footer/>
+        </VanList>
+      </VanPullRefresh>
+    </div>
+
+    <!-- 背景图 -->
+    <div
+      v-if="!state.seachKey" 
+      style="margin: 50px 25px 0px;" >
+      <img class="home-back-img" :src="homeBack">
+
+      <!-- 底部 -->
+      <Footer absolute/>
     </div>
   </div>
 </template>
@@ -29,9 +127,10 @@
 <script setup lang="ts">
 import { defineAsyncComponent, onMounted, onUnmounted, reactive, ref, nextTick} from 'vue';
 import homeBack from '/@/assets/img/home-back.webp';
-import { showNotify} from 'vant';
+import { List as VanList, PullRefresh as VanPullRefresh, Image as VanImage, Divider as VanDivider} from 'vant';
 import Api from "/@/api/api"
 import Request from "/@/api/request"
+import imgPig from '/@/assets/img/pig1.gif';
 
 // 引入组件
 const Navbar = defineAsyncComponent(() => import('/@/components/layout/navbar/index.vue'));
@@ -39,24 +138,102 @@ const Footer = defineAsyncComponent(() => import('/@/components/layout/footer/in
 
 const state = reactive({
   seachKey: "",
+
+  
+  listLoading: false,
+  
+  pageNum: 1,
+  pageSize: 10,
+  //列表页面是否开始加载
+  list_status: "load_before",
+  //是否关闭底部上拉加载
+  hasMore: false,
+  // 加载失败
+  loadError: false,
+  // 下拉刷新
+  reFreshing: false,
+  
+  list:{
+    // 用户数据第一个数据下标
+    userFirstIndex: 0,
+    // 博客数据第一个数据下标
+    blogFirstIndex: 0,
+    total: 0,
+    count: 0,
+    data: [] as any
+  },
+
   inputFocus: false
 })
 
 const searchListener = (event: any) => {
-  if(event.srcElement.id != 'searchSugrec'){
+  if(event.srcElement.id != 'searchInput'){
     state.inputFocus = false
   }
 }
 
-const searchEnter = () => {
+// 下拉刷新
+const onPullDownRefresh = () => {
+  loadPage(1); //第一次加载数据
+}
+
+// 页面上拉
+const onReachBottom = () =>  {
+  if (state.hasMore) {
+    loadPage(++state.pageNum);
+  }
+}
+
+const loadPage = (pageNum: number) => {
+  if(state.pageNum != pageNum){
+    state.pageNum = pageNum;
+  }
+
+  // 空字段
+  if(!state.seachKey){
+    state.list.data = [];
+    state.hasMore = false;
+    return;
+  }
+
   Request.post(Api.ES_Search, {
 		searchKey: state.seachKey,
-    pageNum: 1,
-    pageSize : 10
+    pageNum: state.pageNum,
+    pageSize : state.pageSize
 	}).then((res:any) =>{
-    
+    state.loadError = false;
+    state.reFreshing = false;
+    //处理列表数据
+    if (pageNum == 1) {
+      state.list.userFirstIndex = 0
+      state.list.blogFirstIndex = 0
+      state.list.data = res.list;
+    } else {
+      state.list.data.push(...res.list);
+    }
+    //是否加载完成判断
+    state.hasMore = state.pageNum * state.pageSize <= res.total;
+
+    // 更新下标
+    if(state.list.userFirstIndex == 0){
+      for (let [index,item] of state.list.data.entries()){
+        if(item.type === 'user'){
+          state.list.userFirstIndex = index
+          break
+        }
+      }
+    }
+    if(state.list.blogFirstIndex == 0){
+      for (let [index,item] of state.list.data.entries()){
+        if(item.type === 'blog'){
+          state.list.blogFirstIndex = index
+          break
+        }
+      }
+    }
 	}).catch((res:any) =>{
-		showNotify({ type: 'danger', message: res.message });
+    state.loadError = true;
+    state.reFreshing = false;
 	})
 }
 
