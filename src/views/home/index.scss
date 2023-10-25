@@ -7,6 +7,7 @@
     font-size: 35px;
     color: var(--app-item-title);
     letter-spacing: 1px;
+    margin-bottom: 10px;
   }
 
   .search-input-focus {
@@ -15,10 +16,15 @@
     box-shadow: var(--el-color-primary) 0px 0px 0px 1px inset;
   }
 
-  .search-input{
+  .search-top-group{
+    background-image: radial-gradient(transparent 1px,var(--app-color-bg) 1px);
+    background-size: 4px 4px;
+    backdrop-filter: saturate(50%) blur(4px);
+  }
+
+  .base-search-input{
     min-width: 300px;
     max-width: 600px;
-    height: 40px;
     padding: 0 10px;
     border: 1px solid var(--app-border-color);
     border-radius: 6px;
@@ -41,6 +47,21 @@
       }
     }
   }
+  // 未输入关键字
+  .search-input-not-key{
+    height: 40px;
+
+    input {
+      font-size: 14px;
+    }
+  }
+  // 已输入关键字
+  .search-input-onkey{
+    height: 40px;
+    input {
+      font-size: 14px;
+    }
+  }
 
   .home-back-img{
     width: 100%;
@@ -49,6 +70,9 @@
 
   .seach-list-group{
     width: $lg;
+    min-height: 100vh;
+    padding-top: 180px;
+    overflow-y: scroll;
   }
 
   // 列表-用户
@@ -115,8 +139,6 @@
         margin-bottom: 10px;
       }
     }
-
-
   
     .item-bottom{
       width: 100%;
@@ -160,11 +182,20 @@
 @media screen and (max-width: $lg) {
   .page-home {
     .home-title{
-      font-size: 30px;
+      font-size: 22px;
     }
+
+    // 已输入关键字
+    .search-input-onkey{
+      height: 30px;
+      input {
+        font-size: 12px;
+      }
+    }   
 
     .seach-list-group{
       width: 100%;
+      padding-top: 120px;
     }
   }
 }

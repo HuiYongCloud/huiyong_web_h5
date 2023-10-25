@@ -1,24 +1,30 @@
 <template>
   <div 
     :class = "[state.seachKey ? 'flex-center-start' : 'flex-center-center']"
-    :style="{'padding-top': state.seachKey ? '50px' : '0px', 'position' : state.seachKey ? 'relative' :  'static'}"
+    :style="{'position' : state.seachKey ? 'relative' :  'static'}"
     class="page-home h100" 
     style="flex-direction: column;">
-    
-    <!-- 导航 -->
-    <div style="position: absolute; top: 0; right: 0;">
-      <Navbar/>
-    </div>
 
-    <div class="flex-center-center" style="flex-direction: column;">
+    <!-- 导航 -->
+    <div style="position: absolute; top: 0; right: 0; z-index: 100;">
+      <Navbar/>
+    </div>   
+
+    <div 
+      class="flex-center-center search-top-group" 
+      style="flex-direction: column; position: absolute; top: 0; right: 0; left: 0; z-index: 1;"
+      :style="{ 'position' : state.seachKey ? 'absolute' :  'static'}">
       <!-- logo -->
-      <div class="home-title">Hui Yong</div>
+      <div class="home-title" :style="{'padding-top': state.seachKey ? '30px' : '0px',}">Hui Yong</div>
 
       <!-- 搜索 -->
-      <div class="flex-center-center" style="padding: 20px 0px;">
+      <div class="flex-center-center" :class="{'search-input-onkey': state.seachKey}" style="padding: 20px 0px;">
         <div 
-          class="search-input" 
-          :class="{'search-input-focus': state.inputFocus}" 
+          class="base-search-input" 
+          :class="{
+            'search-input-focus': state.inputFocus, 
+            'search-input-not-key': !state.seachKey, 
+            'search-input-onkey': state.seachKey}" 
           style="width: calc(100vw - 50px); margin: 0 25px; ">
           <input 
             class="input-class"
@@ -33,16 +39,16 @@
             v-model="state.seachKey" />
         </div>
       </div>
-    </div>
+    </div> 
 
     <div v-if="state.seachKey" class="seach-list-group">
-      <VanPullRefresh v-model="state.reFreshing" @refresh="onPullDownRefresh">
+      <VanPullRefresh v-model="state.reFreshing" @refresh="onPullDownRefresh" style="min-height: calc(100vh - 240px);">
         <VanList
           v-model:loading="state.listLoading"
           v-model:error="state.loadError"
           :finished="!state.hasMore"
           error-text="请求失败，点击重新加载"
-          finished-text="没有更多数据了哦!"
+          finished-text="已经到底了!"
           @load="onReachBottom">
 
           <!-- item -->
@@ -54,8 +60,8 @@
                 <div class="flex-center-between">
                   <div class="flex-center-start">
                     <VanImage round class="user-header" :src="item.userImage" style="height: 25px; width: 25px;"/>
-                    <div v-html="item.userName" style="margin-left: 10px; font-size: 14px; color: var(--app-item-title);"/>
-                    <span class="open-status-0 ml10">博主</span>
+                    <div v-html="item.userName" style="margin-left: 10px; font-size: 12px; font-weight: bold; color: var(--app-item-title);"/>
+                    <span class="open-status-1 ml10">博主</span>
                   </div>
 
                   <div class="flex-center-start">
@@ -85,19 +91,19 @@
                 <!-- 博主信息 -->
                 <div class="flex-center-start">
                   <VanImage round class="user-header" :src="item.userImage" style="height: 25px; width: 25px;"/>
-                  <div v-html="item.userName" style="margin-left: 10px; font-size: 14px; color: var(--app-item-title);"/>
+                  <div v-html="item.userName" style="margin-left: 10px; font-size: 12px; font-weight: bold; color: var(--app-item-title);"/>
                 </div>
                 <!-- 博客信息 -->
                 <div class="item-content-group">
                   <div class="flex-center-between" style="margin-bottom: 10px;">
                     <div>
-                      <span class="item-title" v-html="item.title"></span>
+                      <span class="item-title" v-html="item.title" style="font-size: 12px; font-weight: bold;"></span>
                       <span v-if="item.openStatus == 0" class="open-status-0 ml10">私密，博主可搜索</span>
                       <!-- <span v-if="item.openStatus == 1" class="open-status-1 ml10">公开</span> -->
                     </div>
                     <div style="color: var(--app-item-sub); margin-left: 10px;">{{item.timeStr}}</div>
                   </div>
-                  <div class="blog-centent" v-html="item.content"></div>
+                  <div class="blog-centent" style="font-size: 12px; padding-right: 10px; overflow: hidden;" v-html="item.content"></div>
                   <div class="item-bottom flex-center-between">
                     <div class="item-bottom-left flex-center-start">
                       <div class="item-status-num">阅读 {{item.readNum || 0}}</div>
