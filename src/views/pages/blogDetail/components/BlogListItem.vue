@@ -82,7 +82,7 @@ const openBlogDetail = (blogId: any) => {
 		.open-status-0{
 			padding: 2px 4px;
 			border-radius: 2px;
-			color: #6b5;
+			color: #fc5531;
 			font-size: 12px;
 			background: rgba(103,187,85,.1);
 			margin-right: 10px;
@@ -91,7 +91,7 @@ const openBlogDetail = (blogId: any) => {
 		.open-status-1{
 			padding: 2px 4px;
 			border-radius: 2px;
-			color: #fc5531;
+			color: #6b5;
 			font-size: 12px;
 			background: rgba(103,187,85,.1);
 			margin-right: 10px;

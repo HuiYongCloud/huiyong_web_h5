@@ -46,29 +46,33 @@
           <div v-for="(item, index) in state.list.data" :key="index">
 
             <!-- 用户 -->
-            <div v-if="item.type == 'user'">
+            <div v-if="item.type == 'user'" class="item-user">
               <!-- 用户分割线 -->
               <VanDivider content-position="left" v-if="index == state.list.userFirstIndex">用户</VanDivider>
-              <div class="flex-start-start">
-                <VanImage round class="user-header" :src="item.userImage" style="height: 30px; width: 30px;"/>
-                <div class="item-user" style="margin-left: 10px;" >
-                  <div class="flex">
-                    <div v-html="item.userName"/>
+              <div>
+                <div class="flex-center-between">
+                  <div class="flex-center-start">
+                    <VanImage round class="user-header" :src="item.userImage" style="height: 25px; width: 25px;"/>
+                    <div v-html="item.userName" style="margin-left: 10px; font-size: 14px;"/>
+                  </div>
+
+                  <div class="flex-center-start">
                     <div class="user-code-year-box flex-center-center">
                       <img class="code-year-img" :src="imgPig">
                       <span class="code-year">{{item.codeYear}}</span>
                     </div>
+                    <div style="color: var(--app-item-sub); margin-left: 10px;">{{item.timeStr}}</div>
                   </div>
+                </div>
 
-                  <div class="flex-center-start" style="margin-top: 8px;">
-                      <div class="item-status-num">访问量 {{item.blogInfoReadNum || 0}}</div>
-                      <div class="item-status-dot"/>
-                      <div class="item-status-num">被关注 {{item.focusNum || 0}}</div>                         
-                      <div class="item-status-dot"/>
-                      <div class="item-status-num">文章 {{item.blogNum || 0}}</div>
-                      <div class="item-status-dot"/>
-                      <div class="item-status-num">被收藏 {{item.blogLikeNum || 0}}</div>
-                  </div>
+                <div class="flex-center-start" style="margin-top: 10px;">
+                    <div class="item-status-num">访问量 {{item.blogInfoReadNum || 0}}</div>
+                    <div class="item-status-dot"/>
+                    <div class="item-status-num">被关注 {{item.focusNum || 0}}</div>                         
+                    <div class="item-status-dot"/>
+                    <div class="item-status-num">文章 {{item.blogNum || 0}}</div>
+                    <div class="item-status-dot"/>
+                    <div class="item-status-num">被收藏 {{item.blogLikeNum || 0}}</div>
                 </div>
               </div>
             </div>
@@ -78,27 +82,29 @@
               <!-- 博客分割线 -->
               <VanDivider content-position="left" v-if="index == state.list.blogFirstIndex">博客</VanDivider>
               <div class="blog-item">
-                <div class="item-blog flex">
-                  <div class="item-top-box flex-start-between">
-                    <span>
-                      <span class="item-title" v-html="item.title"></span>
-                      <span v-if="item.openStatus == 0" class="open-status-0 ml10">私密</span>
-                      <span v-if="item.openStatus == 1" class="open-status-1 ml10">公开</span>
-                    </span>
-                    <div class="item-time" >{{item.createTime}}</div>
+                <div class="item-blog">
+                  <!-- 博主信息 -->
+                  <div class="flex-center-start">
+                    <VanImage round class="user-header" :src="item.userImage" style="height: 25px; width: 25px;"/>
+                    <div v-html="item.userName" style="margin-left: 10px; font-size: 14px;"/>
                   </div>
-
-                  <div class="item-bottom flex-center-between">
-                    <div class="item-bottom-left flex-center-start">
-                      <div class="item-status-num">阅读 {{item.readNum || 0}}</div>
-                      
-                      <!-- 收藏列表不显示收藏数 -->
-                      <div class="item-status-dot"/>
-                      <div class="item-status-num">收藏 {{item.favoriteNum || 0}}</div>                  
+                  <!-- 博客信息 -->
+                  <div class="item-content-group">
+                    <div class="flex-center-between" style="margin-bottom: 10px;">
+                      <div>
+                        <span class="item-title" v-html="item.title"></span>
+                        <span v-if="item.openStatus == 0" class="open-status-0 ml10">私密，博主可搜索</span>
+                        <!-- <span v-if="item.openStatus == 1" class="open-status-1 ml10">公开</span> -->
+                      </div>
+                      <div style="color: var(--app-item-sub); margin-left: 10px;">{{item.timeStr}}</div>
                     </div>
-
-                    <div class="item-bottom-right flex-center-start">
-                      <div class="item-control">分享</div>
+                    <div class="blog-centent" v-html="item.content"></div>
+                    <div class="item-bottom flex-center-between">
+                      <div class="item-bottom-left flex-center-start">
+                        <div class="item-status-num">阅读 {{item.readNum || 0}}</div>
+                        <div class="item-status-dot"/>
+                        <div class="item-status-num">收藏 {{item.favoriteNum || 0}}</div>                  
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -47,7 +47,8 @@
 
   // 列表-用户
   .item-user{
-    width: 100vw;
+    width: calc(100vw - 20px);
+    padding: 10px;
 
     .item-status-num{
       color: var(--app-item-sub);
@@ -85,30 +86,27 @@
   }
 
   .item-blog{
-    // width: calc(100vw - 20px);
+    width: calc(100vw - 20px);
     position: relative;
-    border-bottom: 1px solid var(--app-border-color);
     padding: 10px;
     cursor: pointer;
     flex-direction: column;
     &:hover, &:active{
       background-color: rgba(var(--el-color-primary-rgb), .1);
     }
-  
-    .item-top-box{
-      width: 100%;
-      margin-bottom: 15px;
-  
-      .open-status-0{
-        padding: 2px 4px;
-        border-radius: 2px;
-        color: #6b5;
-        font-size: 12px;
-        background: rgba(103,187,85,.1);
-        margin-right: 10px;
+
+    .item-content-group{
+      background-color: #161b22;
+      padding: 10px;
+      border-radius: 5px;
+      margin-top: 10px;
+
+      .item-title{
+        color: var(--app-item-title);
+        font-size: 14px;
       }
-  
-      .open-status-1{
+
+      .open-status-0{
         padding: 2px 4px;
         border-radius: 2px;
         color: #fc5531;
@@ -117,16 +115,24 @@
         margin-right: 10px;
       }
   
-      .item-title{
-        color: var(--app-item-title);
-        font-size: 14px;
-      }
-  
-      .item-time{
+      .open-status-1{
+        padding: 2px 4px;
+        border-radius: 2px;
+        color: #6b5;
         font-size: 12px;
-        color: var(--app-item-sub);
+        background: rgba(103,187,85,.1);
+        margin-right: 10px;
+      }
+
+      .blog-centent{
+        color: var(--app-item-title);
+        font-size: 12px;
+        line-height: 1.6;
+        margin-bottom: 10px;
       }
     }
+
+
   
     .item-bottom{
       width: 100%;
@@ -143,21 +149,6 @@
           border-radius: 50%;
           background-color: var(--app-item-sub);
           margin: 0 8px;
-        }
-      }
-  
-      .item-bottom-right{
-        .item-control{
-          color: var(--app-item-sub);
-          font-size: 12px;
-          padding-left: 20px;
-          cursor: pointer;
-          transition: color 0.1s;
-  
-          &:hover, &:active{
-            color: var(--el-color-primary);
-            font-weight: bold;
-          }
         }
       }
     }
