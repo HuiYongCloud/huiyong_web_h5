@@ -151,14 +151,13 @@ const route = useRoute();
 const router = useRouter();
 const state = reactive({
   seachKey: "" as any,
-  listLoading: true,
   
   pageNum: 1,
   pageSize: 10,
   //列表页面是否开始加载
-  list_status: "load_before",
+  listLoading: true,
   //是否关闭底部上拉加载
-  hasMore: false,
+  hasMore: true,
   // 加载失败
   loadError: false,
   // 下拉刷新
