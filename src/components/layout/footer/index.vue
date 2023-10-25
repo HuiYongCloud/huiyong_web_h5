@@ -22,7 +22,6 @@ const toLink = () => window.open("https://beian.miit.gov.cn/", '_blank')
 
 <style scoped lang="scss">
 .layout-footer {
-	width: 100%;
 	bottom: 0;
 	left: 0;
 	width: 100%;

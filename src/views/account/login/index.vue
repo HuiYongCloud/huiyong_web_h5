@@ -15,7 +15,7 @@
 			<img :src="loginBg" class="login-left-waves" />
 		</div>
 		<div class="login-right">
-			<Footer/>
+			<Footer absolute/>
 
 			<div class="login-right-warp flex-center-center">
 				<span class="login-right-warp-one"></span>
