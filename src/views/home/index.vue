@@ -33,13 +33,15 @@
       </div>
     </div>
 
-    <!-- 列表 -->
-    <div v-if="state.seachKey" style="margin-bottom: 50px;">
+    <!-- 列表  style="margin-bottom: 50px; height: calc(50vh - 300px); overflow-y: scroll;" -->
+    <div v-if="state.seachKey">
       <VanPullRefresh v-model="state.reFreshing" @refresh="onPullDownRefresh">
         <VanList
           v-model:loading="state.listLoading"
           v-model:error="state.loadError"
-          :finished="state.hasMore"
+          :finished="!state.hasMore"
+          error-text="请求失败，点击重新加载"
+          finished-text="没有更多数据了哦!"
           @load="onReachBottom">
 
           <!-- item -->
@@ -145,7 +147,7 @@ const route = useRoute();
 const router = useRouter();
 const state = reactive({
   seachKey: "" as any,
-  listLoading: false,
+  listLoading: true,
   
   pageNum: 1,
   pageSize: 10,
@@ -203,13 +205,13 @@ const onInputChange = () => {
 
 // 下拉刷新
 const onPullDownRefresh = () => {
-  loadPage(1); //第一次加载数据
+  loadPage(1);
 }
 
 // 页面上拉
 const onReachBottom = () =>  {
   if (state.hasMore) {
-    loadPage(++state.pageNum);
+    loadPage(state.pageNum);
   }
 }
 
@@ -240,8 +242,12 @@ const loadPage = (pageNum: number) => {
     } else {
       state.list.data.push(...res.list);
     }
+    
     //是否加载完成判断
     state.hasMore = state.pageNum * state.pageSize <= res.total;
+    state.listLoading = false;
+    // 下一页
+    ++state.pageNum;
 
     // 更新下标
     if(state.list.userFirstIndex == 0){
@@ -262,6 +268,7 @@ const loadPage = (pageNum: number) => {
     }
 	}).catch((res:any) =>{
     state.loadError = true;
+    state.listLoading = false;
     state.reFreshing = false;
 	})
 }
