@@ -1,3 +1,5 @@
+@import '/@/theme/media.scss';
+
 .page-home {
   position: relative;
 
@@ -45,9 +47,12 @@
     max-width: 800px;
   }
 
+  .seach-list-group{
+    width: $lg;
+  }
+
   // 列表-用户
   .item-user{
-    width: calc(100vw - 20px);
     padding: 10px;
 
     .item-status-num{
@@ -85,15 +90,11 @@
     }
   }
 
+  // 列表-博客
   .item-blog{
-    width: calc(100vw - 20px);
     position: relative;
     padding: 10px;
-    cursor: pointer;
     flex-direction: column;
-    &:hover, &:active{
-      background-color: rgba(var(--el-color-primary-rgb), .1);
-    }
 
     .item-content-group{
       background-color: #161b22;
@@ -105,24 +106,6 @@
       .item-title{
         color: var(--app-item-title);
         font-size: 14px;
-      }
-
-      .open-status-0{
-        padding: 2px 4px;
-        border-radius: 2px;
-        color: #fc5531;
-        font-size: 12px;
-        background: rgba(103,187,85,.1);
-        margin-right: 10px;
-      }
-  
-      .open-status-1{
-        padding: 2px 4px;
-        border-radius: 2px;
-        color: #6b5;
-        font-size: 12px;
-        background: rgba(103,187,85,.1);
-        margin-right: 10px;
       }
 
       .blog-centent{
@@ -154,4 +137,34 @@
       }
     }
   }  
+
+  .open-status-0{
+    padding: 2px 4px;
+    border-radius: 2px;
+    color: #fc5531;
+    font-size: 12px;
+    background: rgba(103,187,85,.1);
+    margin-right: 10px;
+  }
+
+  .open-status-1{
+    padding: 2px 4px;
+    border-radius: 2px;
+    color: #6b5;
+    font-size: 12px;
+    background: rgba(103,187,85,.1);
+    margin-right: 10px;
+  }  
+}
+
+@media screen and (max-width: $lg) {
+  .page-home {
+    .home-title{
+      font-size: 30px;
+    }
+
+    .seach-list-group{
+      width: 100%;
+    }
+  }
 }

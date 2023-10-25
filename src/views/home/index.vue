@@ -1,7 +1,7 @@
 <template>
   <div 
     :class = "[state.seachKey ? 'flex-center-start' : 'flex-center-center']"
-    :style="{'padding-top': state.seachKey ? '50px' : '0px'}"
+    :style="{'padding-top': state.seachKey ? '50px' : '0px', 'position' : state.seachKey ? 'relative' :  'static'}"
     class="page-home h100" 
     style="flex-direction: column;">
     
@@ -10,31 +10,32 @@
       <Navbar/>
     </div>
 
-    <!-- logo -->
-    <div class="home-title">Hui Yong</div>
+    <div class="flex-center-center" style="flex-direction: column;">
+      <!-- logo -->
+      <div class="home-title">Hui Yong</div>
 
-    <!-- 搜索 -->
-    <div class="flex-center-center" style="padding: 20px 0px;">
-      <div 
-        class="search-input" 
-        :class="{'search-input-focus': state.inputFocus}" 
-        style="width: calc(100vw - 50px); margin: 0 25px; ">
-        <input 
-          class="input-class"
-          type="text" 
-          autofocus 
-          autocomplete="off"
-          id="searchInput"
-          placeholder="搜索"
-          @focus="state.inputFocus = true"
-          v-on:input="onInputChange"
-          @keyup.enter="onPullDownRefresh"
-          v-model="state.seachKey" />
+      <!-- 搜索 -->
+      <div class="flex-center-center" style="padding: 20px 0px;">
+        <div 
+          class="search-input" 
+          :class="{'search-input-focus': state.inputFocus}" 
+          style="width: calc(100vw - 50px); margin: 0 25px; ">
+          <input 
+            class="input-class"
+            type="text" 
+            autofocus 
+            autocomplete="off"
+            id="searchInput"
+            placeholder="搜索"
+            @focus="state.inputFocus = true"
+            v-on:input="onInputChange"
+            @keyup.enter="onPullDownRefresh"
+            v-model="state.seachKey" />
+        </div>
       </div>
     </div>
 
-    <!-- 列表  style="margin-bottom: 50px; height: calc(50vh - 300px); overflow-y: scroll;" -->
-    <div v-if="state.seachKey">
+    <div v-if="state.seachKey" class="seach-list-group">
       <VanPullRefresh v-model="state.reFreshing" @refresh="onPullDownRefresh">
         <VanList
           v-model:loading="state.listLoading"
@@ -49,13 +50,12 @@
 
             <!-- 用户 -->
             <div v-if="item.type == 'user'" class="item-user">
-              <!-- 用户分割线 -->
-              <VanDivider content-position="left" v-if="index == state.list.userFirstIndex">用户</VanDivider>
-              <div @click="toUserDetail(item.id)">
+              <router-link style="cursor: pointer;"  :to="{name: 'blogDetail', query: {userId: item.id}}">
                 <div class="flex-center-between">
                   <div class="flex-center-start">
                     <VanImage round class="user-header" :src="item.userImage" style="height: 25px; width: 25px;"/>
-                    <div v-html="item.userName" style="margin-left: 10px; font-size: 14px;"/>
+                    <div v-html="item.userName" style="margin-left: 10px; font-size: 14px; color: var(--app-item-title);"/>
+                    <span class="open-status-0 ml10">博主</span>
                   </div>
 
                   <div class="flex-center-start">
@@ -76,18 +76,16 @@
                     <div class="item-status-dot"/>
                     <div class="item-status-num">被收藏 {{item.blogLikeNum || 0}}</div>
                 </div>
-              </div>
+              </router-link>
             </div>
 
             <!-- 博客 -->
             <div v-if="item.type == 'blog'"  class="item-blog">
-              <!-- 博客分割线 -->
-              <VanDivider content-position="left" v-if="index == state.list.blogFirstIndex">博客</VanDivider>
-              <div @click="toBlogDetail(item.id)">
+              <router-link style="cursor: pointer;" :to="{name: 'blogDetail', query: {blogId: item.id}}">
                 <!-- 博主信息 -->
                 <div class="flex-center-start">
                   <VanImage round class="user-header" :src="item.userImage" style="height: 25px; width: 25px;"/>
-                  <div v-html="item.userName" style="margin-left: 10px; font-size: 14px;"/>
+                  <div v-html="item.userName" style="margin-left: 10px; font-size: 14px; color: var(--app-item-title);"/>
                 </div>
                 <!-- 博客信息 -->
                 <div class="item-content-group">
@@ -108,14 +106,14 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </router-link>
             </div>
           </div>
-
-          <!-- 底部 -->
-          <Footer/>
         </VanList>
       </VanPullRefresh>
+
+      <!-- 底部 -->
+      <Footer/>
     </div>
 
     <!-- 背景图 -->
@@ -133,7 +131,7 @@
 <script setup lang="ts">
 import { defineAsyncComponent, onMounted, onUnmounted, reactive, ref, nextTick} from 'vue';
 import homeBack from '/@/assets/img/home-back.webp';
-import { List as VanList, PullRefresh as VanPullRefresh, Image as VanImage, Divider as VanDivider} from 'vant';
+import { Sticky, List as VanList, PullRefresh as VanPullRefresh, Image as VanImage, Divider as VanDivider} from 'vant';
 import Api from "/@/api/api"
 import Request from "/@/api/request"
 import imgPig from '/@/assets/img/pig1.gif';
@@ -177,20 +175,6 @@ const searchListener = (event: any) => {
   if(event.srcElement.id != 'searchInput'){
     state.inputFocus = false
   }
-}
-
-const toUserDetail = (id: any) => {
-  router.push({
-		name: 'blogDetail',
-		query: {userId: id}
-	})
-}
-
-const toBlogDetail = (id: any) => {
-  router.push({
-		name: 'blogDetail',
-		query: {blogId: id}
-	})
 }
 
 const onInputChange = () => {
