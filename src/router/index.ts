@@ -6,6 +6,7 @@ import { appStore } from "/@/stores/appStore";
 const routes: RouteRecordRaw[] = [
     { 
         path: '/', 
+        name: 'home', 
         component: () => import('/@/views/home/index.vue') ,
         meta: { title: 'HuiYong' }
     },

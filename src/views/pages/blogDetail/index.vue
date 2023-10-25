@@ -159,7 +159,6 @@ const openBlogDetail = (blogId: any) => {
 }
 
 const openBlogShare = (blogId: any) => {
-	console.log(2222, blogId)
 	Request.post(Api.Blog_Share, { blogId : blogId})
 	.then((res : any) =>{
 		blogShareDialog.value.openDialog(res);

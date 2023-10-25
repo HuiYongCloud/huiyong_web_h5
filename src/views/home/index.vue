@@ -27,7 +27,7 @@
           id="searchInput"
           placeholder="搜索"
           @focus="state.inputFocus = true"
-          v-on:input="onPullDownRefresh"
+          v-on:input="onInputChange"
           @keyup.enter="onPullDownRefresh"
           v-model="state.seachKey" />
       </div>
@@ -49,7 +49,7 @@
             <div v-if="item.type == 'user'" class="item-user">
               <!-- 用户分割线 -->
               <VanDivider content-position="left" v-if="index == state.list.userFirstIndex">用户</VanDivider>
-              <div>
+              <div @click="toUserDetail(item.id)">
                 <div class="flex-center-between">
                   <div class="flex-center-start">
                     <VanImage round class="user-header" :src="item.userImage" style="height: 25px; width: 25px;"/>
@@ -78,33 +78,31 @@
             </div>
 
             <!-- 博客 -->
-            <div v-if="item.type == 'blog'">
+            <div v-if="item.type == 'blog'"  class="item-blog">
               <!-- 博客分割线 -->
               <VanDivider content-position="left" v-if="index == state.list.blogFirstIndex">博客</VanDivider>
-              <div class="blog-item">
-                <div class="item-blog">
-                  <!-- 博主信息 -->
-                  <div class="flex-center-start">
-                    <VanImage round class="user-header" :src="item.userImage" style="height: 25px; width: 25px;"/>
-                    <div v-html="item.userName" style="margin-left: 10px; font-size: 14px;"/>
-                  </div>
-                  <!-- 博客信息 -->
-                  <div class="item-content-group">
-                    <div class="flex-center-between" style="margin-bottom: 10px;">
-                      <div>
-                        <span class="item-title" v-html="item.title"></span>
-                        <span v-if="item.openStatus == 0" class="open-status-0 ml10">私密，博主可搜索</span>
-                        <!-- <span v-if="item.openStatus == 1" class="open-status-1 ml10">公开</span> -->
-                      </div>
-                      <div style="color: var(--app-item-sub); margin-left: 10px;">{{item.timeStr}}</div>
+              <div @click="toBlogDetail(item.id)">
+                <!-- 博主信息 -->
+                <div class="flex-center-start">
+                  <VanImage round class="user-header" :src="item.userImage" style="height: 25px; width: 25px;"/>
+                  <div v-html="item.userName" style="margin-left: 10px; font-size: 14px;"/>
+                </div>
+                <!-- 博客信息 -->
+                <div class="item-content-group">
+                  <div class="flex-center-between" style="margin-bottom: 10px;">
+                    <div>
+                      <span class="item-title" v-html="item.title"></span>
+                      <span v-if="item.openStatus == 0" class="open-status-0 ml10">私密，博主可搜索</span>
+                      <!-- <span v-if="item.openStatus == 1" class="open-status-1 ml10">公开</span> -->
                     </div>
-                    <div class="blog-centent" v-html="item.content"></div>
-                    <div class="item-bottom flex-center-between">
-                      <div class="item-bottom-left flex-center-start">
-                        <div class="item-status-num">阅读 {{item.readNum || 0}}</div>
-                        <div class="item-status-dot"/>
-                        <div class="item-status-num">收藏 {{item.favoriteNum || 0}}</div>                  
-                      </div>
+                    <div style="color: var(--app-item-sub); margin-left: 10px;">{{item.timeStr}}</div>
+                  </div>
+                  <div class="blog-centent" v-html="item.content"></div>
+                  <div class="item-bottom flex-center-between">
+                    <div class="item-bottom-left flex-center-start">
+                      <div class="item-status-num">阅读 {{item.readNum || 0}}</div>
+                      <div class="item-status-dot"/>
+                      <div class="item-status-num">收藏 {{item.favoriteNum || 0}}</div>                  
                     </div>
                   </div>
                 </div>
@@ -137,15 +135,16 @@ import { List as VanList, PullRefresh as VanPullRefresh, Image as VanImage, Divi
 import Api from "/@/api/api"
 import Request from "/@/api/request"
 import imgPig from '/@/assets/img/pig1.gif';
+import { useRoute, useRouter } from 'vue-router';
 
 // 引入组件
 const Navbar = defineAsyncComponent(() => import('/@/components/layout/navbar/index.vue'));
 const Footer = defineAsyncComponent(() => import('/@/components/layout/footer/index.vue'));
-
+// 定义变量
+const route = useRoute();
+const router = useRouter();
 const state = reactive({
-  seachKey: "",
-
-  
+  seachKey: "" as any,
   listLoading: false,
   
   pageNum: 1,
@@ -176,6 +175,30 @@ const searchListener = (event: any) => {
   if(event.srcElement.id != 'searchInput'){
     state.inputFocus = false
   }
+}
+
+const toUserDetail = (id: any) => {
+  router.push({
+		name: 'blogDetail',
+		query: {userId: id}
+	})
+}
+
+const toBlogDetail = (id: any) => {
+  router.push({
+		name: 'blogDetail',
+		query: {blogId: id}
+	})
+}
+
+const onInputChange = () => {
+  // 变更路径
+	router.push({
+		name: 'home',
+		query: {seachKey: state.seachKey}
+	})
+
+  onPullDownRefresh()
 }
 
 // 下拉刷新
@@ -243,14 +266,27 @@ const loadPage = (pageNum: number) => {
 	})
 }
 
+// 返回时刷新页面
+const backRefresh = ()=> {
+	window.location.reload();
+}
+
 onMounted(()=> {
 	nextTick(() => {
     document.body.addEventListener('click', searchListener, true);
+
+    // 搜索关键字处理
+    if(route.query.seachKey){
+      state.seachKey = route.query.seachKey
+      // 刷新
+      onPullDownRefresh();
+    }
   })
 })
 
 onUnmounted(()=> {
-  document.body.removeEventListener('click', searchListener);
+  // 移除监听返回
+	window.removeEventListener('popstate', backRefresh)
 })
 
 </script>
