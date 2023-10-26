@@ -42,13 +42,13 @@
 				position="right"
   				:style="{ width: '240px', height: '100%', }">
 				  <div class="user-menu-list">
-					<div class="user-info flex-center-start">
+					<div class="user-info flex-center-start" v-if="mainStore.userInfo">
 						<div class="menu-user-image">
 							<VanImage round class="user-header" :src="mainStore.userInfo.userImage"/>
 						</div>
 						<div class="menu-user-name">{{mainStore.userInfo.userName}}</div>
 					</div>
-					<div class="menu-item flex-center-between" @click="toHome">首页</div>
+					<div class="menu-item flex-center-between" v-if="route.path != '/'" @click="toHome">首页</div>
 					<div class="menu-item flex-center-between">
 						<div class="w100 flex-center-between">
 							<div>主题切换</div>
@@ -139,7 +139,10 @@ const outLogin = () => {
 		.then((_) =>{
 			// 清除缓存
 			mainStore.userInfo = null
-			router.push('/login')
+			// 首页退出就不跳转登录页面
+			if(route.path != '/'){
+				router.push('/login')
+			}
 		}).catch((res:any) =>{
 			showNotify({ type: 'danger', message: res.message });
 		})
