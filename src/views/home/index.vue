@@ -120,7 +120,7 @@
             </div>
           </div>
 
-          <div v-if="state.list.data.length == 0" class="flex-center-center" style="padding-top: 30vh;">
+          <div v-if="state.list.data.length == 0" class="flex-center-center" style="padding-top: 20vh;">
             <div style="color: var(--app-item-sub); font-size: 15px;">空空如也！</div>
           </div>
         </VanList>
