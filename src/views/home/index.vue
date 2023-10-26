@@ -44,6 +44,7 @@
     <div v-if="state.seachKey" class="seach-list-group">
       <VanPullRefresh 
         v-model="state.reFreshing" 
+        class="flex-center-center"
         @refresh="onPullDownRefresh" 
         style="min-height: calc(100vh - 240px); padding-bottom: 50px;">
 
@@ -55,7 +56,7 @@
           @load="onReachBottom">
 
           <!-- item -->
-          <div v-for="(item, index) in state.list.data" :key="index">
+          <div class="seach-list" v-for="(item, index) in state.list.data" :key="index">
 
             <!-- 用户 -->
             <div v-if="item.type == 'user'" class="item-user">

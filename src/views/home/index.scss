@@ -71,16 +71,20 @@
   }
 
   .seach-list-group{
-    width: $lg;
+    width: 100%;
     min-height: 100vh;
     padding-top: 180px;
     overflow-y: scroll;
+
+    .seach-list{
+      width: $lg;
+    }
   }
 
   // 隐藏滚动条
-  ::-webkit-scrollbar {
-    display: none !important;
-  }
+  // ::-webkit-scrollbar {
+  //   display: none !important;
+  // }
 
   // 列表-用户
   .item-user{
@@ -211,8 +215,10 @@
     }   
 
     .seach-list-group{
-      width: 100%;
       padding-top: 120px;
+      .seach-list{
+        width: 100%;
+      }
     }
   }
 }
