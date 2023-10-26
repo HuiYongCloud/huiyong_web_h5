@@ -42,7 +42,11 @@
     </div> 
 
     <div v-if="state.seachKey" class="seach-list-group">
-      <VanPullRefresh v-model="state.reFreshing" @refresh="onPullDownRefresh" style="min-height: calc(100vh - 240px); padding-bottom: 50px;">
+      <VanPullRefresh 
+        v-model="state.reFreshing" 
+        @refresh="onPullDownRefresh" 
+        style="min-height: calc(100vh - 240px); padding-bottom: 50px;">
+
         <VanList
           v-model:loading="state.listLoading"
           v-model:error="state.loadError"
