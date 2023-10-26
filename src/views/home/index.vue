@@ -195,7 +195,7 @@ const onInputChange = () => {
   // 变更路径
 	router.push({
 		name: 'home',
-		query: {seachKey: state.seachKey}
+		query: {q: state.seachKey}
 	})
 
   onPullDownRefresh()
@@ -284,8 +284,8 @@ onMounted(()=> {
     document.body.addEventListener('click', searchListener, true);
 
     // 搜索关键字处理
-    if(route.query.seachKey){
-      state.seachKey = route.query.seachKey
+    if(route.query.q){
+      state.seachKey = route.query.q
       // 刷新
       onPullDownRefresh();
     }
