@@ -20,6 +20,7 @@
     background-image: radial-gradient(transparent 1px,var(--app-color-bg) 1px);
     background-size: 4px 4px;
     backdrop-filter: saturate(50%) blur(4px);
+    padding-bottom: 10px;
   }
 
   .base-search-input{
@@ -28,6 +29,7 @@
     padding: 0 10px;
     border: 1px solid var(--app-border-color);
     border-radius: 6px;
+    background-color: var(--app-color-bg);
 
     input {
       width: 100%;
@@ -125,14 +127,14 @@
     padding: 10px;
     flex-direction: column;
 
-    .item-content-group{
-      background-color: #161b22;
+    .blog-content-group{
+      background-color: #f6f8fa;
       padding: 10px;
       border-radius: 5px;
       margin-top: 10px;
       overflow: hidden;
 
-      .item-title{
+      .blog-title{
         color: var(--app-item-title);
         font-size: 14px;
       }
@@ -182,6 +184,16 @@
     background: rgba(103,187,85,.1);
     margin-right: 10px;
   }  
+}
+
+[data-theme="dark"] {
+  .page-home {
+    .item-blog{
+      .blog-content-group{
+        background-color: #161b22;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: $lg) {

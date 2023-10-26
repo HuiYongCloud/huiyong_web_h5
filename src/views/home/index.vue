@@ -93,10 +93,10 @@
                   <div v-html="item.userName" style="margin-left: 10px; font-size: 12px; font-weight: bold; color: var(--app-item-title);"/>
                 </div>
                 <!-- 博客信息 -->
-                <div class="item-content-group">
+                <div class="blog-content-group">
                   <div class="flex-center-between" style="margin-bottom: 10px;">
                     <div>
-                      <span class="item-title" v-html="item.title" style="font-size: 12px; font-weight: bold;"></span>
+                      <span class="blog-title" v-html="item.title" style="font-size: 12px; font-weight: bold;"></span>
                       <span v-if="item.openStatus == 0" class="open-status-0 ml10">私密，博主可搜索</span>
                       <!-- <span v-if="item.openStatus == 1" class="open-status-1 ml10">公开</span> -->
                     </div>
