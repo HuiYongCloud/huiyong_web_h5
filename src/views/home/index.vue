@@ -41,7 +41,7 @@
       </div>
     </div> 
 
-    <div v-if="state.seachKey" class="seach-list-group">
+    <div ref="seachListGroup" v-if="state.seachKey" class="seach-list-group">
       <VanPullRefresh 
         v-model="state.reFreshing" 
         class="flex-center-center"
@@ -121,7 +121,7 @@
           </div>
 
           <div v-if="state.list.data.length == 0" class="flex-center-center" style="padding-top: 30vh;">
-              <div style="color: var(--app-item-sub); font-size: 15px;">空空如也！</div>
+            <div style="color: var(--app-item-sub); font-size: 15px;">空空如也！</div>
           </div>
         </VanList>
       </VanPullRefresh>
@@ -157,6 +157,7 @@ const Footer = defineAsyncComponent(() => import('/@/components/layout/footer/in
 // 定义变量
 const route = useRoute();
 const router = useRouter();
+const seachListGroup = ref();
 const state = reactive({
   seachKey: "" as any,
   
@@ -233,6 +234,9 @@ const loadPage = (pageNum: number) => {
     state.reFreshing = false;
     //处理列表数据
     if (pageNum == 1) {
+      // 滑动到顶部
+      seachListGroup.value.scrollTop = 0   
+
       state.list.userFirstIndex = 0
       state.list.blogFirstIndex = 0
       state.list.data = res.list;
