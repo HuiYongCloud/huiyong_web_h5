@@ -84,7 +84,7 @@ router.beforeEach((to, from, next) => {
         mainStore.userInfo = ''
         mainStore.token_403 = ''
         next(`/login?redirect=${to.path}&params=${JSON.stringify(to.query ? to.query : to.params)}`);
-    }else if (userInfo.userId && to.path === '/login'){
+    }else if (userInfo && userInfo.userId && to.path === '/login'){
         NextLoading.start();
         next('/');
         NextLoading.done(1000);
