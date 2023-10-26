@@ -138,7 +138,7 @@ const outLogin = () => {
 		Request.post(Api.UUA_LoginOut)
 		.then((_) =>{
 			// 清除缓存
-			mainStore.userInfo = ''
+			mainStore.userInfo = null
 			router.push('/login')
 		}).catch((res:any) =>{
 			showNotify({ type: 'danger', message: res.message });

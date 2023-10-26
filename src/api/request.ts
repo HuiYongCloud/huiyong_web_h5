@@ -20,7 +20,7 @@ service.interceptors.request.use(
     // 在请求发送前做的操作
     config.headers['Content-Type'] = "application/json"
     config.headers['client'] = "h5"
-    config.headers['token'] = appStore().userInfo.token
+    config.headers['token'] = appStore().userInfo ? appStore().userInfo.token : ''
     return config
   },
   (error) => {
@@ -58,6 +58,7 @@ service.interceptors.response.use(
   },
 
   error => {
+    console.log(error)
     return Promise.reject({code: 404, message: "未请求到有效地址"})
   }
 )
