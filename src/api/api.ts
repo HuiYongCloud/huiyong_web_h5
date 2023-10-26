@@ -21,6 +21,7 @@ export const Api = {
 	Login_Email_Code:       Api_UUA + '/uua/n/loginByCode',       		// 登录【验证码】
 	UUA_Register:       	Api_UUA + '/uua/n/register',       			// 用户注册
 	UUA_LoginOut:       	Api_UUA + '/uua/n/loginOut',       			// 退出登录
+	UUA_UserCache:       	Api_UUA + '/uua/n/getUserCache',       		// 用户缓存
 
 	/**
 	 * 腾讯Oss

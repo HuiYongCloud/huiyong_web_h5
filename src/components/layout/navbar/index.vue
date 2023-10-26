@@ -1,7 +1,7 @@
 <template>
 	<div class="w100">
 		<div class="layout-nav-bar-pc">
-			<div class="flex-center-end">
+			<div class="flex-center-end" v-if="state.isUpUserCache">
 				<ThemeSwitch/>
 				<div class="flex-center-center pl20 pr15 pt12 pb12" v-if="mainStore.userInfo" @mouseover="state.isSelectUser = true" @mouseleave="state.isSelectUser = false">
 					<VanImage round class="user-header" :src="mainStore.userInfo.userImage"/>
@@ -92,6 +92,7 @@ const route = useRoute();
 const router = useRouter();
 const mainStore = appStore()
 const state = reactive({
+	isUpUserCache: false,
 	isSelectUser: false,
 	showDrawer: false,
 	isDark: false,
@@ -146,6 +147,14 @@ const outLogin = () => {
 	});
 }
 
+const getUserCache = () => {
+	Request.post(Api.UUA_UserCache)
+		.then((res) =>{
+			mainStore.userInfo = res
+			state.isUpUserCache = true
+		}).catch((res:any) =>{})
+}
+
 // 初始化主题色
 const onInitTheme = () => {
 	let isDark = false;
@@ -161,6 +170,7 @@ onMounted(() => {
 	nextTick(() => {
 		// 主题色
 		onInitTheme()
+		getUserCache()
 	});
 });
 </script>

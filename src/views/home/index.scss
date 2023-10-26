@@ -75,6 +75,11 @@
     overflow-y: scroll;
   }
 
+  // 隐藏滚动条
+  ::-webkit-scrollbar {
+    display: none !important;
+  }
+
   // 列表-用户
   .item-user{
     padding: 10px;

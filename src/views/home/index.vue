@@ -42,13 +42,12 @@
     </div> 
 
     <div v-if="state.seachKey" class="seach-list-group">
-      <VanPullRefresh v-model="state.reFreshing" @refresh="onPullDownRefresh" style="min-height: calc(100vh - 240px);">
+      <VanPullRefresh v-model="state.reFreshing" @refresh="onPullDownRefresh" style="min-height: calc(100vh - 240px); padding-bottom: 50px;">
         <VanList
           v-model:loading="state.listLoading"
           v-model:error="state.loadError"
           :finished="!state.hasMore"
           error-text="请求失败，点击重新加载"
-          finished-text="已经到底了!"
           @load="onReachBottom">
 
           <!-- item -->
@@ -115,6 +114,10 @@
               </router-link>
             </div>
           </div>
+
+          <div v-if="state.list.data.length == 0" class="flex-center-center" style="padding-top: 30vh;">
+              <div style="color: var(--app-item-sub); font-size: 15px;">空空如也！</div>
+          </div>
         </VanList>
       </VanPullRefresh>
 
@@ -137,7 +140,7 @@
 <script setup lang="ts">
 import { defineAsyncComponent, onMounted, onUnmounted, reactive, ref, nextTick} from 'vue';
 import homeBack from '/@/assets/img/home-back.webp';
-import { Sticky, List as VanList, PullRefresh as VanPullRefresh, Image as VanImage, Divider as VanDivider} from 'vant';
+import { List as VanList, PullRefresh as VanPullRefresh, Image as VanImage} from 'vant';
 import Api from "/@/api/api"
 import Request from "/@/api/request"
 import imgPig from '/@/assets/img/pig1.gif';
