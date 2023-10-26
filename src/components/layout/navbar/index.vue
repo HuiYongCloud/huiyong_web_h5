@@ -32,7 +32,7 @@
 			</div>
 		</div>
 
-		<div class="layout-nav-bar-mobile">
+		<div class="layout-nav-bar-mobile" v-if="state.isUpUserCache">
 			<div class="h100 w100 flex-center-center" @click="state.showDrawer = !state.showDrawer">
 				<img :src="blogToc" style="width: 18px; height: 18px; filter: drop-shadow(10000px 0 0 var(--el-color-black)); transform: translate(-10000px);"/>
 			</div>
@@ -149,10 +149,10 @@ const outLogin = () => {
 
 const getUserCache = () => {
 	Request.post(Api.UUA_UserCache)
-		.then((res) =>{
-			mainStore.userInfo = res
-			state.isUpUserCache = true
-		}).catch((res:any) =>{})
+	.then((res) =>{
+		mainStore.userInfo = res
+		state.isUpUserCache = true
+	}).catch((res:any) =>{})
 }
 
 // 初始化主题色
