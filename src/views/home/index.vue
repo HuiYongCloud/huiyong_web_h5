@@ -28,7 +28,6 @@
             'search-input-onkey': state.seachKey}" 
           style="width: calc(100vw - 50px); margin: 0 25px; ">
           <input 
-            class="input-class"
             type="text" 
             autofocus 
             autocomplete="off"
