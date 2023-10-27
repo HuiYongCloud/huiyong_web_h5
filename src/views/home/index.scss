@@ -88,7 +88,7 @@
 
   // 列表-用户
   .item-user{
-    padding: 10px;
+    padding: 15px 10px;
 
     .item-status-num{
       color: var(--app-item-sub);
@@ -125,10 +125,18 @@
     }
   }
 
+  .item-link-active{
+    color: var(--app-item-title);
+    &:hover{
+      color: var(--el-color-primary);
+      text-decoration: underline;
+    }
+  }
+
   // 列表-博客
   .item-blog{
     position: relative;
-    padding: 10px;
+    padding: 15px 10px;
     flex-direction: column;
 
     .blog-content-group{
@@ -137,11 +145,6 @@
       border-radius: 5px;
       margin-top: 10px;
       overflow: hidden;
-
-      .blog-title{
-        color: var(--app-item-title);
-        font-size: 14px;
-      }
 
       .blog-centent{
         color: var(--app-item-title);

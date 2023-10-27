@@ -61,63 +61,71 @@
 
             <!-- 用户 -->
             <div v-if="item.type == 'user'" class="item-user">
-              <router-link style="cursor: pointer;"  :to="{name: 'blogDetail', query: {userId: item.id}}">
-                <div class="flex-center-between">
-                  <div class="flex-center-start">
-                    <VanImage round class="user-header" :src="item.userImage" style="height: 25px; width: 25px;"/>
-                    <div v-html="item.userName" style="margin-left: 10px; font-size: 12px; font-weight: bold; color: var(--app-item-title);"/>
-                    <span class="open-status-1 ml10">博主</span>
-                  </div>
-
-                  <div class="flex-center-start">
-                    <div class="user-code-year-box flex-center-center">
-                      <img class="code-year-img" :src="imgPig">
-                      <span class="code-year">{{item.codeYear}}</span>
-                    </div>
-                    <div style="color: var(--app-item-sub); margin-left: 10px;">{{item.timeStr}}</div>
-                  </div>
+              <div class="flex-center-between">
+                <div class="flex-center-start">
+                  <VanImage round class="user-header" :src="item.userImage" style="height: 25px; width: 25px;"/>
+                  <router-link 
+                    class="item-link-active"
+                    v-html="item.userName" 
+                    style="margin-left: 10px; font-size: 12px; font-weight: bold;"
+                    :to="{name: 'blogDetail', query: {userId: item.id}}"/>
+                  <span class="open-status-1 ml10">博主</span>
                 </div>
 
-                <div class="flex-center-start" style="margin-top: 10px;">
-                    <div class="item-status-num">访问量 {{item.blogInfoReadNum || 0}}</div>
-                    <div class="item-status-dot"/>
-                    <div class="item-status-num">被关注 {{item.focusNum || 0}}</div>                         
-                    <div class="item-status-dot"/>
-                    <div class="item-status-num">文章 {{item.blogNum || 0}}</div>
-                    <div class="item-status-dot"/>
-                    <div class="item-status-num">被收藏 {{item.blogLikeNum || 0}}</div>
+                <div class="flex-center-start">
+                  <div class="user-code-year-box flex-center-center">
+                    <img class="code-year-img" :src="imgPig">
+                    <span class="code-year">{{item.codeYear}}</span>
+                  </div>
+                  <div style="color: var(--app-item-sub); margin-left: 10px;">{{item.timeStr}}</div>
                 </div>
-              </router-link>
+              </div>
+
+              <div class="flex-center-start" style="margin-top: 10px;">
+                  <div class="item-status-num">访问量 {{item.blogInfoReadNum || 0}}</div>
+                  <div class="item-status-dot"/>
+                  <div class="item-status-num">被关注 {{item.focusNum || 0}}</div>                         
+                  <div class="item-status-dot"/>
+                  <div class="item-status-num">文章 {{item.blogNum || 0}}</div>
+                  <div class="item-status-dot"/>
+                  <div class="item-status-num">被收藏 {{item.blogLikeNum || 0}}</div>
+              </div>
             </div>
 
             <!-- 博客 -->
             <div v-if="item.type == 'blog'"  class="item-blog">
-              <router-link style="cursor: pointer;" :to="{name: 'blogDetail', query: {blogId: item.id}}">
-                <!-- 博主信息 -->
-                <div class="flex-center-start">
-                  <VanImage round class="user-header" :src="item.userImage" style="height: 25px; width: 25px;"/>
-                  <div v-html="item.userName" style="margin-left: 10px; font-size: 12px; font-weight: bold; color: var(--app-item-title);"/>
-                </div>
-                <!-- 博客信息 -->
-                <div class="blog-content-group">
-                  <div class="flex-center-between" style="margin-bottom: 10px;">
-                    <div>
-                      <span class="blog-title" v-html="item.title" style="font-size: 12px; font-weight: bold;"></span>
-                      <span v-if="item.openStatus == 0" class="open-status-0 ml10">私密，博主可搜索</span>
-                      <!-- <span v-if="item.openStatus == 1" class="open-status-1 ml10">公开</span> -->
-                    </div>
-                    <div style="color: var(--app-item-sub); margin-left: 10px;">{{item.timeStr}}</div>
+              <!-- 博主信息 -->
+              <div class="flex-center-start">
+                <VanImage round class="user-header" :src="item.userImage" style="height: 25px; width: 25px;"/>
+                <router-link 
+                  v-html="item.userName" 
+                  class="item-link-active" 
+                  style="margin-left: 10px; font-size: 12px; font-weight: bold;"
+                  :to="{name: 'blogDetail', query: {userId: item.id}}"/>
+              </div>
+
+              <!-- 博客信息 -->
+              <div class="blog-content-group">
+                <div class="flex-center-between" style="margin-bottom: 10px;">
+                  <div>
+                    <router-link 
+                      class="item-link-active" 
+                      v-html="item.title" 
+                      style="font-size: 12px; font-weight: bold;"
+                      :to="{name: 'blogDetail', query: {blogId: item.id}}"/>
+                    <span v-if="item.openStatus == 0" class="open-status-0 ml10">私密，博主可搜索</span>
                   </div>
-                  <div class="blog-centent" style="font-size: 12px; padding-right: 10px; overflow: hidden; white-space: break-word;" v-html="item.content"></div>
-                  <div class="item-bottom flex-center-between">
-                    <div class="item-bottom-left flex-center-start">
-                      <div class="item-status-num">阅读 {{item.readNum || 0}}</div>
-                      <div class="item-status-dot"/>
-                      <div class="item-status-num">收藏 {{item.favoriteNum || 0}}</div>                  
-                    </div>
+                  <div style="color: var(--app-item-sub); margin-left: 10px;">{{item.timeStr}}</div>
+                </div>
+                <div class="blog-centent" style="font-size: 12px; padding-right: 10px; overflow: hidden; white-space: break-word;" v-html="item.content"></div>
+                <div class="item-bottom flex-center-between">
+                  <div class="item-bottom-left flex-center-start">
+                    <div class="item-status-num">阅读 {{item.readNum || 0}}</div>
+                    <div class="item-status-dot"/>
+                    <div class="item-status-num">收藏 {{item.favoriteNum || 0}}</div>                  
                   </div>
                 </div>
-              </router-link>
+              </div>
             </div>
           </div>
 
