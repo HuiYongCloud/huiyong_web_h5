@@ -11,7 +11,8 @@
     </div>   
 
     <div 
-      class="flex-center-center search-top-group" 
+      class="flex-center-center" 
+      :class = "[state.seachKey ? 'search-top-group' : '']"
       style="flex-direction: column; position: absolute; top: 0; right: 0; left: 0; z-index: 1;"
       :style="{ 'position' : state.seachKey ? 'absolute' :  'static'}">
       <!-- logo -->
@@ -107,7 +108,7 @@
                     </div>
                     <div style="color: var(--app-item-sub); margin-left: 10px;">{{item.timeStr}}</div>
                   </div>
-                  <div class="blog-centent" style="font-size: 12px; padding-right: 10px; overflow: hidden;" v-html="item.content"></div>
+                  <div class="blog-centent" style="font-size: 12px; padding-right: 10px; overflow: hidden; white-space: break-word;" v-html="item.content"></div>
                   <div class="item-bottom flex-center-between">
                     <div class="item-bottom-left flex-center-start">
                       <div class="item-status-num">阅读 {{item.readNum || 0}}</div>
