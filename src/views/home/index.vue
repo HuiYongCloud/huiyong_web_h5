@@ -44,7 +44,7 @@
     <div ref="seachListGroup" v-if="state.seachKey" class="seach-list-group">
       <VanPullRefresh 
         v-model="state.reFreshing" 
-        class="flex-center-start"
+        class="flex-start-center"
         @refresh="onPullDownRefresh" 
         style="min-height: calc(100vh - 240px); padding-bottom: 50px;">
 
