@@ -93,10 +93,8 @@ const getBlogInfo = (blogUserId: any) => {
 	Request.post(Api.BLOG_INFO_DETAIL, {userId: blogUserId})
 	.then((res:any) =>{
 		state.blogInfo = res
-		// 设置标题
-		if(!state.blogId){
-			document.title = res.userName
-		}
+		// 标签列表
+		getTagList();
 	}).catch((res:any) =>{
 		showNotify({ type: 'danger', message: res.message });
 	})
@@ -109,6 +107,16 @@ const getTagList = () => {
 		state.tagList = res
 		if(!state.tagId && state.tagList && state.tagList.length > 0){
 			state.tagId = state.tagList[0].tagId
+		}
+
+		// 设置标题
+		state.tagList.forEach( (item: any) => {
+			if(item.tagId == state.tagId && ( route.query.tagId || route.query.userId )){
+				document.title = item.tagName
+			}
+		});
+		if(document.title == '博客详情'){
+			document.title = state.blogInfo.userName
 		}
 	}).catch((res:any) =>{
 		showNotify({ type: 'danger', message: res.message });
@@ -123,8 +131,6 @@ const getTagUserId = (tagId: any) => {
 	}).then((userId:any) =>{
 		// 博主信息
 		getBlogInfo(userId)
-		// 标签列表
-		getTagList();
 	}).catch((res:any) =>{
 		showNotify({ type: 'danger', message: res.message });
 	})
@@ -136,8 +142,6 @@ const onDetailLoad = (data: any) => {
 	state.blogCode = data.blogCode
 	// 博主信息
 	getBlogInfo(data.userId);
-	// 标签列表
-	getTagList();
 }
 
 const openTagInfo = (item: any) => {
@@ -148,7 +152,7 @@ const openTagInfo = (item: any) => {
 		name: 'blogDetail',
 		query: {tagId: item.tagId}
 	})
-	// 设置标题
+	// 变更标题
 	document.title = item.tagName
 }
 
@@ -183,8 +187,6 @@ onMounted(() => {
 	if(route.query.userId){
 		// 博主信息
 		getBlogInfo(route.query.userId)
-		// 标签列表
-		getTagList();
 	} else if(route.query.tagId){
 		// 标签博主
 		getTagUserId(route.query.tagId)

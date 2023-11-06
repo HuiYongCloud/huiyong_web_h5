@@ -97,7 +97,7 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach((to, from, next) => {
     //遍历meta改变title
-    if (to.meta.title) {
+    if (to.path != from.path && to.meta.title) {
         document.title = to.meta.title as string
     }
     window.scrollTo(0, 0)

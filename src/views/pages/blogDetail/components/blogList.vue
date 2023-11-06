@@ -46,8 +46,8 @@ const props = defineProps({
 	tagId: {
 		type: String,
 		default: () => '',
-	},
-  // 标签id
+	}, 
+  // 博主id
   blogUserId: {
 		type: String,
 		default: () => '',

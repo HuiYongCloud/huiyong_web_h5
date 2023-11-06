@@ -19,7 +19,7 @@
 								</div>
 								<div class="menu-item flex-center-between" @click="toHome">首页</div>
 								<div class="menu-line"/>
-								<div class="menu-item flex-center-between" @click="toBlog">我的博客</div>
+								<div class="menu-item flex-center-between" v-if="route.name != 'blogDetail'" @click="toBlog">我的博客</div>
 								<div class="menu-item flex-center-between" @click="toResume">我的简历</div>
 								<div class="menu-item flex-center-between" @click="toAdmin">后台管理</div>
 								<div class="menu-line"/>
@@ -65,7 +65,7 @@
 
 					<!-- 已登录 -->
 					<div class="menu-line" v-if="mainStore.userInfo"/>
-					<div class="menu-item flex-center-between" v-if="mainStore.userInfo" @click="toBlog">我的博客</div>
+					<div class="menu-item flex-center-between" v-if="mainStore.userInfo && route.name != 'blogDetail'" @click="toBlog">我的博客</div>
 					<div class="menu-item flex-center-between" v-if="mainStore.userInfo" @click="toResume">我的简历</div>
 					<div class="menu-item flex-center-between" v-if="mainStore.userInfo" @click="toAdmin">后台管理</div>
 					<div class="menu-line" v-if="mainStore.userInfo"/>
