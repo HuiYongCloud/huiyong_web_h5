@@ -93,6 +93,10 @@ const getBlogInfo = (blogUserId: any) => {
 	Request.post(Api.BLOG_INFO_DETAIL, {userId: blogUserId})
 	.then((res:any) =>{
 		state.blogInfo = res
+		// 设置标题
+		if(!state.blogId){
+			document.title = res.userName
+		}
 	}).catch((res:any) =>{
 		showNotify({ type: 'danger', message: res.message });
 	})
@@ -136,15 +140,16 @@ const onDetailLoad = (data: any) => {
 	getTagList();
 }
 
-const openTagInfo = (tagId: any) => {
-	state.tagId = tagId
+const openTagInfo = (item: any) => {
+	state.tagId = item.tagId
 	state.isShowBlogDetail = false
-
 	// 变更路径
 	router.push({
 		name: 'blogDetail',
-		query: {tagId: tagId}
+		query: {tagId: item.tagId}
 	})
+	// 设置标题
+	document.title = item.tagName
 }
 
 const openBlogDetail = (blogId: any) => {

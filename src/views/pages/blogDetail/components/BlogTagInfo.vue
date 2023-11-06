@@ -8,7 +8,7 @@
           class="info-item flex-center-between" 
           :class="[item.tagId == props.tagId? 'info-item-active':'']" 
           :key="index" 
-          @click="changeTagInfo(item.tagId)">
+          @click="changeTagInfo(item)">
           <div class="info-title">{{item.tagName}}</div>
           <div class="info-value">{{item.blogContentNum}}</div>
         </div>
@@ -36,8 +36,8 @@ const props = defineProps({
 
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['changeTagInfo']);
-const changeTagInfo = (tagId: String)=>{
-  emit('changeTagInfo', tagId);
+const changeTagInfo = (item: String)=>{
+  emit('changeTagInfo', item);
 }
 </script>
 

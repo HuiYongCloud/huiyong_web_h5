@@ -129,6 +129,8 @@ const getBlogDetail = () => {
   Request.post(Api.Blog_Detail, { blogId: props.blogId, priCode : state.priCode})
   .then((res:any) =>{      
     state.blogDetail = res
+    // 设置标题
+    document.title = res.title
     // 回调显示博客内容
     emit('onDetailLoad', {
       userId: res.userId, 
