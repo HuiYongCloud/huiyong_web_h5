@@ -28,14 +28,16 @@
 				</div>
 
 			<div class="blog-info-right">
-				<div class="flex-center-between">
-					<div class="blog-toc-title flex-center-start mt15" v-show="state.blogCode == 200">
-						<img :src="blogToc" style="margin-left:12px; width: 14px; height: 14px; filter: drop-shadow(10000px 0 0 var(--el-color-black)); transform: translate(-10000px);"/>
-						<div style="margin-left:10px">目录</div>
+				<template  v-if="state.isShowBlogDetail == true">
+					<div class="flex-center-between" >
+						<div class="blog-toc-title flex-center-start mt15" v-show="state.blogCode == 200">
+							<img :src="blogToc" style="margin-left:12px; width: 14px; height: 14px; filter: drop-shadow(10000px 0 0 var(--el-color-black)); transform: translate(-10000px);"/>
+							<div style="margin-left:10px">目录</div>
+						</div>
 					</div>
-				</div>
-				<!-- 博客目录 -->
-				<MdCatalog editorId="md-preview-id" :scrollElement="scrollElement" :theme="isDarkTheme()?'dark':'light'" />
+					<!-- 博客目录 -->
+					<MdCatalog editorId="md-preview-id" :scrollElement="scrollElement" :theme="isDarkTheme()?'dark':'light'" />
+				</template>
 			</div>
 		</div>
 
