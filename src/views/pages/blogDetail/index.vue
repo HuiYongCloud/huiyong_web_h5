@@ -187,6 +187,11 @@ onMounted(() => {
 		openBlogDetail(route.query.blogId)
 	}
 
+	// 兼容老版本
+	if(route.query.id){
+		openBlogDetail(route.query.id)
+	}
+
 	// 监听返回
 	// 由于上面router.push是当前页面，所以返回时，页面并没有刷新，这里手动调用刷新
 	window.addEventListener('popstate', backRefresh)
