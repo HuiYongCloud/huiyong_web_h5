@@ -42,7 +42,7 @@
                         <div class="card-bottom-text">{{detail.userEmail || '邮箱'}}</div>
                     </div>
 
-                    <div class="flex-center-center" style="flex-direction: column;">
+                    <div class="flex-center-center" style="flex-direction: column;" v-if="false">
                         <img :src="Wechat" style=" width: 25px; height: 25px; filter: drop-shadow(10000px 0 0 var(--el-color-black)); transform: translate(-10000px);">
                         <div class="card-bottom-text">二维码</div>
                     </div>
