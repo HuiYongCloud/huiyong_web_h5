@@ -7,7 +7,7 @@
 	<div class="resume-preview">
 		<PreViewer :detail="state.detail"/>
 	</div>
-	<Footer/>
+	<Footer absolute/>
   </div>
 </template>
 
