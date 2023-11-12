@@ -3,12 +3,16 @@
 		<div class="flex-center-start mb20 ml30" style="font-size: 12px; color: var(--app-item-sub);">
 			<div style="letter-spacing: 1px;">HuiYong, © 2023</div>
 			<div class="text-info" @click="toLink">赣ICP备20008193号</div>
+			<div class="text-info" @click="toAbout">关于</div>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
+import { useRoute, useRouter } from "vue-router"
 
+const route = useRoute();
+const router = useRouter();
 // 定义父组件传过来的值
 const props = defineProps({
     // 定位
@@ -18,6 +22,12 @@ const props = defineProps({
     },
 });
 const toLink = () => window.open("https://beian.miit.gov.cn/", '_blank')
+const toAbout = () => {
+	router.push({
+		name: 'blogDetail',
+		query: {blogId: '202111260489'}
+	})
+}
 </script>
 
 <style scoped lang="scss">

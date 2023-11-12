@@ -8,9 +8,8 @@
 </template>
 
 <script setup lang="ts">
-import { reactive} from 'vue';
 import { appStore } from '/@/stores/appStore'
-import { MdPreview, MdCatalog, config} from 'md-editor-v3';
+import { MdPreview, config} from 'md-editor-v3';
 import 'md-editor-v3/lib/preview.css';
 import Cropper from 'cropperjs';
 import 'cropperjs/dist/cropper.css';
