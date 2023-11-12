@@ -6,28 +6,28 @@
       <h1 class="blog-title">{{state.blogDetail.title}}</h1>
 
       <div v-if="state.blogDetail && state.blogDetail.blogCode == 200">
-        <div class="blog-info-box flex-center-start">
-          <div class="flex-center-start">
+        <div class="blog-info-box flex-center-start" style="flex-flow: wrap;">
+          <div class="flex-center-start mt5">
             <img :src="blogTag" style="margin-right:8px; width: 12px; height: 10px; filter: drop-shadow(10000px 0 0 #999aaa); transform: translate(-10000px);"/>
 					  <div class="item-status-num">{{state.blogDetail.tagName}}</div> 
           </div>
           
-          <div class="item-status-dot"/>
-          <div class="flex-center-start">
+          <div class="item-status-dot mt5"/>
+          <div class="flex-center-start mt5">
             <img :src="blogCalendar" style="margin-right:8px; width: 16px; height: 16px; filter: drop-shadow(10000px 0 0 #999aaa); transform: translate(-10000px);"/>
 					  <div class="item-status-num">{{state.blogDetail.createTime}}</div>  
           </div>
 
-					<div class="item-status-dot"/>
-					<div class="item-status-num">阅读 {{state.blogDetail.readNum || 0}}</div>    
+					<div class="item-status-dot mt5"/>
+					<div class="item-status-num mt5">阅读 {{state.blogDetail.readNum || 0}}</div>    
 
-          <div class="item-status-dot"/>
-					<div class="item-status-num">收藏 {{state.blogDetail.likeNum || 0}}</div>    
+          <div class="item-status-dot mt5"/>
+					<div class="item-status-num mt5">收藏 {{state.blogDetail.likeNum || 0}}</div>    
 
-          <div class="item-status-dot"/>
-          <div class="item-status-num">{{state.wordNum}}字</div>    
-          <div class="item-status-dot"/>
-					<div class="item-status-num">大概{{state.readTime}}</div>    
+          <div class="item-status-dot mt5"/>
+          <div class="item-status-num mt5">{{state.wordNum}}字</div>    
+          <div class="item-status-dot mt5"/>
+					<div class="item-status-num mt5">大概{{state.readTime}}</div>    
 
           <div style="margin-left: 15px;" v-if="!isRootBlog">
             <FavateBtn :width="75" :height="20" :size="12" :text="!state.blogDetail || state.blogDetail.isFavorite == false ? '收藏文章':'取消收藏'" @click="favorite"/>
@@ -205,6 +205,7 @@ onMounted(() => {
 
 			.item-status-num{
 				font-size: 12px;
+        white-space: nowrap;
 			}
 
 			.item-status-dot{
