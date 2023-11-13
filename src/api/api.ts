@@ -1,5 +1,5 @@
 const Api_Client = '/api-client'
-const Api_UUA 	 = '/api-uua'
+const Api_UUA 	 = '/api-uaa'
 
 export const Api = {
 
@@ -11,17 +11,17 @@ export const Api = {
 	/**
 	 * 验证码
 	 */
-	Get_Login_Code:     	Api_UUA + '/uua/n/getLoginCode',          	// 获取登录验证码	
-	Get_Reg_Code:     		Api_UUA + '/uua/n/getRegisterCode',         // 获取注册验证码	
+	Get_Login_Code:     	Api_UUA + '/uaa/n/getLoginCode',          	// 获取登录验证码	
+	Get_Reg_Code:     		Api_UUA + '/uaa/n/getRegisterCode',         // 获取注册验证码	
     
 	/**
 	 * Auth 
 	 */
-	Login_Password:       	Api_UUA + '/uua/n/loginByPassword',       	// 登录【密码】
-	Login_Email_Code:       Api_UUA + '/uua/n/loginByCode',       		// 登录【验证码】
-	UUA_Register:       	Api_UUA + '/uua/n/register',       			// 用户注册
-	UUA_LoginOut:       	Api_UUA + '/uua/n/loginOut',       			// 退出登录
-	UUA_UserCache:       	Api_UUA + '/uua/n/getUserCache',       		// 用户缓存
+	Login_Password:       	Api_UUA + '/uaa/n/loginByPassword',       	// 登录【密码】
+	Login_Email_Code:       Api_UUA + '/uaa/n/loginByCode',       		// 登录【验证码】
+	UUA_Register:       	Api_UUA + '/uaa/n/register',       			// 用户注册
+	UUA_LoginOut:       	Api_UUA + '/uaa/n/loginOut',       			// 退出登录
+	UUA_UserCache:       	Api_UUA + '/uaa/n/getUserCache',       		// 用户缓存
 
 	/**
 	 * 腾讯Oss
