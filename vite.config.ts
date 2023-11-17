@@ -32,7 +32,7 @@ const viteConfig = defineConfig((mode: ConfigEnv) => {
 					changeOrigin: true,
 					ws: true
 				},
-        		'/api-uua': {
+        		'/api-uaa': {
 					target: 'http://localhost:20001',
 					changeOrigin: true,
 					ws: true

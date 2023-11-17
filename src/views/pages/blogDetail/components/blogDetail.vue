@@ -53,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import {defineAsyncComponent, onMounted, reactive, nextTick, computed} from 'vue';
+import {defineAsyncComponent, onMounted, reactive, nextTick, computed, watch} from 'vue';
 import Api from "/@/api/api"
 import Request from "/@/api/request"
 import { showNotify, showDialog } from 'vant';
@@ -132,11 +132,7 @@ const getBlogDetail = () => {
     // 设置标题
     document.title = res.title
     // 回调显示博客内容
-    emit('onDetailLoad', {
-      userId: res.userId, 
-      tagId: res.tagId,
-      blogCode: res.blogCode
-    });
+    emit('onDetailLoad', res);
     // 如果有文章，则可以查看
     if(res.content){
 
@@ -157,6 +153,16 @@ const getBlogDetail = () => {
   })
 }
 
+// 监听标签变更，更新列表
+watch(
+	() => props.blogId,
+	(value) => {
+		nextTick(() => {
+      // 获取详情
+      getBlogDetail()
+		})
+	}
+);
 // 页面加载时
 onMounted(() => {
   nextTick(() => {

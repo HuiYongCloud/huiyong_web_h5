@@ -1,6 +1,6 @@
 <template >
 	<ConfigProvider id="app" :theme="state.sysTheme" >
-		<router-view/>
+		<router-view :key="route.path"/>
 	</ConfigProvider>
 </template>
 
@@ -8,6 +8,10 @@
 import { onMounted, nextTick, watch, computed, ref, reactive} from 'vue';
 import { ConfigProvider } from 'vant';
 import { appStore } from '/@/stores/appStore'
+import { useRoute, useRouter } from 'vue-router';
+
+const route = useRoute();
+const router = useRouter();
 const mainStore = appStore()
 const state = reactive({
 	sysTheme: '' as any,

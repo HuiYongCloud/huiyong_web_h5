@@ -5,12 +5,18 @@
 
 			<!-- 个人信息导航 -->
 			<div style="position: absolute; top: 0; right: 0; z-index: 100;">
-				<Sticky><Navbar :sticky="true"/></Sticky>
+				<Sticky>
+					<Navbar 
+						:sticky="true" 
+						:blogDetail="state.drawerBlogDetail"
+						@openTagDetail="openTagDetail"
+						@openBlogDetail="openBlogDetail"/>
+				</Sticky>
 			</div>
 
 			<!-- 右侧导航 -->
 			<div class="blog-info-left">
-				<BlogUserInfo  :detail="state.blogInfo"/>
+				<BlogUserInfo :detail="state.blogInfo"/>
 				<BlogTagInfo :list="state.tagList" :tagId="state.tagId" @changeTagInfo="openTagInfo"/>
 			</div>
 
@@ -19,12 +25,11 @@
 				<BlogDetail v-if="state.isShowBlogDetail === true" :blogId="state.blogId" @onDetailLoad="onDetailLoad"/>
 				<!-- 文章列表 -->
 				<BlogList 
-					v-if="state.isShowBlogDetail == false" 
+					v-if="state.isShowBlogDetail === false" 
 					:tagId="state.tagId" 
 					:blogUserId="state.blogUserId"
 					@openBlogDetail="openBlogDetail"
-					@openBlogShare="openBlogShare"
-					/>
+					@openBlogShare="openBlogShare"/>
 				</div>
 
 			<div class="blog-info-right">
@@ -87,8 +92,16 @@ const state = reactive({
 	blogInfo: null as any,
 	tagList: [] as any,
 
+	drawerBlogDetail: {} as any,
+	
 	isShowBlogDetail: '' as any,
 });
+
+
+const openUserDetail = (userId: any) => {
+	state.isShowBlogDetail = false
+	getBlogInfo(route.query.userId)
+}
 
 const getBlogInfo = (blogUserId: any) => {
 	state.blogUserId = blogUserId
@@ -125,13 +138,13 @@ const getTagList = () => {
 	})
 }
 
-const getTagUserId = (tagId: any) => {
+const openTagDetail = (tagId: any) => {
 	state.tagId = tagId
-	state.isShowBlogDetail == false
+	state.isShowBlogDetail = false
 	Request.post(Api.Get_Tag_User_Id, {
 		id: tagId
 	}).then((userId:any) =>{
-		// 博主信息
+		// 如果是标签详情，则获取博主信息
 		getBlogInfo(userId)
 	}).catch((res:any) =>{
 		showNotify({ type: 'danger', message: res.message });
@@ -139,6 +152,7 @@ const getTagUserId = (tagId: any) => {
 }
 
 const onDetailLoad = (data: any) => {
+	state.drawerBlogDetail = data
 	// 详情标签id
 	state.tagId = data.tagId
 	state.blogCode = data.blogCode
@@ -179,19 +193,14 @@ const openBlogShare = (blogId: any) => {
 	})
 }
 
-// 返回时刷新页面
-const backRefresh = ()=> {
-	window.location.reload();
-}
-
 // 页面加载时
 onMounted(() => {
 	if(route.query.userId){
 		// 博主信息
-		getBlogInfo(route.query.userId)
+		openUserDetail(route.query.userId)
 	} else if(route.query.tagId){
 		// 标签博主
-		getTagUserId(route.query.tagId)
+		openTagDetail(route.query.tagId)
 	} else if(route.query.blogId){
 		openBlogDetail(route.query.blogId)
 	}
@@ -200,17 +209,7 @@ onMounted(() => {
 	if(route.query.id){
 		openBlogDetail(route.query.id)
 	}
-
-	// 监听返回
-	// 由于上面router.push是当前页面，所以返回时，页面并没有刷新，这里手动调用刷新
-	window.addEventListener('popstate', backRefresh)
 });
-
-// 页面卸载
-onUnmounted(() => {
-	// 移除监听返回
-	window.removeEventListener('popstate', backRefresh)
-})
     
 </script>
 

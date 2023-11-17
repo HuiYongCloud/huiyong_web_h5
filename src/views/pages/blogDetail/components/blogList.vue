@@ -108,7 +108,9 @@ const getListByTabActive= (tabActive: any) => {
   }
 
   Request.post(url, params)
-  .then((res : any) =>{ state.list = res})
+  .then((res : any) =>{ 
+    state.list = res
+  })
   .catch(res =>{
     state.list = []
     showNotify({ type: 'danger', message: res.message });
@@ -140,6 +142,7 @@ const openBlogDetail = (blogId: String) => {
 onMounted(() => {
   onChangeTab()
 });
+
 </script>
 
 <style lang="scss">

@@ -60,11 +60,27 @@
 							/>
 						</div>
 					</div>
+
+					<div class="menu-line" v-if="route.query.blogId != null || route.query.tagId != null "/>
+					<!-- 文章目录 -->
+					<template v-if="route.query.blogId != null">
+						<div class="menu-tag-title" @click="toTagPage(props.blogDetail.tagId)">{{props.blogDetail.tagName}}</div>
+						<div v-for="(item, index) in state.blogList" :key="index">
+							<div class="menu-blog-title" @click="toBlogPage(item.blogId)">{{item.title}}</div>
+						</div>
+					</template>
+
+					<template v-if="route.query.tagId">
+						<div class="menu-tag-title" @click="toTagPage(props.blogDetail.tagId)">{{props.blogDetail.tagName}}</div>
+						<div v-for="(item, index) in state.blogList" :key="index">
+							<div class="menu-blog-title" @click="toBlogPage(item.blogId)">{{item.title}}</div>
+						</div>
+					</template>
+
+					<div class="menu-line"/>
 					<!-- 未登录 -->
 					<div class="menu-item flex-center-between" v-if="!mainStore.userInfo" @click="toLogin">去登录</div>
-
 					<!-- 已登录 -->
-					<div class="menu-line" v-if="mainStore.userInfo"/>
 					<div class="menu-item flex-center-between" v-if="mainStore.userInfo && route.name != 'blogDetail'" @click="toBlog">我的博客</div>
 					<div class="menu-item flex-center-between" v-if="mainStore.userInfo" @click="toResume">我的简历</div>
 					<div class="menu-item flex-center-between" v-if="mainStore.userInfo" @click="toAdmin">后台管理</div>
@@ -77,15 +93,14 @@
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent, onMounted, reactive, nextTick} from 'vue';
+import { defineAsyncComponent, onMounted, reactive, nextTick, watch} from 'vue';
 import { appStore } from '/@/stores/appStore'
-import { Icon, Image as VanImage, Popup , Switch} from 'vant';
+import { Icon, Image as VanImage, Popup , Switch, showNotify} from 'vant';
 import { useRoute, useRouter } from 'vue-router';
 import { showConfirmDialog } from 'vant';
 import blogToc from '/@/assets/svg/blog-toc.svg';
 import Api from "/@/api/api"
 import Request from "/@/api/request"
-import { showNotify} from 'vant';
 
 // 定义变量
 const route = useRoute();
@@ -96,9 +111,23 @@ const state = reactive({
 	isSelectUser: false,
 	showDrawer: false,
 	isDark: false,
+	blogList: '' as any,
 });
+
+// 定义父组件传过来的值
+const props = defineProps({
+  	// 详情
+	blogDetail: {
+		type: Object,
+		default: () => null,
+	},
+});
+
 // 引入组件
 const ThemeSwitch = defineAsyncComponent(() => import('/@/components/theme-switch/index.vue'));
+
+// 定义子组件向父组件传值/事件
+const emit = defineEmits(['openBlogDetail', 'openTagDetail']);
 
 // 首页
 const toHome = ()=> router.push('/')
@@ -107,17 +136,21 @@ const toLogin = () => {
 	router.push(`/login?redirect=${route.path}&params=${JSON.stringify(route.query ? route.query : route.params)}`)
 }
 // 博客
-const toBlog = ()=> router.push({
-		name: 'blogDetail',
-		query: {userId: mainStore.userInfo.userId}
-	})
+const toBlog = ()=> router.push({name: 'blogDetail', query: {userId: mainStore.userInfo.userId}})
 // 简历
-const toResume = () => router.push({
-		name: 'resume',
-		query: {userId: mainStore.userInfo.userId}
-	})
+const toResume = ()=> router.push({name: 'resume', query: {userId: mainStore.userInfo.userId}})
 // 管理后台
 const toAdmin = ()=> window.open("https://admin.huiyong.online/", '_blank')
+// 博客标签
+const toTagPage = (tagId: any)=> {
+	emit('openTagDetail', tagId);
+	state.showDrawer = false
+}
+// 博客标签
+const toBlogPage = (blogId: any)=> {
+	emit('openBlogDetail', blogId);
+	state.showDrawer = false
+}
 
 // 变更主题
 const changeSysTheme = () => {
@@ -169,6 +202,27 @@ const onInitTheme = () => {
 	state.isDark = isDark;
 }
 
+const getBlogList = () => {
+	Request.post(Api.Blog_List_By_Tag_Id, {id: props.blogDetail.tagId})
+	.then((res : any) =>{ 
+		state.blogList = res
+	})
+	.catch(res =>{
+		state.blogList = []
+	})
+}
+
+// 监听标签变更，更新列表
+// watch(
+// 	() => props.blogDetail.tagId,
+// 	(value) => {
+// 		nextTick(() => {
+// 			// 标签变更，获取列表
+// 			state.blogList = null
+// 			getBlogList()
+// 		})
+// 	}
+// );
 onMounted(() => {
 	nextTick(() => {
 		// 主题色
@@ -320,6 +374,20 @@ onMounted(() => {
 			color: var(--app-item-title);
 			font-size: 14px;
 			transition: all .3s ease;
+		}
+
+		.menu-tag-title{
+			padding: 5px 16px;
+			color: var(--el-color-primary);
+			font-size: 13px;
+			cursor: pointer;
+		}
+
+		.menu-blog-title{
+			padding: 5px 16px 5px 32px;
+			color: var(--el-color-primary);
+			font-size: 12px;
+			cursor: pointer;
 		}
 
 		.menu-line{
