@@ -39,16 +39,20 @@ service.interceptors.response.use(
         return Promise.resolve(res.data)
       
       // 登录失效
-      case 403:        
-        // 过期或者账号已在别处登录
-        if(appStore().userInfo != null){
-          // 清除浏览器全部临时缓存
-          appStore().userInfo = ''
+      case 403:   
+        const mainStore = appStore() 
+        if(mainStore.userInfo != null){
+          // 过期或者账号已在别处登录，则提示token过期
+          mainStore.userInfo = null
           showDialog({title: '提示', message:res.message,})
             .then(() => {
-              appStore().token_403 = '403'
+              mainStore.token_403 = '403'
               window.location.reload();
             });
+        }else{
+          // 否则直接打开登录页
+          mainStore.token_403 = '403'
+          window.location.reload();
         }
         return Promise.reject({code: res.code, message: res.message})
 

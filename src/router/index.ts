@@ -79,11 +79,10 @@ router.beforeEach((to, from, next) => {
     const mainStore = appStore()
     const userInfo = mainStore.userInfo
     const token_403 = mainStore.token_403
-
     if (token_403 === '403'){
-        mainStore.userInfo = ''
+        mainStore.userInfo = null
         mainStore.token_403 = ''
-        next(`/login?redirect=${to.path}&params=${JSON.stringify(to.query ? to.query : to.params)}`);
+        router.push(`/login?redirect=${to.path}&params=${JSON.stringify(to.query ? to.query : to.params)}`);
     }else if (userInfo && userInfo.userId && to.path === '/login'){
         NextLoading.start();
         next('/');
