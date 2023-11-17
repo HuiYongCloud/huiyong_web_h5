@@ -95,7 +95,7 @@
 	</div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="navBar">
 import { defineAsyncComponent, onMounted, reactive, nextTick, watch} from 'vue';
 import { appStore } from '/@/stores/appStore'
 import { Icon, Image as VanImage, Popup , Switch, showNotify} from 'vant';
@@ -220,8 +220,8 @@ const onInitTheme = () => {
 	state.isDark = isDark;
 }
 
-const getBlogList = () => {
-	Request.post(Api.Blog_List_By_Tag_Id, {id: props.blogDetail.tagId})
+const getBlogList = (tagId: any) => {
+	Request.post(Api.Blog_List_By_Tag_Id, {id: tagId})
 	.then((res : any) =>{ 
 		state.blogList = res
 	})
@@ -230,23 +230,17 @@ const getBlogList = () => {
 	})
 }
 
-// 监听标签变更，更新列表
-watch(
-	() => props.tagId,
-	(value) => {
-		nextTick(() => {
-			// 标签变更，获取列表
-			state.blogList = null
-			getBlogList()
-		})
-	}
-);
 onMounted(() => {
 	nextTick(() => {
 		// 主题色
 		onInitTheme()
 		getUserCache()
 	});
+});
+
+// 暴露变量
+defineExpose({
+	getBlogList,
 });
 </script>
 

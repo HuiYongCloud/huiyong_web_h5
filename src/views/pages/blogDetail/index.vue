@@ -7,6 +7,7 @@
 			<div style="position: absolute; top: 0; right: 0; z-index: 100;">
 				<Sticky>
 					<Navbar 
+						ref="navBar"
 						:sticky="true" 
 						:blogDetail="state.drawerBlogDetail"
 						:tagList="state.tagList"
@@ -54,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent, onMounted, onUnmounted, reactive, ref} from 'vue';
+import { defineAsyncComponent, onMounted, onUnmounted, reactive, ref, nextTick} from 'vue';
 import { useRoute, useRouter } from "vue-router"
 import { showNotify, Sticky, BackTop } from 'vant';
 import Api from "/@/api/api"
@@ -86,6 +87,7 @@ const scrollElement = document.documentElement;
 const route = useRoute();
 const router = useRouter();
 const blogShareDialog = ref();
+const navBar = ref();
 const state = reactive({
 	blogUserId:'' as any,	
 	tagId: null as any,
@@ -161,6 +163,8 @@ const onDetailLoad = (data: any) => {
 	state.blogCode = data.blogCode
 	// 博主信息
 	getBlogInfo(data.userId);
+	// 更新菜单
+	navBar.value.getBlogList(state.tagId)
 }
 
 const openTagInfo = (item: any) => {
@@ -203,24 +207,26 @@ const backRefresh = ()=> {
 
 // 页面加载时
 onMounted(() => {
-	if(route.query.userId){
+	nextTick(() => {
+		if(route.query.userId){
 		// 博主信息
 		openUserDetail(route.query.userId)
-	} else if(route.query.tagId){
-		// 标签博主
-		openTagDetail(route.query.tagId)
-	} else if(route.query.blogId){
-		openBlogDetail(route.query.blogId)
-	}
+		} else if(route.query.tagId){
+			// 标签博主
+			openTagDetail(route.query.tagId)
+		} else if(route.query.blogId){
+			openBlogDetail(route.query.blogId)
+		}
 
-	// 兼容老版本
-	if(route.query.id){
-		openBlogDetail(route.query.id)
-	}
+		// 兼容老版本
+		if(route.query.id){
+			openBlogDetail(route.query.id)
+		}
 
-	// 监听返回
-	// 由于上面router.push是当前页面，所以返回时，页面并没有刷新，这里手动调用刷新
-	window.addEventListener('popstate', backRefresh)
+		// 监听返回
+		// 由于上面router.push是当前页面，所以返回时，页面并没有刷新，这里手动调用刷新
+		window.addEventListener('popstate', backRefresh)
+	})
 });
 
 // 页面卸载
