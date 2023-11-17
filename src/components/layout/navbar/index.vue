@@ -62,21 +62,20 @@
 					</div>
 
 					<div class="menu-line" v-if="route.query.blogId != null || route.query.tagId != null || route.query.userId != null"/>
-					<!-- 文章目录 -->
+					<!-- 文章列表 -->
 					<template v-if="route.query.blogId != null">
 						<div class="menu-tag-title"  @click="toTagPage(props.blogDetail)">{{props.blogDetail.tagName}}</div>
 						<div v-for="(item, index) in state.blogList" :key="index">
 							<div class="menu-blog-title" 
-							style="color: var(--app-item-sub);"
-								:class="[item.blogId == props.blogId ? 'menu-title-select' : '']"
+								:class="[item.blogId == props.blogId ? 'menu-title-select' : 'menu-title-no-select']"
 								@click="toBlogPage(item.blogId)">{{item.title}}</div>
 						</div>
 					</template>
-
+					<!-- 标签列表 -->
 					<template v-if="route.query.tagId || route.query.userId">
 						<div v-for="(item, index) in props.tagList" :key="index">
 							<div class="menu-tag-title" 
-								:class="[item.tagId == props.tagId ? 'menu-title-select' : '']"
+								:class="[item.tagId == props.tagId ? 'menu-title-select' : 'menu-title-no-select']"
 								@click="toTagPage(item)">{{item.tagName}}</div>
 						</div>
 					</template>
@@ -407,6 +406,9 @@ onMounted(() => {
 			cursor: pointer;
 		}
 
+		.menu-title-no-select{
+			color: var(--app-item-sub);
+		}
 		.menu-title-select{
 			color: var(--el-color-primary);
 		}
