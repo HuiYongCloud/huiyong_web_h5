@@ -61,19 +61,23 @@
 						</div>
 					</div>
 
-					<div class="menu-line" v-if="route.query.blogId != null || route.query.tagId != null "/>
+					<div class="menu-line" v-if="route.query.blogId != null || route.query.tagId != null || route.query.userId != null"/>
 					<!-- 文章目录 -->
 					<template v-if="route.query.blogId != null">
-						<div class="menu-tag-title" @click="toTagPage(props.blogDetail.tagId)">{{props.blogDetail.tagName}}</div>
+						<div class="menu-tag-title"  @click="toTagPage(props.blogDetail)">{{props.blogDetail.tagName}}</div>
 						<div v-for="(item, index) in state.blogList" :key="index">
-							<div class="menu-blog-title" @click="toBlogPage(item.blogId)">{{item.title}}</div>
+							<div class="menu-blog-title" 
+							style="color: var(--app-item-sub);"
+								:class="[item.blogId == props.blogId ? 'menu-title-select' : '']"
+								@click="toBlogPage(item.blogId)">{{item.title}}</div>
 						</div>
 					</template>
 
-					<template v-if="route.query.tagId">
-						<div class="menu-tag-title" @click="toTagPage(props.blogDetail.tagId)">{{props.blogDetail.tagName}}</div>
-						<div v-for="(item, index) in state.blogList" :key="index">
-							<div class="menu-blog-title" @click="toBlogPage(item.blogId)">{{item.title}}</div>
+					<template v-if="route.query.tagId || route.query.userId">
+						<div v-for="(item, index) in props.tagList" :key="index">
+							<div class="menu-tag-title" 
+								:class="[item.tagId == props.tagId ? 'menu-title-select' : '']"
+								@click="toTagPage(item)">{{item.tagName}}</div>
 						</div>
 					</template>
 
@@ -116,18 +120,33 @@ const state = reactive({
 
 // 定义父组件传过来的值
 const props = defineProps({
+	// blogId
+	blogId:{
+		type: String,
+		default: () => null,
+	},
+	// tagId
+	tagId:{
+		type: String,
+		default: () => null,
+	},	
   	// 详情
 	blogDetail: {
 		type: Object,
 		default: () => null,
 	},
+	// tag列表
+	tagList:{
+		type: Object,
+		default: () => null,
+	}
 });
 
 // 引入组件
 const ThemeSwitch = defineAsyncComponent(() => import('/@/components/theme-switch/index.vue'));
 
 // 定义子组件向父组件传值/事件
-const emit = defineEmits(['openBlogDetail', 'openTagDetail']);
+const emit = defineEmits(['openBlogDetail', 'openTagInfo']);
 
 // 首页
 const toHome = ()=> router.push('/')
@@ -142,8 +161,8 @@ const toResume = ()=> router.push({name: 'resume', query: {userId: mainStore.use
 // 管理后台
 const toAdmin = ()=> window.open("https://admin.huiyong.online/", '_blank')
 // 博客标签
-const toTagPage = (tagId: any)=> {
-	emit('openTagDetail', tagId);
+const toTagPage = (item: any)=> {
+	emit('openTagInfo', item);
 	state.showDrawer = false
 }
 // 博客标签
@@ -213,16 +232,16 @@ const getBlogList = () => {
 }
 
 // 监听标签变更，更新列表
-// watch(
-// 	() => props.blogDetail.tagId,
-// 	(value) => {
-// 		nextTick(() => {
-// 			// 标签变更，获取列表
-// 			state.blogList = null
-// 			getBlogList()
-// 		})
-// 	}
-// );
+watch(
+	() => props.tagId,
+	(value) => {
+		nextTick(() => {
+			// 标签变更，获取列表
+			state.blogList = null
+			getBlogList()
+		})
+	}
+);
 onMounted(() => {
 	nextTick(() => {
 		// 主题色
@@ -378,16 +397,18 @@ onMounted(() => {
 
 		.menu-tag-title{
 			padding: 5px 16px;
-			color: var(--el-color-primary);
-			font-size: 13px;
+			font-size: 12px;
 			cursor: pointer;
 		}
 
 		.menu-blog-title{
 			padding: 5px 16px 5px 32px;
-			color: var(--el-color-primary);
 			font-size: 12px;
 			cursor: pointer;
+		}
+
+		.menu-title-select{
+			color: var(--el-color-primary);
 		}
 
 		.menu-line{

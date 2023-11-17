@@ -9,7 +9,10 @@
 					<Navbar 
 						:sticky="true" 
 						:blogDetail="state.drawerBlogDetail"
-						@openTagDetail="openTagDetail"
+						:tagList="state.tagList"
+						:tagId="state.tagId"
+						:blogId="state.blogId"
+						@openTagInfo="openTagInfo"
 						@openBlogDetail="openBlogDetail"/>
 				</Sticky>
 			</div>
@@ -85,8 +88,8 @@ const router = useRouter();
 const blogShareDialog = ref();
 const state = reactive({
 	blogUserId:'' as any,	
-	tagId:'' as any,
-	blogId:'' as any,
+	tagId: null as any,
+	blogId: null as any,
 	blogCode: 0,
 
 	blogInfo: null as any,

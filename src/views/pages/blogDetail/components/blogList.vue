@@ -9,14 +9,14 @@
     <!-- 列表 -->
     <div class="info-item" v-for="(item, index) in state.list" :key="index">
       <!-- 博客列表 -->
-      <blog-list-item  
+      <BlogListItem
         v-if="state.tabActive == 0 || state.tabActive == 1" 
         :item="item" 
         :blogUserId="props.blogUserId" 
         @openBlogDetail="openBlogDetail"
         @openBlogShare="openBlogShare"/>
       <!-- 关注列表 -->
-      <blog-user-focus-list-item  
+      <BlogUserFocusListItem 
         v-else-if="state.tabActive == 2" 
         :item="item" 
         :blogUserId="props.blogUserId" 
