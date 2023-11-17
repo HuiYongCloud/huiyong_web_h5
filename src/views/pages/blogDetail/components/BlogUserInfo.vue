@@ -54,7 +54,7 @@
               <div class="blog-info flex">
                 <div class="info-item flex-center-start">
                   <div class="info-title">访问：</div>
-                  <div class="info-value">{{props.detail.blogReadNum || 0}}</div>
+                  <div class="info-value">{{props.detail.blogInfoReadNum || 0}}</div>
                 </div>
                 <div class="info-item flex-center-start">
                   <div class="info-title">文章：</div>

@@ -167,7 +167,7 @@ const route = useRoute();
 const router = useRouter();
 const seachListGroup = ref();
 const state = reactive({
-  seachKey: "" as any,
+  seachKey: "梁惠涌" as any,
   
   pageNum: 1,
   pageSize: 10,
@@ -300,6 +300,8 @@ onMounted(()=> {
     // 监听返回
     // 关键字历史记录返回时，是当前页面，所以返回时，页面并没有刷新，这里手动调用刷新
     window.addEventListener('popstate', backRefresh)
+
+    onPullDownRefresh()
   })
 })
 
