@@ -100,7 +100,7 @@
                   v-html="item.userName" 
                   class="item-link-active" 
                   style="margin-left: 10px; font-size: 12px; font-weight: bold;"
-                  :to="{name: 'blogDetail', query: {userId: item.id}}"/>
+                  :to="{name: 'blogDetail', query: {userId: item.userId}}"/>
               </div>
 
               <!-- 博客信息 -->
