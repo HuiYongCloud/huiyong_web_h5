@@ -1,3 +1,5 @@
+@import '/@/theme/media.scss';
+
 .page-resume-detail{
   position: relative;
 
@@ -5,5 +7,15 @@
     max-width: 1024px;
     margin-bottom: 150px;
     min-height: calc(100vh - 150px);
+  }
+}
+
+// 平板移动端禁止显示滚动条
+@media screen and (max-width: $lg) {
+  .page-resume-detail{
+  
+    .resume-preview{
+      max-width: 100vw;
+    }
   }
 }
