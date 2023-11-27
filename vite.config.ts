@@ -16,29 +16,29 @@ const viteConfig = defineConfig((mode: ConfigEnv) => {
     plugins: [vue()],
 
     root: process.cwd(),
-		resolve: { alias },
-		base: './',
-		mode: 'dev',
+	resolve: { alias },
+	base: './',
+	mode: 'dev',
 
-		// 本地运行配置，及代理配置
-		server: {
-			host: '0.0.0.0',
-			port: 8899,
-			open: false,
-			hmr: true,
-			proxy: {
-				'/api-client': {
-					target: 'http://localhost:20001',
-					changeOrigin: true,
-					ws: true
-				},
-        		'/api-uaa': {
-					target: 'http://localhost:20001',
-					changeOrigin: true,
-					ws: true
-				},
+	// 本地运行配置，及代理配置
+	server: {
+		host: '0.0.0.0',
+		port: 8899,
+		open: false,
+		hmr: true,
+		proxy: {
+			'/api-client': {
+				target: 'http://localhost:20001',
+				changeOrigin: true,
+				ws: true
+			},
+			'/api-uaa': {
+				target: 'http://localhost:20001',
+				changeOrigin: true,
+				ws: true
 			},
 		},
+	},
   }
 })
 
