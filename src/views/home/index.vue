@@ -19,7 +19,7 @@
       style="flex-direction: column; position: absolute; top: 0; right: 0; left: 0; z-index: 1;"
       :style="{ 'position' : state.seachKey ? 'absolute' :  'static'}">
       <!-- logo -->
-      <!-- <div class="home-title" :style="{'padding-top': state.seachKey ? '30px' : '0px','padding-bottom': state.seachKey ? '0px' : '30px',}">HuiYong.Online</div> -->
+      <div v-if="state.seachKey" class="home-title" :style="{'padding-top': '30px'}">HuiYong.Online</div>
       <!-- 搜索 -->
       <div class="flex-center-center" :class="{'search-input-onkey': state.seachKey}" style="padding: 20px 0px;">
         <div 
