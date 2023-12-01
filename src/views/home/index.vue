@@ -10,14 +10,16 @@
       <Navbar/>
     </div>   
 
+    <!-- 背景图 -->
+    <img v-if="!state.seachKey"  class="home-back-img" src="https://huiyong.online/logo.svg">
+
     <div 
       class="flex-center-center" 
       :class = "[state.seachKey ? 'search-top-group' : '']"
       style="flex-direction: column; position: absolute; top: 0; right: 0; left: 0; z-index: 1;"
       :style="{ 'position' : state.seachKey ? 'absolute' :  'static'}">
       <!-- logo -->
-      <div class="home-title" :style="{'padding-top': state.seachKey ? '30px' : '0px',}">Hui Yong</div>
-
+      <!-- <div class="home-title" :style="{'padding-top': state.seachKey ? '30px' : '0px','padding-bottom': state.seachKey ? '0px' : '30px',}">HuiYong.Online</div> -->
       <!-- 搜索 -->
       <div class="flex-center-center" :class="{'search-input-onkey': state.seachKey}" style="padding: 20px 0px;">
         <div 
@@ -38,6 +40,23 @@
             @keyup.enter="onPullDownRefresh"
             v-model="state.seachKey" />
         </div>
+      </div>
+
+      <!-- 链接 -->
+      <div class="link-group" v-if="!state.seachKey" style="width: 100%; margin-top: 100px; padding: 0px 50px;">
+        <router-link 
+          class="flex-center-center link-text" 
+          :to="{name: 'blogDetail', query: {blogId: '202111260489'}}">
+          <div style="font-weight: bold;">HuiYong.Online</div>
+          <div style="margin-top: 10px;">一个可以安安静静写博客的地方</div>
+        </router-link>
+
+        <router-link 
+          class="flex-center-center link-text"
+          :to="{name: 'resume', query: {userId: 'U202111250003'}}">
+          <div style="font-weight: bold;">梁惠涌</div>
+          <div style="margin-top: 10px;">Java开发工程师</div>
+        </router-link>
       </div>
     </div> 
 
@@ -138,22 +157,15 @@
       <Footer/>
     </div>
 
-    <!-- 背景图 -->
-    <div
-      v-if="!state.seachKey" 
-      style="margin: 50px 25px 0px;" >
-      <img class="home-back-img" :src="homeBack">
+    <!-- 底部 -->
+    <Footer v-if="!state.seachKey" absolute/>
 
-      <!-- 底部 -->
-      <Footer absolute/>
-    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { defineAsyncComponent, onMounted, onUnmounted, reactive, ref, nextTick} from 'vue';
-import homeBack from '/@/assets/img/home-back.webp';
-import { List as VanList, PullRefresh as VanPullRefresh, Image as VanImage} from 'vant';
+import { List as VanList, PullRefresh as VanPullRefresh, Image as VanImage, Col as VanCol, Row as VanRow} from 'vant';
 import Api from "/@/api/api"
 import Request from "/@/api/request"
 import imgPig from '/@/assets/img/pig1.gif';
@@ -167,7 +179,7 @@ const route = useRoute();
 const router = useRouter();
 const seachListGroup = ref();
 const state = reactive({
-  seachKey: "梁惠涌" as any,
+  seachKey: '' as any,
   
   pageNum: 1,
   pageSize: 10,
