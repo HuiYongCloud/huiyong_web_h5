@@ -55,7 +55,7 @@
           class="flex-center-center link-text"
           :to="{name: 'resume', query: {userId: 'U202111250003'}}">
           <div style="font-weight: bold;">梁惠涌</div>
-          <div style="margin-top: 10px;">Java开发工程师</div>
+          <div style="margin-top: 10px;">个人简历：Java开发工程师</div>
         </router-link>
       </div>
     </div> 
