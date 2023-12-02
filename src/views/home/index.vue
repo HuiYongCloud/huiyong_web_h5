@@ -44,19 +44,15 @@
 
       <!-- 链接 -->
       <div class="link-group" v-if="!state.seachKey" style="width: 100%; margin-top: 100px; padding: 0px 50px;">
-        <router-link 
-          class="flex-center-center link-text" 
-          :to="{name: 'blogDetail', query: {blogId: '202111260489'}}">
+        <div class="flex-center-center link-text" @click="openBlogDetail('202111260489')">
           <div style="font-weight: bold;">HuiYong.Online</div>
           <div style="margin-top: 10px;">一个可以安安静静写博客的地方</div>
-        </router-link>
+        </div>
 
-        <router-link 
-          class="flex-center-center link-text"
-          :to="{name: 'resume', query: {userId: 'U202111250003'}}">
+        <div class="flex-center-center link-text" @click="openResume('U202111250003')">
           <div style="font-weight: bold;">梁惠涌</div>
           <div style="margin-top: 10px;">个人简历：Java开发工程师</div>
-        </router-link>
+        </div>
       </div>
     </div> 
 
@@ -82,11 +78,11 @@
               <div class="flex-center-between">
                 <div class="flex-center-start">
                   <VanImage round class="user-header" :src="item.userImage" style="height: 25px; width: 25px;"/>
-                  <router-link 
+                  <div
                     class="item-link-active"
                     v-html="item.userName" 
                     style="margin-left: 10px; font-size: 12px; font-weight: bold;"
-                    :to="{name: 'blogDetail', query: {userId: item.id}}"/>
+                    @click="openBlogUser(item.id)"/>
                   <span class="open-status-1 ml10">博主</span>
                 </div>
 
@@ -115,22 +111,22 @@
               <!-- 博主信息 -->
               <div class="flex-center-start">
                 <VanImage round class="user-header" :src="item.userImage" style="height: 25px; width: 25px;"/>
-                <router-link 
+                <div 
                   v-html="item.userName" 
                   class="item-link-active" 
                   style="margin-left: 10px; font-size: 12px; font-weight: bold;"
-                  :to="{name: 'blogDetail', query: {userId: item.userId}}"/>
+                  @click="openBlogUser(item.userId)"/>
               </div>
 
               <!-- 博客信息 -->
               <div class="blog-content-group">
                 <div class="flex-center-between" style="margin-bottom: 10px;">
                   <div>
-                    <router-link 
+                    <div 
                       class="item-link-active" 
                       v-html="item.title" 
                       style="font-size: 12px; font-weight: bold;"
-                      :to="{name: 'blogDetail', query: {blogId: item.id}}"/>
+                      @click="openBlogDetail(item.id)"/>
                     <span v-if="item.openStatus == 0" class="open-status-0 ml10">私密，博主可搜索</span>
                   </div>
                   <div style="color: var(--app-item-sub); margin-left: 10px;">{{item.timeStr}}</div>
@@ -209,6 +205,27 @@ const searchListener = (event: any) => {
   if(event.srcElement.id != 'searchInput'){
     state.inputFocus = false
   }
+}
+
+const openResume =(userId: any) => {
+  router.push({
+		name: 'resume',
+		query: {userId: userId}
+	})
+}
+
+const openBlogUser =(userId: any) => {
+  router.push({
+		name: 'blogDetail',
+		query: {userId: userId}
+	})
+}
+
+const openBlogDetail =(blogId: any) => {
+  router.push({
+		name: 'blogDetail',
+		query: {blogId: blogId}
+	})
 }
 
 const onInputChange = () => {
