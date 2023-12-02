@@ -61,7 +61,7 @@
 						</div>
 					</div>
 
-					<div class="menu-line" v-if="route.query.blogId != null || route.query.tagId != null || route.query.userId != null"/>
+					<div class="menu-line" v-if="route.name == 'blogDetail' && (route.query.blogId != null || route.query.tagId != null || route.query.userId != null)"/>
 					<!-- 文章列表 -->
 					<template v-if="route.query.blogId != null">
 						<div class="menu-tag-title"  @click="toTagPage(props.blogDetail)">{{props.blogDetail.tagName}}</div>
