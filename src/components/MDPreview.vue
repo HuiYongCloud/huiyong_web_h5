@@ -4,16 +4,19 @@
 		:theme="isDarkTheme()?'dark':'light'" 
 		:modelValue="props.content"
 		previewTheme="github"
+		:noImgZoomIn="true"
 		codeTheme="github" />
 </template>
 
 <script setup lang="ts">
+import { onMounted} from 'vue';
 import { appStore } from '/@/stores/appStore'
 import { MdPreview, config} from 'md-editor-v3';
 import 'md-editor-v3/lib/preview.css';
 import Cropper from 'cropperjs';
 import 'cropperjs/dist/cropper.css';
 import MarkdownItMark from 'markdown-it-mark';
+import { showImagePreview } from 'vant';
 
 const mainStore = appStore()
 const isDarkTheme = () => {
@@ -44,6 +47,28 @@ const props = defineProps({
 		type: String,
 		default: () => '',
 	},
+});
+
+// 添加图片预览功能
+const initImageClick = () => {
+	// 延时5秒，保证图片节点加载进来
+	setTimeout(() => {
+		let imgList = document.getElementsByTagName("img");
+		for (var i = 0; i < imgList.length; i++) {
+			console.log(imgList[i].src)
+			imgList[i].addEventListener("click", (e:any) => {
+				showImagePreview({
+					images: [e.target.currentSrc],
+  					closeable: true,
+				});
+			});
+		};
+	}, 1000);
+}
+
+// 页面加载时
+onMounted(() => {
+	initImageClick()
 });
 </script>
 
