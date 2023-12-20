@@ -213,6 +213,7 @@ const openBlogShare = (blogId: any) => {
 
 // 返回时刷新页面
 const backRefresh = ()=> {
+	window.scrollTo(0, 0)
 	window.location.reload();
 }
 
