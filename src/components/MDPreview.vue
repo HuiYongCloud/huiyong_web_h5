@@ -1,6 +1,6 @@
 <template>
 	<MdPreview 
-		editorId="md-preview-id"
+		editorId="md-preview"
 		:theme="isDarkTheme()?'dark':'light'" 
 		:modelValue="props.content"
 		previewTheme="github"
@@ -46,7 +46,7 @@ const props = defineProps({
 	content: {
 		type: String,
 		default: () => '',
-	},
+	}
 });
 
 // 添加图片预览功能
