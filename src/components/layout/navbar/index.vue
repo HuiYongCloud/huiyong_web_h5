@@ -53,12 +53,7 @@
 					<div class="menu-item flex-center-between">
 						<div class="w100 flex-center-between">
 							<div>主题切换</div>
-							<Switch 
-								size="20" 
-								v-model="state.isDark" 
-								@change="changeSysTheme" 
-								active-color="#000000" 
-							/>
+							<ThemeSwitch/>
 						</div>
 					</div>
 
@@ -107,6 +102,9 @@ import blogToc from '/@/assets/svg/blog-toc.svg';
 import Api from "/@/api/api"
 import Request from "/@/api/request"
 
+// 引入组件
+const ThemeSwitch = defineAsyncComponent(() => import('/@/components/theme-switch/index.vue'));
+
 // 定义变量
 const route = useRoute();
 const router = useRouter();
@@ -143,9 +141,6 @@ const props = defineProps({
 	}
 });
 
-// 引入组件
-const ThemeSwitch = defineAsyncComponent(() => import('/@/components/theme-switch/index.vue'));
-
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['openBlogDetail', 'openTagInfo']);
 
@@ -174,16 +169,6 @@ const toBlogPage = (blogId: any)=> {
 	state.showDrawer = false
 }
 
-// 变更主题
-const changeSysTheme = () => {
-	let isDark = false;
-	if(mainStore.theme){
-		isDark = mainStore.theme === 'dark'
-	}else{
-		isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-	}
-	mainStore.theme = isDark ? 'light' : 'dark';
-}
 // 退出登录
 const outLogin = () => {
 	showConfirmDialog({

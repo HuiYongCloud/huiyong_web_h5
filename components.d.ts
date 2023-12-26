@@ -10,6 +10,7 @@ declare module 'vue' {
     Avatar: typeof import('./src/components/Avatar.vue')['default']
     BlogShareDialog: typeof import('./src/components/dialog/BlogShareDialog.vue')['default']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
+    ElSwitch: typeof import('element-plus/es')['ElSwitch']
     ElTree: typeof import('element-plus/es')['ElTree']
     Empty: typeof import('./src/components/Empty.vue')['default']
     FavateBtn: typeof import('./src/components/FavateBtn.vue')['default']
