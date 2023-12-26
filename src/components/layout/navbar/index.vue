@@ -19,6 +19,7 @@
 								</div>
 								<div class="menu-item flex-center-between" @click="toHome">首页</div>
 								<div class="menu-line"/>
+								<div class="menu-item flex-center-between" v-if="route.name != 'mindDetail'" @click="toMind">思维导图</div>
 								<div class="menu-item flex-center-between" v-if="route.name != 'blogDetail'" @click="toBlog">我的博客</div>
 								<div class="menu-item flex-center-between" @click="toResume">我的简历</div>
 								<div class="menu-item flex-center-between" @click="toAdmin">后台管理</div>
@@ -84,6 +85,7 @@
 					<!-- 未登录 -->
 					<div class="menu-item flex-center-between" v-if="!mainStore.userInfo" @click="toLogin">去登录</div>
 					<!-- 已登录 -->
+					<div class="menu-item flex-center-between" v-if="mainStore.userInfo && route.name != 'mindDetail'" @click="toMind">思维导图</div>
 					<div class="menu-item flex-center-between" v-if="mainStore.userInfo && route.name != 'blogDetail'" @click="toBlog">我的博客</div>
 					<div class="menu-item flex-center-between" v-if="mainStore.userInfo" @click="toResume">我的简历</div>
 					<div class="menu-item flex-center-between" v-if="mainStore.userInfo" @click="toAdmin">后台管理</div>
@@ -153,6 +155,8 @@ const toHome = ()=> router.push('/')
 const toLogin = () => {
 	router.push(`/login?redirect=${route.path}&params=${JSON.stringify(route.query ? route.query : route.params)}`)
 }
+// 思维导图
+const toMind = ()=> router.push({name: 'mindDetail', query: {userId: mainStore.userInfo.userId}})
 // 博客
 const toBlog = ()=> router.push({name: 'blogDetail', query: {userId: mainStore.userInfo.userId}})
 // 简历

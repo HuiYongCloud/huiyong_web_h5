@@ -37,6 +37,12 @@ const routes: RouteRecordRaw[] = [
         meta: { title: '博客详情' }
     },
     { 
+        path: '/mindDetail', 
+        name: 'mindDetail', 
+        component: () => import('/@/views/pages/mindDetail/index.vue')  ,
+        meta: { title: '思维导图' }
+    },    
+    { 
         path: '/resume', 
         name: 'resume', 
         component: () => import('/@/views/pages/resume/index.vue')  ,

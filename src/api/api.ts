@@ -44,6 +44,13 @@ export const Api = {
 	Blog_Share:   			Api_Client + '/blog/n/getShareInfo',   	 	 // 分享博客
 
 	/**
+	 * 思维导图
+	 */	
+	Mind_Detail:          	Api_Client + '/mind/n/detail',               // 思维导图详情
+	Mind_List:  			Api_Client + '/mind/n/mindList',      		 // 思维导图列表
+	Mind_Share:   			Api_Client + '/mind/n/getShareInfo',   	 	 // 分享思维导图	
+
+	/**
 	 * 博客收藏
 	 */	
 	Blog_Like_Add:         	Api_Client + '/blogLike/likeAdd',            // 收藏博客

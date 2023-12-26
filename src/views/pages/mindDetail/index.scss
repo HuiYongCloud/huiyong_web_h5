@@ -1,0 +1,36 @@
+@import '/@/theme/media.scss';
+
+.mind-detail-page{
+  width: 85%;
+
+  .mind-info-left{
+    width: 17%;
+    min-width: 200px;
+    position: sticky;
+    top: 0;
+    padding-top: 10px;
+  }
+
+  .mind-content-page{
+    width: 83%;
+    margin: 10px 0 0 10px;
+  }
+}
+
+@media screen and (max-width: $lg) {
+  .mind-detail-page {
+    padding: 0px;
+    display: block;
+    width: 100%;
+
+    .mind-info-left{
+      position: static;
+      padding-top: 0px;
+    }
+
+    .mind-content-page{
+      width: 100vw;
+      margin: 0px;
+    }
+  }
+}

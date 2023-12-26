@@ -1,7 +1,9 @@
 <template >
-	<ConfigProvider id="app" :theme="state.sysTheme" >
-		<router-view :key="route.path"/>
-	</ConfigProvider>
+	<el-config-provider>
+		<ConfigProvider id="app" :theme="state.sysTheme" >
+			<router-view :key="route.path"/>
+		</ConfigProvider>
+	</el-config-provider>
 </template>
 
 <script setup lang="ts">
@@ -11,7 +13,6 @@ import { appStore } from '/@/stores/appStore'
 import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
-const router = useRouter();
 const mainStore = appStore()
 const state = reactive({
 	sysTheme: '' as any,
