@@ -9,10 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute, useRouter } from "vue-router"
 
-const route = useRoute();
-const router = useRouter();
 // 定义父组件传过来的值
 const props = defineProps({
     // 定位
@@ -22,12 +19,7 @@ const props = defineProps({
     },
 });
 const toLink = () => window.open("https://beian.miit.gov.cn/", '_blank')
-const toAbout = () => {
-	router.push({
-		name: 'blogDetail',
-		query: {blogId: '202111260489'}
-	})
-}
+const toAbout = () => window.open("https://huiyong.online/blogDetail?blogId=202111260489", '_blank')
 </script>
 
 <style scoped lang="scss">

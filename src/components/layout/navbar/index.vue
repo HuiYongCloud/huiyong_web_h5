@@ -95,7 +95,7 @@
 <script setup lang="ts" name="navBar">
 import { defineAsyncComponent, onMounted, reactive, nextTick, watch} from 'vue';
 import { appStore } from '/@/stores/appStore'
-import { Icon, Image as VanImage, Popup , Switch, showNotify} from 'vant';
+import { Icon, Image as VanImage, Popup , showNotify} from 'vant';
 import { useRoute, useRouter } from 'vue-router';
 import { showConfirmDialog } from 'vant';
 import blogToc from '/@/assets/svg/blog-toc.svg';
@@ -113,7 +113,6 @@ const state = reactive({
 	isUpUserCache: false,
 	isSelectUser: false,
 	showDrawer: false,
-	isDark: false,
 	blogList: '' as any,
 });
 
@@ -198,17 +197,6 @@ const getUserCache = () => {
 	}).catch((res:any) =>{})
 }
 
-// 初始化主题色
-const onInitTheme = () => {
-	let isDark = false;
-	if(mainStore.theme){
-		isDark = mainStore.theme === 'dark'
-	}else{
-		isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-	}
-	state.isDark = isDark;
-}
-
 const getBlogList = (tagId: any) => {
 	Request.post(Api.Blog_List_By_Tag_Id, {id: tagId})
 	.then((res : any) =>{ 
@@ -221,8 +209,6 @@ const getBlogList = (tagId: any) => {
 
 onMounted(() => {
 	nextTick(() => {
-		// 主题色
-		onInitTheme()
 		getUserCache()
 	});
 });
@@ -237,6 +223,9 @@ defineExpose({
 @import '/@/theme/media.scss';
 
 .layout-nav-bar-pc {
+	position: fixed; 
+	top: 0; 
+	right: 0;
 	width: 100%;
 	z-index: 100;
 
