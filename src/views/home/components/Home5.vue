@@ -1,31 +1,32 @@
 <template>
-  <div class="block5Container">
-    <div class="blockContent">
-      <div class="infoBox">
-        <div class="infoTitle">梁惠涌</div>
-        <div class="infoDesc">专注前端、后端、运维、高并发、k8s、DevOps。</div>
-        <div class="linkBtnList">
-          <div class="linkBtn">
-            <a href="https://github.com/HuiYongCloud" target="_blank">GitHub</a>
-          </div>
-          <div class="linkBtn">
-            <a href="https://gitee.com/HuiYongCloud" target="_blank">Gitee</a>
-          </div>
-          <div class="linkBtn">
-            <a href="https://huiyong.online/blogDetail?userId=U202111250003" target="_blank">Blog</a>
-          </div>
-        </div>
-      </div>
-      <div class="linkBox">
-        <div class="linkTitle">更多作品</div>
-        <div class="linkList">
-          <div class="linkItem" v-for="item in linkList" :key="item.name">
-            <el-tooltip :content="item.desc" placement="top">
-              <a :href="item.url" target="_blank">{{ item.name }}</a>
-            </el-tooltip>
-          </div>
-        </div>
-      </div>
+  <div class="flex-center-center" style="width: 100vw; padding: 0 0 100px; background-color: var(--el-bg-color-page); border-radius:20vw 0 0 0;">
+    <div style="width: 100%; max-width: 980px;">
+      <el-row :gutter="50">
+        <el-col :xs="24" :sm="14" :md="14" :lg="14" :xl="14">
+          <div class="item-group">
+            <div class="item-title">梁惠涌</div>
+            <div class="item-desc">专注前端、后端、运维、高并发、k8s、DevOps。</div>
+            <div class="flex mt10">
+              <a class="link-txt" href="https://github.com/HuiYongCloud" target="_blank">GitHub</a>
+              <a class="link-txt" href="https://gitee.com/HuiYongCloud" target="_blank">Gitee</a>
+              <a class="link-txt" href="https://huiyong.online/blogDetail?userId=U202111250003" target="_blank">Blog</a>
+            </div>
+          </div>        
+        </el-col>
+
+        <el-col :xs="24" :sm="10" :md="10" :lg="10" :xl="10">
+          <div class="item-group">
+            <div class="item-title">更多作品</div>
+            <div class="flex mt10">
+              <template v-for="item in linkList" :key="item.name">
+                <el-tooltip :content="item.desc" placement="top">
+                  <a class="link-txt" :href="item.url" target="_blank">{{ item.name }}</a>
+                </el-tooltip>
+              </template>
+            </div>
+          </div>        
+        </el-col>
+      </el-row>      
     </div>
   </div>
 </template>
@@ -41,80 +42,36 @@ const linkList = [
 </script>
 
 <style lang="scss" scoped>
-.block5Container {
-  background-color: var(--el-bg-color-page);
-  border-radius: 450px 0 0 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+@import '/@/theme/media.scss';
+.item-group{
+  margin-top: 50px;
+}
 
-  .blockContent {
-    width: 100%;
-    max-width: 980px;
-    height: 350px;
-    display: flex;
-    padding-top: 100px;
+.item-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--app-item-title);
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
 
-    .infoBox {
-      .infoTitle {
-        font-size: 20px;
-        font-weight: 700;
-        color: var(--app-item-title);
-        line-height: 1.4;
-        margin-bottom: 20px;
-      }
+.item-desc {
+  color: var(--app-item-sub);
+  font-size: 16px;
+}
 
-      .infoDesc {
-        color: var(--app-item-sub);
-        font-size: 16px;
-      }
+.link-txt {
+  font-size: 14px;
+  margin-right: 10px;
+  color: var(--app-item-sub);
+  &:hover{
+    color: var(--el-color-primary);
+  }
+}
 
-      .linkBtnList {
-        margin-top: 30px;
-        display: flex;
-        align-items: center;
-        .linkBtn {
-          height: 38px;
-          margin-right: 10px;
-
-          a {
-            color: var(--app-item-title);
-          }
-        }
-      }
-    }
-
-    .linkBox {
-      margin-left: 150px;
-      .linkTitle {
-        font-size: 20px;
-        font-weight: 700;
-        color: var(--app-item-title);
-        line-height: 1.4;
-        margin-bottom: 20px;
-      }
-
-      .linkList {
-        display: flex;
-        flex-wrap: wrap;
-
-        .linkItem {
-          margin-right: 20px;
-          margin-bottom: 10px;
-
-          a {
-            color: var(--app-item-sub);
-            font-size: 15px;
-            transition: all 0.5s;
-            text-decoration: none;
-
-            &:hover {
-              color: #1ea59a;
-            }
-          }
-        }
-      }
-    }
+@media screen and (max-width: $md) {
+  .item-group{
+    padding: 0 40px;
   }
 }
 </style>

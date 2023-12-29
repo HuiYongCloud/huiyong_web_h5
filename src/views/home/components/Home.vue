@@ -1,10 +1,10 @@
 <template>
   <div class="home-box">
     <Home1/>
-    <!-- <Home2/>
+    <Home2/>
     <Home3/>
     <Home4/>
-    <Home5/> -->
+    <Home5/>
   </div>
 </template>
 

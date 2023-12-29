@@ -1,190 +1,180 @@
 <template>
-  <div class="block1Container" :style="{ height: height + 'px' }">
-    <div class="blockContent">
-      <div class="infoBox">
-        <div class="infoList">
-          <p class="infoRow">整理中，即将开放...</p>
-        </div>
-      </div>
-      <div class="picBox">
-        <div class="animation1"></div>
-        <div class="animation2"></div>
-        <div class="animation3"></div>
-        <img class="pic" :src="svg2024" />
-      </div>
-    </div>
+  <div class="flex-center-center" style="width: 100vw; height: 100vh; background-color: var(--el-bg-color-page); border-radius: 0 0 0 20vw;">
+      <el-row :gutter="50">
+        <el-col :xs="24" :sm="24" :md="14" :lg="14" :xl="14">
+          <div class="flex-center-center h100">
+              <div class="infoRow">整理中，即将开放...</div>
+          </div>
+        </el-col>
+        
+        <el-col :xs="24" :sm="24" :md="10" :lg="10" :xl="10">
+          <div class="flex-center-center">
+            <div style="position: relative;">
+              <div class="animation1"></div>
+              <div class="animation2"></div>
+              <div class="animation3"></div>
+              <img class="pic" :src="svg2024" />
+            </div>
+          </div>          
+        </el-col>
+      </el-row>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
-
 import svg2024 from '/@/assets/svg/2024.svg';
 
-const router = useRouter()
-const height = ref(0)
-
-onMounted(() => {
-  window.addEventListener('resize', onResize)
-  onResize()
-})
-
-onUnmounted(() => {
-  window.removeEventListener('resize', onResize)
-})
-
-const onResize = () => {
-  height.value = window.innerHeight
-}
-
-const useOnline = () => {
-  router.push('/')
-}
-
-const jumpDoc = () => {
-  router.push('/doc/zh/')
+const aboutMore =() => {
+  window.open("https://huiyong.online/blogDetail?blogId=202111260489", '_blank')
 }
 </script>
 
 <style lang="scss" scoped>
-.block1Container {
-  width: 100vw;
-  border-radius: 0 0 0 450px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+@import '/@/theme/media.scss';
 
-  .blockContent {
-    width: 100%;
-    max-width: 980px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.infoRow {
+  font-size: 45px;
+  color: var(--app-item-title);
+  font-weight: 700;
+  margin-bottom: 20px;
+}
 
-    .infoBox {
-      .blockTitle {
-        font-size: 16px;
-        color: var(--app-item-title);
-        margin-bottom: 10px;
-      }
+.infoRow-sub-1 {
+  font-size: 28px;
+  color: var(--app-item-title);
+  font-weight: 700;
+  margin-bottom: 20px;
+  margin-top: 50px;
+}
 
-      .infoList {
-        margin-top: 20px;
+.infoRow-sub-2 {
+  font-size: 28px;
+  color: var(--app-item-title);
+  font-weight: 700;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}    
 
-        .infoRow {
-          font-size: 45px;
-          color: var(--app-item-title);
-          font-weight: 700;
-          margin-bottom: 20px;
-        }
-      }
+.desc {
+  color: var(--el-color-info);
+  font-size: 16px;
+  line-height: 1.8;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
 
-      .desc {
-        color: var(--el-color-info);
-        font-size: 20px;
-        line-height: 1.5;
-      }
+.btn {
+  height: 44px;
+  padding: 0 20px;
+  line-height: 44px;
+  cursor: pointer;
+  background: var(--el-color-primary);
+  color: var(--el-color-white);
+  font-weight: 600;
+  font-size: 15px;
+  border-radius: 5px;
+  transition: all 0.5s;
+  margin-right: 10px;
 
-      .btnBox {
-        display: flex;
-        align-items: center;
-        margin-top: 20px;
-
-        .btn {
-          height: 44px;
-          padding: 0 20px;
-          line-height: 44px;
-          cursor: pointer;
-          background: #1ea59a;
-          border-color: #1ea59a;
-          color: #fff;
-          font-weight: 600;
-          font-size: 15px;
-          border-radius: 5px;
-          transition: all 0.5s;
-          margin-right: 10px;
-
-          &:hover {
-            transform: translateY(-4px);
-          }
-
-          &.btn2 {
-            background-color: #f5828b;
-          }
-        }
-      }
-    }
-
-    .picBox {
-      position: relative;
-      .pic {
-        width: 500px;
-        height: 500px;
-        background-image: url('../../../assets/img/index/block1.png');
-        background-size: cover;
-      }
-
-      .animation1 {
-        width: 38px;
-        height: 38px;
-        border: 7px solid #f5828b;
-        border-radius: 50%;
-        position: absolute;
-        right: -50px;
-        bottom: 86px;
-        animation-name: zoom1;
-        animation-duration: 3s;
-        animation-iteration-count: infinite;
-        animation-direction: alternate;
-        box-shadow: 0 12px 50px 0 rgba(0, 0, 0, 0.14);
-      }
-
-      .animation2 {
-        border-radius: 50%;
-        background-color: var(--el-color-primary);
-        box-shadow: 0 20px 30px 0 rgba(48, 61, 114, 0.4);
-        position: absolute;
-        width: 25px;
-        height: 25px;
-        top: -60px;
-        right: 60px;
-        animation: spin 2s infinite alternate;
-        bottom: 60px;
-      }
-
-      .animation3 {
-        border-radius: 50%;
-        background-color: var(--el-text-color-primary);
-        box-shadow: 0 20px 30px 0 rgba(245, 130, 139, 0.4);
-        position: absolute;
-        width: 25px;
-        height: 25px;
-        bottom: 50px;
-        left: 0px;
-        animation: spin 3s infinite alternate;
-      }
-    }
+  &:hover {
+    transform: translateY(-4px);
   }
+
+  &.btn-1{  
+    background: var(--el-color-primary);
+  }
+
+  &.btn-2{
+    background: #f5828b;
+  }  
+}
+  
+.pic {
+  width: 500px;
+  max-width: 80vw;
+}
+
+.animation1 {
+  width: 38px;
+  height: 38px;
+  border: 7px solid #f5828b;
+  border-radius: 50%;
+  position: absolute;
+  right: -50px;
+  bottom: 86px;
+  animation-name: zoom1;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  box-shadow: 0 12px 50px 0 rgba(0, 0, 0, 0.14);
+}
+
+.animation2 {
+  border-radius: 50%;
+  background-color: var(--el-color-primary);
+  box-shadow: 0 20px 30px 0 rgba(48, 61, 114, 0.4);
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  top: -10px;
+  right: 60px;
+  animation: spin 2s infinite alternate;
+  bottom: 60px;
+}
+
+.animation3 {
+  border-radius: 50%;
+  background-color: var(--el-text-color-primary);
+  box-shadow: 0 20px 30px 0 rgba(245, 130, 139, 0.4);
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  bottom: 50px;
+  left: 0px;
+  animation: spin 3s infinite alternate;
 }
 
 @keyframes zoom1 {
-  0% {
-    transform: scale(0.9);
-  }
-
-  100% {
-    transform: scale(1.5);
-  }
+  0% {transform: scale(0.9);}
+  100% {transform: scale(1.5);}
 }
 
 @keyframes spin {
-  0% {
-    transform: translateY(0);
+  0% {transform: translateY(0);}
+  100% {transform: translateY(40px);}
+}
+
+@media screen and (max-width: $md) {
+  .infoRow {
+    margin: 100px 20px 0;
+    font-size: 25px;
+    font-weight: 700;
   }
 
-  100% {
-    transform: translateY(40px);
+  .infoRow-sub-1 {
+    margin: 30px 20px 0;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .infoRow-sub-2 {
+    margin: 5px 20px 0;
+    font-size: 20px;
+    font-weight: 700;
+  }    
+
+  .desc {
+    font-size: 14px;
+    margin: 20px;
+  }
+
+  .btn {
+    height: 35px;
+    padding: 0 15px;
+    line-height: 35px;
+    &.btn-1{
+      margin-left: 20px;
+    }
   }
 }
 </style>

@@ -1,137 +1,49 @@
 <template>
-  <div class="block4Container">
-    <div class="blockContent">
-      <div class="infoBox">
-        <div class="infoTitle">JavaScript库</div>
-        <div class="info">simple-mind-map是一个简单&强大的Web思维导图库，不依赖任何特定框架，可以帮助你快速开发思维导图产品。</div>
-        <div class="info">使用非常简单，只需三步即可渲染出一个思维导图：</div>
-        <div class="info">第一步：安装</div>
-        <div class="codeBox">
-          <pre><code class="language-bash" ref="code1">
-npm i simple-mind-map
-            </code></pre>
-        </div>
-        <div class="info">第二步：引入</div>
-        <div class="codeBox">
-          <pre><code class="language-javascript" ref="code2">
-import MindMap from "simple-mind-map"
-            </code></pre>
-        </div>
-        <div class="info">第三步：实例化</div>
-        <div class="codeBox">
-          <pre><code class="language-javascript" ref="code3">
-const mindMap = new MindMap({
-  // 提供一个宽高不为0的容器元素
-  el: document.getElementById('mindMapContainer'),
-  // 思维导图数据
-  data: {
-    "data": {
-        "text": "根节点"
-    },
-    "children": []
-  }
-})
-            </code></pre>
-        </div>
-        <div class="btnList">
-          <div class="btn" @click="jumpDoc">查看更多</div>
-        </div>
-      </div>
-      <div class="picBox"></div>
+  <div class="flex-center-center" style="width: 100vw; padding: 50px 0;">
+    <div class="home4-group">
+      <MDPreview :content="state.content"/>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-// import hljs from 'highlight.js/lib/core'
-// import javascript from 'highlight.js/lib/languages/javascript'
-// import bash from 'highlight.js/lib/languages/bash'
-// import 'highlight.js/styles/github.css'
-// hljs.registerLanguage('javascript', javascript)
-// hljs.registerLanguage('bash', bash)
+import { defineAsyncComponent, reactive, onMounted, nextTick} from 'vue';
 
-// const code1 = ref(null)
-// const code2 = ref(null)
-// const code3 = ref(null)
+// 引入组件
+const MDPreview = defineAsyncComponent(() => import('/@/components/MDPreview.vue'));
 
-// onMounted(() => {
-//   hljs.highlightElement(code1.value)
-//   hljs.highlightElement(code2.value)
-//   hljs.highlightElement(code3.value)
-// })
-
-const jumpDoc = () => {
-}
+const state = reactive({
+  content:"### 服务器配置 \n"
+        + "| 类型 | CPU | 内存 | 网络 | \n" 
+        + "| - | - | - | - | \n"
+        + "| 腾迅轻量 | 4核 | 4GB | 8M | \n" 
+        + "| 腾迅轻量 | 2核 | 4GB | 5M | \n" 
+        + "| ECS服务器 | 2核 | 2GB | 3M |"
+        + "\n"
+        + "<div style='margin-top: 50px;' />"
+        + "\n"
+        + "\n"
+        + "### 🎨 演示账号 \n"
+        + "|名称 | 地址 | \n"
+        + "|---|---| \n"
+        + "|管理后台 | [admin.huiyong.online](https://admin.huiyong.online)| \n"
+        + "|客户端 | [huiyong.online](https://huiyong.online) | \n"
+        + "|账号 | test | \n"
+        + "|密码 | test123 | \n"
+})
 </script>
 
 <style lang="scss" scoped>
-.block4Container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+@import '/@/theme/media.scss';
 
-  .blockContent {
-    width: 100%;
-    max-width: 980px;
-    display: flex;
-    align-items: center;
-    padding: 50px 0;
+.home4-group{
+  width: 100%; 
+  max-width: 980px;
+}
 
-    .picBox {
-      width: 500px;
-      height: 500px;
-      background-image: url('../../../assets/img/index/block4.png');
-      flex-shrink: 0;
-    }
-
-    .infoBox {
-      margin-right: 50px;
-
-      .infoTitle {
-        font-weight: 700;
-        color: var(--app-item-title);
-        font-size: 40px;
-      }
-
-      .info {
-        color: var(--app-item-sub);
-        font-size: 16px;
-        line-height: 1.7;
-        margin-top: 20px;
-      }
-
-      .codeBox {
-        font-size: 16px;
-        margin-top: 10px;
-      }
-
-      .btnList {
-        display: flex;
-        align-items: center;
-
-        .btn {
-          height: 44px;
-          cursor: pointer;
-          background: #1ea59a;
-          border-color: #1ea59a;
-          border-radius: 5px;
-          transition: all 0.5s;
-          margin-right: 10px;
-          margin-top: 20px;
-          height: 100%;
-          padding: 0 20px;
-          line-height: 44px;
-          color: #fff;
-          font-weight: 600;
-          font-size: 15px;
-
-          &:hover {
-            transform: translateY(-4px);
-          }
-        }
-      }
-    }
+@media screen and (max-width: $md) {
+  .home4-group{
+    padding: 0 20px;
   }
 }
 </style>

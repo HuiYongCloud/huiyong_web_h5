@@ -21,7 +21,7 @@ export const appStore = defineStore('appStore', {
      */
     state: () => {
         return {
-            theme: '',
+            theme: 'dark',
             token_403: '',
           	userInfo: {} as any
         }

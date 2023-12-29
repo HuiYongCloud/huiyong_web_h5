@@ -156,7 +156,7 @@ onUnmounted(() => {
 }
 
 [data-theme='dark'] {
-  .app-header {
+  .app-header-pc {
     &.active {
       box-shadow: 0 5px 30px -10px rgba(255, 255, 255, 0.1);
     }

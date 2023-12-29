@@ -1,235 +1,206 @@
 <template>
-  <div class="block2Container">
-    <div class="blockContent">
-      <div class="blockTitle">为什么选择 HuiYong.Online ？</div>
-      <!-- <div class="dataList">
-        <div class="dataItem" v-for="(item, index) in dataList" :key="index">
-          <div class="iconBox">
-            <span class="icon iconfont" :class="[item.icon]"></span>
-          </div>
-          <div class="dataValue">{{ item.value }}</div>
-        </div>
-      </div> -->
-      <!-- <div class="desc">如果你是开发者：Simple mind map提供了一个功能完善的 js 思维导图库，不依赖任何框架，你可以使用它来快速完成Web思维导图产品的开发。</div>
-      <div class="desc">如果你是使用者：Simple mind map提供了一个完整的思维导图软件，支持在线和客户端两种使用方式，所有功能完全免费。</div> -->
-      <div class="functionList">
-        <div class="functionItem" v-for="(item, index) in functionList" :key="index">
-          <div class="icon iconfont" :class="[item.icon]"></div>
-          <div class="info">
-            <div class="name">{{ item.name }}</div>
-            <div class="value">{{ item.value }}</div>
-          </div>
-        </div>
-      </div>
+  <div class="flex-center-center">
+    <div class="home2-box">
+      <div class="home2-title">为什么选择 HuiYong.Online ？</div>
+      <el-row style="margin-top: 60px;">
+        <template v-for="(item, index) in functionList" :key="index">
+          <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="8" >
+            <div class="home2-item">
+              <div class="flex">
+                <div class="img-box flex-center-center">
+                  <img :src="item.img" style="filter: drop-shadow(10000px 0 0 var(--el-text-color-primary)); transform: translate(-10000px);">
+                </div>
+                <div class="info">
+                  <div class="name">{{ item.name }}</div>
+                  <div class="value">{{ item.value }}</div>
+                </div>
+              </div>   
+            </div>
+          </el-col>
+        </template>
+      </el-row>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const dataList = [
-  {
-    icon: 'iconstar',
-    value: 'Github star数量600+'
-  },
-  {
-    icon: 'iconfork',
-    value: 'Github fork数量150+'
-  },
-  {
-    icon: 'iconxiazai',
-    value: 'npm总下载次数10000+'
-  },
-  {
-    icon: 'iconteamwork',
-    value: '代码贡献者8+'
-  }
-]
+import MicroService from './svg/MicroService.svg';
+import Docker from './svg/Docker.svg';
+import Theme from './svg/Theme.svg';
+import Window from './svg/Window.svg';
+import MD from './svg/MD.svg';
+import Drawio from './svg/Drawio.svg';
+import XMind from './svg/XMind.svg';
+import Img from './svg/Img.svg';
+import Video from './svg/Video.svg';
+import BaseDoc from './svg/BaseDoc.svg';
+import YinSi from './svg/yinsi.svg';
+import RBAC from './svg/RBAC.svg';
+import Log from './svg/Log.svg';
+import BoardMap from './svg/BoardMap.svg';
+import InAndOut from './svg/InAndOut.svg';
+
 const functionList = [
   {
-    icon: 'iconjingzi',
-    name: '微服务',
-    value: 'Gateway+Nacos+Sentinel服务治理、流量管控'
+    img: Theme,
+    name: '主题',
+    value: '支持明亮/暗黑模式，护眼。'
   },
   {
-    icon: 'iconjingzi',
+    img: MicroService,
+    name: '微服务',
+    value: '微服务治理、流量管控，安全、稳定。'
+  },
+  {
+    img: Docker,
     name: 'Docker',
-    value: '镜像部署，方便快捷'
+    value: '镜像部署，方便快捷。'
   },  
   {
-    icon: 'iconjingzi',
-    name: '主题',
-    value: '支持明亮/暗黑模式，程序员更应该护眼。'
-  },
-  {
-    icon: 'iconjiegou',
-    name: '无广告',
-    value: '无任何广告。'
-  },
-  {
-    icon: 'iconjianpan',
-    name: '快捷键',
-    value: '常用操作支持快捷键，方便使用。'
-  },
-  {
-    icon: 'iconzitixiahuaxian',
+    img: MD,
     name: 'MarkDown',
-    value: 'MarkDown'
+    value: '完善的MarkDown语法支持'
   },
   {
-    icon: 'iconimage',
+    img: Drawio,
     name: 'Drawio',
-    value: '选中任一节点，选择上传图片，让内容达到图文并茂。'
+    value: '内置强大、免费的Drawio绘图工具。'
   },
   {
-    icon: 'icongaikuozonglan',
+    img: XMind,
     name: 'XMind',
-    value: '补充表述几个节点之间的关系。'
+    value: '内置强大的思维导图工具。'
   },
   {
-    icon: 'iconxiaolian',
+    img: Window,
+    name: '屏幕适配',
+    value: '兼容各种大小屏，移动端、PC、平板等。'
+  },  
+  {
+    img: Img,
     name: '图片',
-    value: '图片秒传'
+    value: '文件上传、断点续传、秒传。'
   },
   {
-    icon: 'iconchaolianjie',
+    img: Video,
     name: '视频',
-    value: '节点可插入超链接，鼠标点击即可实现跳转。'
+    value: '文章可加入视频，视频播放。'
   },
   {
-    icon: 'iconflow-Mark',
-    name: '基本文本样式',
-    value: '加粗、下划线。'
+    img: BaseDoc,
+    name: '基本样式',
+    value: '粗体、斜体、删除线、引用、列表、图片、表格、语法高亮等。'
   },
   {
-    icon: 'iconbiaoqian',
+    img: YinSi,
     name: '隐私',
-    value: '如果添加带颜色的标签，来突出要表达的重点。'
+    value: '公开/私密文章，私密文章仅自己可看，或者分享权限码给好友可看。'
   },
   {
-    icon: 'iconlianjiexian',
+    img: RBAC,
     name: '权限管理',
-    value: '通过添加关联线来表明节点之间的关联关系。'
+    value: '完善的权限管理系统，角色、用户、菜单，独立管理。'
   },
   {
-    icon: 'iconmouseL',
-    name: '日志',
-    value: '画布和节点都可以进行拖动。'
+    img: Log,
+    name: '文章互动',
+    value: '点赞、关注、收藏'
   },
   {
-    icon: 'icondaohang',
+    img: BoardMap,
     name: '数据面板',
-    value: '通过导航器可以方便知道当前画布处于思维导图的哪个部分。'
+    value: '博客访问记录，趋势、日统计、月统计展示。'
   },
   {
-    icon: 'icondaochu',
+    img: InAndOut,
     name: '导入导出',
-    value: '支持多种文件格式的导入和导出。'
+    value: '支持Drawio导入导出，支持XMind导入导出。'
   },
 ]
 </script>
 
 <style lang="scss" scoped>
-.block2Container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+@import '/@/theme/media.scss';
 
-  .blockContent {
-    padding: 100px 0;
-    width: 100%;
-    max-width: 980px;
+.home2-box{
+  margin: 100px 0 70px; 
+  max-width: 980px;
+}
 
-    .dataList {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 40px;
-      .dataItem {
-        box-shadow: 0 5px 30px -10px rgba(0, 0, 0, 0.1);
-        border-radius: 20px;
-        margin-right: 30px;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+.home2-title {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--app-item-title);
+  text-align: center;
+  margin-bottom: 40px;
+}
 
-        &:last-of-type {
-          margin-right: 0;
-        }
+.home2-item {
+  margin-bottom: 50px;
+  padding-right: 15px;
 
-        .iconBox {
-          width: 55px;
-          height: 55px;
-          border-radius: 10px;
-          background-color: rgba(30, 165, 154, 0.1);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-bottom: 10px;
+  .img-box {
+    height: 50px;
+    width: 50px;
+    min-width: 50px;
+    border-radius: 10px;
+    background-color: rgba(30, 165, 154, 0.1);
 
-          .icon {
-            font-size: 30px;
-            color: var(--app-item-title);
-          }
-        }
+    img{
+      width: 28px;
+      height: 28px;
+    }    
+  }
 
-        .dataValue {
-          color: var(--app-item-title);
-          font-weight: 700;
-        }
-      }
+  .info{
+    margin-left: 10px;
+    .name {
+      margin-bottom: 8px;
+      color: var(--el-text-color-primary);
+      font-weight: bold;
+      font-size: 16px;
     }
 
-    .blockTitle {
-      font-size: 30px;
-      font-weight: 700;
-      color: var(--app-item-title);
-      text-align: center;
-      margin-bottom: 40px;
-    }
-
-    .desc {
-      color: var(--el-color-info);
-      font-size: 17px;
-      line-height: 1.7;
-    }
-
-    .functionList {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      margin-top: 60px;
-      .functionItem {
-        display: flex;
-        width: 30%;
-        margin-bottom: 50px;
-
-        .icon {
-          width: 50px;
-          height: 50px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          font-size: 50px;
-          margin-right: 24px;
-          color: var(--app-item-sub);
-        }
-
-        .info {
-          .name {
-            margin-bottom: 5px;
-            color: var(--app-item-title);
-            font-weight: 600;
-            font-size: 18px;
-          }
-
-          .value {
-            font-size: 14px;
-            color: var(--app-item-sub);
-          }
-        }
-      }
+    .value {
+      font-size: 14px;
+      color: var(--app-item-sub);
+      line-height: 1.5;
     }
   }
+}
+
+@media screen and (max-width: $md) {
+  .home2-box{
+    padding: 0 20px;
+  }
+
+  .home2-title {
+    font-size: 28px;
+  }
+
+  .home2-item {
+    margin-bottom: 30px;
+
+    .img-box {
+      height: 40px;
+      width: 40px;
+      min-width: 40px;
+
+      img{
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .info{
+      .name {
+        font-size: 15px;
+      }
+
+      .value {
+        font-size: 12px;
+      }
+    }
+  }  
 }
 </style>

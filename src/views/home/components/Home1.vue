@@ -1,6 +1,6 @@
 <template>
   <div class="flex-center-center" style="width: 100vw; height: 100vh; background-color: var(--el-bg-color-page); border-radius: 0 0 0 20vw;">
-    <div class="flex-center-between" style="width: 100%; max-width: 980px;">
+    <div style="width: 100%; max-width: 980px;">
       <el-row :gutter="50">
         <el-col :xs="24" :sm="24" :md="14" :lg="14" :xl="14">
           <div class="flex-center-center">
