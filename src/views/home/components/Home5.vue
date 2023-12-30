@@ -5,7 +5,7 @@
         <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
           <div class="item-group">
             <div class="item-title">梁惠涌</div>
-            <div class="item-desc">专注前端、后端、运维、高并发、k8s、DevOps。</div>
+            <div class="item-desc">专注前端、后端、高并发、docker、k8s、DevOps。</div>
             <div class="flex mt10">
               <a class="link-txt" href="https://github.com/HuiYongCloud" target="_blank">GitHub</a>
               <a class="link-txt" href="https://gitee.com/HuiYongCloud" target="_blank">Gitee</a>
