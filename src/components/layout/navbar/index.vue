@@ -3,7 +3,7 @@
 		<div class="layout-nav-bar-pc">
 			<div class="flex-center-end" v-if="state.isUpUserCache">
 				<ThemeSwitch/>
-				<div class="flex-center-center pl20 pr15 pt12 pb12" v-if="mainStore.userInfo" @mouseover="state.isSelectUser = true" @mouseleave="state.isSelectUser = false">
+				<div class="flex-center-center pl20 pr15 pt15 pb15" v-if="mainStore.userInfo" @mouseover="state.isSelectUser = true" @mouseleave="state.isSelectUser = false">
 					<VanImage round class="user-header" :src="mainStore.userInfo.userImage"/>
 					<div class="user-name pl5">{{mainStore.userInfo.userName}}</div>
 					<Icon class="ml5" name="arrow-down" />
@@ -29,12 +29,12 @@
 						</transition>
 					</div>
 				</div>
-				<div v-else class="login-title pl10 pr10 pt12 pb12" @click="toLogin">去登录</div>
+				<div v-else class="login-title pl10 pr10 pt15 pb15" @click="toLogin">去登录</div>
 			</div>
 		</div>
 
 		<div class="layout-nav-bar-mobile" v-if="state.isUpUserCache">
-			<div class="h100 w100 flex-center-center" @click="state.showDrawer = !state.showDrawer">
+			<div class="flex-center-center" style="height: 50px; width: 50px;" @click="state.showDrawer = !state.showDrawer">
 				<img :src="blogToc" style="width: 18px; height: 18px; filter: drop-shadow(10000px 0 0 var(--el-color-black)); transform: translate(-10000px);"/>
 			</div>
 
@@ -328,8 +328,11 @@ defineExpose({
 }
 
 .layout-nav-bar-mobile {
-	width: 65px;
-	height: 65px;
+	width: 50px;
+	height: 50px;
+	position: fixed;
+  	right: 0;
+  	top: 0;
 	z-index: 100;
 
 	.user-menu-list{

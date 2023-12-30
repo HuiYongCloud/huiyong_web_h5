@@ -3,11 +3,6 @@
     class="flex-center-start"
     style="flex-direction: column;">
 
-    <!-- 导航 -->
-    <div style="position: absolute; top: 0; right: 0; z-index: 100;">
-      <Navbar/>
-    </div>   
-
     <!-- 内容 -->
     <!--   -->
     <div style="min-height: calc(100vh - 36px);">
@@ -17,8 +12,12 @@
       <Deploy v-if="state.tabName == 'deploy'"/>
     </div>
 
-    <!-- 顶部 -->
-    <Header :tabName="state.tabName" @tabChange="tabChange"/>
+    <!-- 顶部导航 -->
+    <div style="position: absolute; top: 0; right: 0; z-index: 100;">
+      <Header :tabName="state.tabName" @tabChange="tabChange"/>
+      <Navbar/>
+    </div>   
+    
     <!-- 底部 -->
     <div :class="{'home-footer': state.tabName == 'home'}">
       <Footer/>

@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="app-header-mobile" :class="{ active: state.active }">
-      <div class="flex-center-center" style="height: 65px; width: 65px;" @click="state.showDrawer = !state.showDrawer">
+      <div class="flex-center-center" style="height: 50px; width: 50px;" @click="state.showDrawer = !state.showDrawer">
 				<img v-if="!state.showDrawer" :src="menuOpen" style="width: 18px; height: 18px; filter: drop-shadow(10000px 0 0 var(--el-color-black)); transform: translate(-10000px);"/>
 				<img v-if="state.showDrawer" :src="menuClose" style="width: 18px; height: 18px; filter: drop-shadow(10000px 0 0 var(--el-color-black)); transform: translate(-10000px);"/>
 			</div>
@@ -125,15 +125,22 @@ onUnmounted(() => {
   left: 0;
   top: 0;
   width: 100%;
-  height: 76px;
+  height: 50px;
   transition: all 0.5s;
   background-color: transparent;
 
+  &.active {
+    background-color: var(--app-color-bg);
+    box-shadow: 0 5px 30px -10px rgba(0, 0, 0, 0.12);
+  }  
+
   .navItem {
-    color: var(--app-item-sub);
-    font-size: 15px;
+    line-height: 40px;
+    height: 40px;
+    padding: 0 16px;
+    color: var(--app-item-title);
+    font-size: 14px;
     transition: all 0.5s;
-    padding: 20px;
     cursor: pointer;
 
     &:last-of-type {
@@ -146,7 +153,7 @@ onUnmounted(() => {
 
     a {
       text-decoration: none;
-      color: var(--app-item-sub);
+      color: var(--app-item-title);
 
       &:hover {
         color: var(--el-color-primary);
@@ -159,6 +166,11 @@ onUnmounted(() => {
   .app-header-pc {
     &.active {
       box-shadow: 0 5px 30px -10px rgba(255, 255, 255, 0.1);
+    }
+  }
+  .app-header-mobile {
+    &.active {
+      box-shadow: 0 5px 30px -10px rgba(255, 255, 255, 0.12);
     }
   }
 }
