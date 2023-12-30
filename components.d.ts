@@ -9,7 +9,13 @@ declare module 'vue' {
   export interface GlobalComponents {
     Avatar: typeof import('./src/components/Avatar.vue')['default']
     BlogShareDialog: typeof import('./src/components/dialog/BlogShareDialog.vue')['default']
+    ElCol: typeof import('element-plus/es')['ElCol']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
+    ElImageViewer: typeof import('element-plus/es')['ElImageViewer']
+    ElRow: typeof import('element-plus/es')['ElRow']
+    ElSwitch: typeof import('element-plus/es')['ElSwitch']
+    ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    ElTree: typeof import('element-plus/es')['ElTree']
     Empty: typeof import('./src/components/Empty.vue')['default']
     FavateBtn: typeof import('./src/components/FavateBtn.vue')['default']
     Footer: typeof import('./src/components/layout/footer/index.vue')['default']

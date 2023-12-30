@@ -86,7 +86,7 @@ const getMindList = (userId: any) => {
 			state.mindId = state.mindList[0].mindId
 		}
 
-		if(route.query.userId){
+		if(route.query.userId && state.mindId){
 			setTimeout(() => {
 				mindDetail.value.getMindDetail(state.mindId)		
 			}, 200);
