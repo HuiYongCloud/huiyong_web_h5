@@ -6,7 +6,7 @@
     <!-- 内容 -->
     <!--   -->
     <div style="min-height: calc(100vh - 36px);">
-      <Home v-if="state.tabName == 'home'"/>
+      <Home v-if="state.tabName == 'home'" @tabChange="tabChange"/>
       <Search v-if="state.tabName == 'search'"/>
       <About v-if="state.tabName == 'about'"/>
       <Deploy v-if="state.tabName == 'deploy'"/>

@@ -1,7 +1,7 @@
 <template>
 	<div class="w100">
 		<div class="layout-nav-bar-pc">
-			<div class="flex-center-end" v-if="state.isUpUserCache">
+			<div class="flex-center-center" v-if="state.isUpUserCache">
 				<ThemeSwitch/>
 				<div class="flex-center-center pl20 pr15 pt15 pb15" v-if="mainStore.userInfo" @mouseover="state.isSelectUser = true" @mouseleave="state.isSelectUser = false">
 					<VanImage round class="user-header" :src="mainStore.userInfo.userImage"/>
@@ -226,7 +226,6 @@ defineExpose({
 	position: fixed; 
 	top: 0; 
 	right: 0;
-	width: 100%;
 	z-index: 100;
 
 	.login-title{

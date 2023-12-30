@@ -108,15 +108,6 @@ onUnmounted(() => {
     &.active,&:hover {
       color: var(--el-color-primary);
     }
-
-    a {
-      text-decoration: none;
-      color: var(--app-item-sub);
-
-      &:hover {
-        color: var(--el-color-primary);
-      }
-    }
   }
 }
 
@@ -126,7 +117,6 @@ onUnmounted(() => {
   top: 0;
   width: 100%;
   height: 50px;
-  transition: all 0.5s;
   background-color: transparent;
 
   &.active {
@@ -140,7 +130,6 @@ onUnmounted(() => {
     padding: 0 16px;
     color: var(--app-item-title);
     font-size: 14px;
-    transition: all 0.5s;
     cursor: pointer;
 
     &:last-of-type {
@@ -149,15 +138,6 @@ onUnmounted(() => {
 
     &.active,&:hover {
       color: var(--el-color-primary);
-    }
-
-    a {
-      text-decoration: none;
-      color: var(--app-item-title);
-
-      &:hover {
-        color: var(--el-color-primary);
-      }
     }
   }
 }
