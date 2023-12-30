@@ -43,7 +43,7 @@ const state = reactive({
 
 @media screen and (max-width: $md) {
   .home4-group{
-    padding: 0 20px;
+    padding: 0 20px;  
   }
 }
 </style>

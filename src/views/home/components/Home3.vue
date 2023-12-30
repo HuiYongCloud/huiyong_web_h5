@@ -7,7 +7,7 @@
       <div class="home3-title-sub">XMind</div>
       <img class="svg-img" src="https://img.huiyong.online/blogImage/2023-12-29/b889a650-88b7-437b-9117-4ce661bb3152.gif">
       <div class="flex">
-        <div class="btn btn-1" @click="aboutMore()">关于更多</div>
+        <div class="btn btn-1" @click="tabChange('about')">关于更多</div>
       </div>
     </div>
   </div>
@@ -15,10 +15,11 @@
 
 <script setup lang="ts">
 
-const aboutMore =() => {
-  window.open("https://huiyong.online/blogDetail?blogId=202111260489", '_blank')
-}
+const emit = defineEmits(['tabChange']);
 
+const tabChange = (tabName: string) => {
+  emit('tabChange', tabName)
+}
 </script>
 
 <style lang="scss" scoped>

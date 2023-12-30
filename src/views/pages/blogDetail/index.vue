@@ -45,7 +45,7 @@
 						</div>
 					</div>
 					<!-- 博客目录 -->
-					<!-- <MdCatalog editorId="md-preview" :theme="isDarkTheme()?'dark':'light'" @click="handleClickCatalog"/> -->
+					<MdCatalog editorId="md-preview" :theme="isDarkTheme()?'dark':'light'" @click="handleClickCatalog"/>
 				</template>
 			</div>
 		</div>
@@ -60,8 +60,8 @@ import { useRoute, useRouter } from "vue-router"
 import { showNotify, Sticky, BackTop } from 'vant';
 import Api from "/@/api/api"
 import Request from "/@/api/request"
-// import { MdCatalog } from 'md-editor-v3';
-// import { TocItem } from "md-editor-v3/lib/types/MdCatalog/MdCatalog";
+import { MdCatalog } from 'md-editor-v3';
+import { TocItem } from "md-editor-v3/lib/types/MdCatalog/MdCatalog";
 import { appStore } from '/@/stores/appStore'
 import blogToc from '/@/assets/svg/blog-toc.svg';
 
@@ -105,14 +105,14 @@ const state = reactive({
 
 
 // 点击目录
-// const handleClickCatalog = (e: MouseEvent, t: TocItem) => {
-// 	const el = document.getElementById(t.text);
-// 	const fullPath = route.fullPath.split("#")[0]
-// 	router.replace(`${fullPath}#${t.text}`);
-// 	if (el) {
-// 		el.scrollIntoView();
-// 	}
-// };
+const handleClickCatalog = (e: MouseEvent, t: TocItem) => {
+	const el = document.getElementById(t.text);
+	const fullPath = route.fullPath.split("#")[0]
+	router.replace(`${fullPath}#${t.text}`);
+	if (el) {
+		el.scrollIntoView();
+	}
+};
 
 const openUserDetail = (userId: any) => {
 	state.isShowBlogDetail = false

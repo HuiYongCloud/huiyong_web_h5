@@ -30,6 +30,10 @@
 <script setup lang="ts">
 import { defineAsyncComponent, reactive } from 'vue';
 import { BackTop } from 'vant';
+import { useRoute, useRouter } from 'vue-router';
+
+const route = useRoute();
+const router = useRouter();
 // 引入组件
 const Navbar = defineAsyncComponent(() => import('/@/components/layout/navbar/index.vue'));
 const Footer = defineAsyncComponent(() => import('/@/components/layout/footer/index.vue'));
@@ -51,7 +55,7 @@ const tabChange = (tabName: string) => {
       state.tabName = tabName
       break;
     case "about":
-      window.open("https://huiyong.online/blogDetail?blogId=202111260489", '_blank')
+      window.open(router.resolve({name: 'blogDetail', query: {blogId: '202111260489'}}).href, '_blank');
       break;  
     case "gitee":
       window.open("https://gitee.com/HuiYongCloud", '_blank')

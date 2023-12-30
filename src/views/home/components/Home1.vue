@@ -10,7 +10,7 @@
               <div class="infoRow-sub-2">免费、简单、强大...</div>
               <div class="desc">用思维导图、流程图、写文章、做笔记、记录生活;<br>搭建自己 / 组织 / 公司的知识储备系统;<br>这里就是你所寻找的。</div>
               <div class="flex-center-start">
-                <div class="btn btn-1" @click="aboutMore()">关于更多</div>
+                <div class="btn btn-1" @click="tabChange('about')">关于更多</div>
                 <div class="btn btn-2" @click="tabChange('deploy')">部署文档</div>
               </div>
             </div>
@@ -35,10 +35,6 @@
 <script setup lang="ts">
 import svg2024 from '/@/assets/svg/2024.svg';
 const emit = defineEmits(['tabChange']);
-
-const aboutMore =() => {
-  window.open("https://huiyong.online/blogDetail?blogId=202111260489", '_blank')
-}
 
 const tabChange = (tabName: string) => {
   emit('tabChange', tabName)

@@ -2,7 +2,7 @@
   <div class="flex-center-center" style="width: 100vw; padding: 0 0 100px; background-color: var(--el-bg-color-page); border-radius:20vw 0 0 0;">
     <div style="width: 100%; max-width: 980px;">
       <el-row :gutter="50">
-        <el-col :xs="24" :sm="14" :md="14" :lg="14" :xl="14">
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
           <div class="item-group">
             <div class="item-title">梁惠涌</div>
             <div class="item-desc">专注前端、后端、运维、高并发、k8s、DevOps。</div>
@@ -14,7 +14,7 @@
           </div>        
         </el-col>
 
-        <el-col :xs="24" :sm="10" :md="10" :lg="10" :xl="10">
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
           <div class="item-group">
             <div class="item-title">更多作品</div>
             <div class="flex mt10">
@@ -24,9 +24,12 @@
                 </el-tooltip>
               </template>
             </div>
+
+            <div class="item-desc mt20 mb10">欢迎加入微信交流群，加微备注：HuiYong.Online</div>
+            <img src="/QRCode.svg" width="180">
           </div>        
         </el-col>
-      </el-row>      
+      </el-row>
     </div>
   </div>
 </template>
@@ -58,6 +61,7 @@ const linkList = [
 .item-desc {
   color: var(--app-item-sub);
   font-size: 16px;
+  line-height: 1.5;
 }
 
 .link-txt {

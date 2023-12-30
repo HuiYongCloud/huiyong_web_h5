@@ -3,7 +3,7 @@
 		<ThemeSwitch :sticky="true"/>
 		<div class="login-left">
 			<div class="login-left-logo">
-				<img :src="logoMini" />
+				<img src="/logo.svg" />
 				<div class="login-left-logo-text">
 					<span>{{ themeConfig.globalViceTitle }}</span>
 					<span class="login-left-logo-text-msg">{{ themeConfig.globalViceTitleMsg }}</span>
@@ -57,7 +57,6 @@ import { Button} from 'vant';
 import { Tab, Tabs, Icon } from 'vant';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { NextLoading } from '/@/components/loading/loading';
-import logoMini from '/@/assets/login/logo_mini.png';
 import loginBg from '/@/assets/login/login-bg.svg';
 import svg1 from '/@/assets/login/1.svg';
 import svg2 from '/@/assets/login/2.svg';

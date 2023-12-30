@@ -23,10 +23,6 @@
 
 <script setup lang="ts">
 import svg2024 from '/@/assets/svg/2024.svg';
-
-const aboutMore =() => {
-  window.open("https://huiyong.online/blogDetail?blogId=202111260489", '_blank')
-}
 </script>
 
 <style lang="scss" scoped>

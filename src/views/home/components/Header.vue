@@ -85,7 +85,7 @@ onUnmounted(() => {
   left: 0;
   top: 0;
   width: 100%;
-  height: 76px;
+  height: 60px;
   transition: all 0.5s;
   background-color: transparent;
 

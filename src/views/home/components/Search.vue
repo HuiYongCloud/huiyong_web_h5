@@ -1,21 +1,11 @@
 <template>
   <div class="search-bog" style="max-width: 980px;">
-    <div 
-      class="flex-center-center" 
-      :class = "[state.seachKey ? 'search-top-group' : '']"
-      style="flex-direction: column; position: absolute; top: 0; right: 0; left: 0; z-index: 1;"
-      :style="{ 'position' : state.seachKey ? 'absolute' :  'static'}">
-      <!-- logo -->
-      <div v-if="state.seachKey" class="home-title" :style="{'padding-top': '30px'}">HuiYong.Online</div>
+    <div class="flex-center-start" style="flex-direction: column;">
       <!-- 搜索 -->
-      <div class="flex-center-center" :class="{'search-input-onkey': state.seachKey}" style="padding: 20px 0px;">
+      <div class="flex-center-center" style="flex-direction: column; padding: 20px 0px;">
         <div 
           class="base-search-input" 
-          :class="{
-            'search-input-focus': state.inputFocus, 
-            'search-input-not-key': !state.seachKey, 
-            'search-input-onkey': state.seachKey}" 
-          style="width: calc(100vw - 50px); margin: 0 25px; ">
+          :class="{'search-input-focus': state.inputFocus}" >
           <input 
               type="text" 
               autofocus 
@@ -27,115 +17,107 @@
               @keyup.enter="onPullDownRefresh"
               v-model="state.seachKey" />
         </div>
-      </div>
 
-      <!-- 链接 -->
-      <div class="link-group" v-if="!state.seachKey" style="width: 100%; margin-top: 100px; padding: 0px 50px;">
-          <div class="flex-center-center link-text" @click="openBlogDetail('202111260489')">
-              <div style="font-weight: bold;">HuiYong.Online</div>
-              <div style="margin-top: 10px;">一个可以安安静静写博客的地方</div>
+        <!-- 背景 -->
+        <div v-if="!state.seachKey" >
+          <img :src="homeBack" style="width: 100%; padding: 0 25px; margin-top: 10vh;">
+        </div>        
+      </div>
+    </div> 
+
+    <div ref="seachListGroup" v-if="state.seachKey" class="seach-list-group">
+      <!-- <VanPullRefresh 
+        v-model="state.reFreshing" 
+        class="flex-start-center"
+        @refresh="onPullDownRefresh" 
+        style="min-height: calc(100vh - 240px); padding-bottom: 50px;"> -->
+
+        <VanList
+          v-model:loading="state.listLoading"
+          v-model:error="state.loadError"
+          :finished="!state.hasMore"
+          error-text="请求失败，点击重新加载"
+          @load="onReachBottom">
+
+          <!-- item -->
+          <div class="seach-list" v-for="(item, index) in state.list.data" :key="index">
+
+              <!-- 用户 -->
+              <div v-if="item.type == 'user'" class="item-user">
+              <div class="flex-center-between">
+                  <div class="flex-center-start">
+                  <VanImage round class="user-header" :src="item.userImage" style="height: 25px; width: 25px;"/>
+                  <div
+                      class="item-link-active"
+                      v-html="item.userName" 
+                      style="margin-left: 10px; font-size: 12px; font-weight: bold;"
+                      @click="openBlogUser(item.id)"/>
+                  <span class="open-status-1 ml10">博主</span>
+                  </div>
+
+                  <div class="flex-center-start">
+                  <div class="user-code-year-box flex-center-center">
+                      <img class="code-year-img" :src="imgPig">
+                      <span class="code-year">{{item.codeYear}}</span>
+                  </div>
+                  <div style="color: var(--app-item-sub); margin-left: 10px;">{{item.timeStr}}</div>
+                  </div>
+              </div>
+
+              <div class="flex-center-start" style="margin-top: 10px;">
+                  <div class="item-status-num">访问量 {{item.blogInfoReadNum || 0}}</div>
+                  <div class="item-status-dot"/>
+                  <div class="item-status-num">被关注 {{item.focusNum || 0}}</div>                         
+                  <div class="item-status-dot"/>
+                  <div class="item-status-num">文章 {{item.blogNum || 0}}</div>
+                  <div class="item-status-dot"/>
+                  <div class="item-status-num">被收藏 {{item.blogLikeNum || 0}}</div>
+              </div>
+              </div>
+
+              <!-- 博客 -->
+              <div v-if="item.type == 'blog'"  class="item-blog">
+              <!-- 博主信息 -->
+              <div class="flex-center-start">
+                  <VanImage round class="user-header" :src="item.userImage" style="height: 25px; width: 25px;"/>
+                  <div 
+                  v-html="item.userName" 
+                  class="item-link-active" 
+                  style="margin-left: 10px; font-size: 12px; font-weight: bold;"
+                  @click="openBlogUser(item.userId)"/>
+              </div>
+
+              <!-- 博客信息 -->
+              <div class="blog-content-group">
+                  <div class="flex-center-between" style="margin-bottom: 10px;">
+                  <div>
+                      <div 
+                      class="item-link-active" 
+                      v-html="item.title" 
+                      style="font-size: 12px; font-weight: bold;"
+                      @click="openBlogDetail(item.id)"/>
+                      <span v-if="item.openStatus == 0" class="open-status-0 ml10">私密，博主可搜索</span>
+                  </div>
+                  <div style="color: var(--app-item-sub); margin-left: 10px;">{{item.timeStr}}</div>
+                  </div>
+                  <div class="blog-centent" style="font-size: 12px; padding-right: 10px; overflow: hidden; white-space: break-word;" v-html="item.content"></div>
+                  <div class="item-bottom flex-center-between">
+                  <div class="item-bottom-left flex-center-start">
+                      <div class="item-status-num">阅读 {{item.readNum || 0}}</div>
+                      <div class="item-status-dot"/>
+                      <div class="item-status-num">收藏 {{item.favoriteNum || 0}}</div>                  
+                  </div>
+                  </div>
+              </div>
+              </div>
           </div>
 
-          <div class="flex-center-center link-text" @click="openResume('U202111250003')">
-              <div style="font-weight: bold;">梁惠涌</div>
-              <div style="margin-top: 10px;">个人简历：Java开发工程师</div>
+          <div v-if="state.list.data.length == 0" class="flex-center-center" style="padding-top: 20vh;">
+              <div style="color: var(--app-item-sub); font-size: 15px;">空空如也！</div>
           </div>
-      </div>
-      </div> 
-
-      <div ref="seachListGroup" v-if="state.seachKey" class="seach-list-group">
-        <VanPullRefresh 
-            v-model="state.reFreshing" 
-            class="flex-start-center"
-            @refresh="onPullDownRefresh" 
-            style="min-height: calc(100vh - 240px); padding-bottom: 50px;">
-
-            <VanList
-            v-model:loading="state.listLoading"
-            v-model:error="state.loadError"
-            :finished="!state.hasMore"
-            error-text="请求失败，点击重新加载"
-            @load="onReachBottom">
-
-            <!-- item -->
-            <div class="seach-list" v-for="(item, index) in state.list.data" :key="index">
-
-                <!-- 用户 -->
-                <div v-if="item.type == 'user'" class="item-user">
-                <div class="flex-center-between">
-                    <div class="flex-center-start">
-                    <VanImage round class="user-header" :src="item.userImage" style="height: 25px; width: 25px;"/>
-                    <div
-                        class="item-link-active"
-                        v-html="item.userName" 
-                        style="margin-left: 10px; font-size: 12px; font-weight: bold;"
-                        @click="openBlogUser(item.id)"/>
-                    <span class="open-status-1 ml10">博主</span>
-                    </div>
-
-                    <div class="flex-center-start">
-                    <div class="user-code-year-box flex-center-center">
-                        <img class="code-year-img" :src="imgPig">
-                        <span class="code-year">{{item.codeYear}}</span>
-                    </div>
-                    <div style="color: var(--app-item-sub); margin-left: 10px;">{{item.timeStr}}</div>
-                    </div>
-                </div>
-
-                <div class="flex-center-start" style="margin-top: 10px;">
-                    <div class="item-status-num">访问量 {{item.blogInfoReadNum || 0}}</div>
-                    <div class="item-status-dot"/>
-                    <div class="item-status-num">被关注 {{item.focusNum || 0}}</div>                         
-                    <div class="item-status-dot"/>
-                    <div class="item-status-num">文章 {{item.blogNum || 0}}</div>
-                    <div class="item-status-dot"/>
-                    <div class="item-status-num">被收藏 {{item.blogLikeNum || 0}}</div>
-                </div>
-                </div>
-
-                <!-- 博客 -->
-                <div v-if="item.type == 'blog'"  class="item-blog">
-                <!-- 博主信息 -->
-                <div class="flex-center-start">
-                    <VanImage round class="user-header" :src="item.userImage" style="height: 25px; width: 25px;"/>
-                    <div 
-                    v-html="item.userName" 
-                    class="item-link-active" 
-                    style="margin-left: 10px; font-size: 12px; font-weight: bold;"
-                    @click="openBlogUser(item.userId)"/>
-                </div>
-
-                <!-- 博客信息 -->
-                <div class="blog-content-group">
-                    <div class="flex-center-between" style="margin-bottom: 10px;">
-                    <div>
-                        <div 
-                        class="item-link-active" 
-                        v-html="item.title" 
-                        style="font-size: 12px; font-weight: bold;"
-                        @click="openBlogDetail(item.id)"/>
-                        <span v-if="item.openStatus == 0" class="open-status-0 ml10">私密，博主可搜索</span>
-                    </div>
-                    <div style="color: var(--app-item-sub); margin-left: 10px;">{{item.timeStr}}</div>
-                    </div>
-                    <div class="blog-centent" style="font-size: 12px; padding-right: 10px; overflow: hidden; white-space: break-word;" v-html="item.content"></div>
-                    <div class="item-bottom flex-center-between">
-                    <div class="item-bottom-left flex-center-start">
-                        <div class="item-status-num">阅读 {{item.readNum || 0}}</div>
-                        <div class="item-status-dot"/>
-                        <div class="item-status-num">收藏 {{item.favoriteNum || 0}}</div>                  
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-
-            <div v-if="state.list.data.length == 0" class="flex-center-center" style="padding-top: 20vh;">
-                <div style="color: var(--app-item-sub); font-size: 15px;">空空如也！</div>
-            </div>
-            </VanList>
-        </VanPullRefresh>
-      </div>
+        </VanList>
+      <!-- </VanPullRefresh> -->
+    </div>
   </div>
 </template>
 
@@ -145,6 +127,7 @@ import { List as VanList, PullRefresh as VanPullRefresh, Image as VanImage} from
 import Api from "/@/api/api"
 import Request from "/@/api/request"
 import imgPig from '/@/assets/img/pig1.gif';
+import homeBack from '/@/assets/img/home-back.webp';
 import { useRoute, useRouter } from 'vue-router';
 
 // 定义变量

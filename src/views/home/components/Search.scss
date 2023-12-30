@@ -2,14 +2,7 @@
 @import '/@/theme/flex.scss';
 
 .search-bog {
-  margin-top: 30vh;
-
-  .home-title{
-    font-size: 35px;
-    color: var(--app-item-title);
-    letter-spacing: 1px;
-    margin-bottom: 10px;
-  }
+  margin-top: 20vh;
 
   .search-input-focus {
     border-color: var(--el-color-primary);
@@ -17,16 +10,17 @@
     box-shadow: var(--el-color-primary) 0px 0px 0px 1px inset;
   }
 
-  .search-top-group{
-    background-image: radial-gradient(transparent 1px,var(--app-color-bg) 1px);
-    background-size: 4px 4px;
-    backdrop-filter: saturate(50%) blur(4px);
-    padding-bottom: 10px;
-  }
+  // .search-top-group{
+  //   background-image: radial-gradient(transparent 1px,var(--app-color-bg) 1px);
+  //   background-size: 4px 4px;
+  //   backdrop-filter: saturate(50%) blur(4px);
+  //   padding-bottom: 10px;
+  // }
 
   .base-search-input{
     min-width: 300px;
     max-width: 600px;
+    width: 50vw;
     padding: 0 10px;
     border: 1px solid var(--app-border-color);
     border-radius: 6px;
@@ -36,6 +30,7 @@
       width: 100%;
       height: 100%;
       font-size: 14px;
+      height: 40px;
       color: var(--app-item-title);
       caret-color:var(--el-color-black);
       background-color: transparent;
@@ -51,49 +46,13 @@
       }
     }
   }
-  // 未输入关键字
-  .search-input-not-key{
-    height: 40px;
-
-    input {
-      font-size: 14px;
-    }
-  }
-  // 已输入关键字
-  .search-input-onkey{
-    height: 40px;
-    input {
-      font-size: 14px;
-    }
-  }
-
-  .home-back-img{
-    width: 100%;
-    max-width: 150px;
-    margin: 0px 25px 50px;
-  }
-
-  .link-text{
-    width: 40%;
-    color: var(--app-item-sub); 
-    flex-direction: column;
-    font-size: 15px;
-    cursor: pointer;
-    margin-top: 30px;
-
-    &:hover{
-      color: var(--el-color-primary);
-    }
-  }
 
   .seach-list-group{
     width: 100%;
-    min-height: 100vh;
-    padding-top: 180px;
-    overflow-y: scroll;
+    padding-top: 100px;
 
     .seach-list{
-      width: $lg;
+      width: 100%;
     }
   }
 
@@ -207,15 +166,10 @@
     background: rgba(103,187,85,.1);
     margin-right: 10px;
   }  
-
-  .link-group{
-    @include flex(center, space-between);
-    margin-bottom: 15vh;
-  }  
 }
 
 [data-theme="dark"] {
-  .page-home {
+  .search-bog {
     .item-blog{
       .blog-content-group{
         background-color: #161b22;
@@ -225,45 +179,23 @@
 }
 
 @media screen and (max-width: $lg) {
-  .page-home {
-    .home-title{
-      font-size: 22px;
-    }
+  .search-bog {
+    margin-top: 100px;
 
-    // 已输入关键字
-    .search-input-onkey{
-      height: 30px;
+    .base-search-input{
+      width: calc(100vw - 40px);
+
       input {
         font-size: 12px;
+        height: 35px;
       }
-    }   
+    }
 
     .seach-list-group{
-      padding-top: 120px;
+      padding-top: 30px;
       .seach-list{
         width: 100vw;
       }
-    }
-
-    .home-back-img{
-      margin: 0px 25px 30px;
-      max-width: 100px;
-    }
-
-    .link-group{
-      @include flex(center, center);
-      flex-direction: column;
-      margin-bottom: 0px;
-
-      .link-text{
-        width: 100%;
-        font-size: 14px;
-        margin-top: 30px;
-    
-        &:hover{
-          color: var(--el-color-primary);
-        }
-      }      
     }
   }
 }

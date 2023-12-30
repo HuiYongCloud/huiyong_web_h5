@@ -19,7 +19,6 @@ const props = defineProps({
     },
 });
 const toLink = () => window.open("https://beian.miit.gov.cn/", '_blank')
-const toAbout = () => window.open("https://huiyong.online/blogDetail?blogId=202111260489", '_blank')
 </script>
 
 <style scoped lang="scss">

@@ -1,10 +1,10 @@
 <template>
   <div class="home-box">
     <Home1 @tabChange="tabChange"/>
-    <Home2/>
-    <Home3/>
-    <Home4/>
-    <Home5/>
+    <Home2 @tabChange="tabChange"/>
+    <Home3 @tabChange="tabChange"/>
+    <Home4 @tabChange="tabChange"/>
+    <Home5 @tabChange="tabChange"/>
   </div>
 </template>
 
