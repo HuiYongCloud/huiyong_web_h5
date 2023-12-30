@@ -1,7 +1,7 @@
 <template>
   <div class="flex-center-center" style="width: 100vw;">
     <div class="home3-group">
-      <div class="home3-title">功能录制</div>
+      <div class="home3-title">功能演示</div>
       <div class="home3-title-sub">Drawio</div>
       <img class="svg-img" src="https://img.huiyong.online/blogImage/2023-12-16/72f62307-a383-4411-9385-be189e807254.gif">
       <div class="home3-title-sub">XMind</div>
