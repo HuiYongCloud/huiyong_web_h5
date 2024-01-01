@@ -90,14 +90,14 @@
               <!-- 博客信息 -->
               <div class="blog-content-group">
                   <div class="flex-center-between" style="margin-bottom: 10px;">
-                  <div>
-                      <div 
-                      class="item-link-active" 
-                      v-html="item.title" 
-                      style="font-size: 12px; font-weight: bold;"
-                      @click="openBlogDetail(item.id)"/>
+                  <span>
+                      <span 
+                        class="item-link-active" 
+                        v-html="item.title" 
+                        style="font-size: 12px; font-weight: bold;"
+                        @click="openBlogDetail(item.id)"/>
                       <span v-if="item.openStatus == 0" class="open-status-0 ml10">私密，博主可搜索</span>
-                  </div>
+                  </span>
                   <div style="color: var(--app-item-sub); margin-left: 10px;">{{item.timeStr}}</div>
                   </div>
                   <div class="blog-centent" style="font-size: 12px; padding-right: 10px; overflow: hidden; white-space: break-word;" v-html="item.content"></div>
