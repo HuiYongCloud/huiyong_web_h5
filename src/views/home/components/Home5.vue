@@ -26,7 +26,7 @@
             </div>
 
             <div class="item-desc mt20 mb10">欢迎加入微信交流群，加微备注：HuiYong.Online</div>
-            <img src="/QRCode.svg" width="180">
+            <img :src="QRCode" width="180">
           </div>        
         </el-col>
       </el-row>
@@ -35,6 +35,7 @@
 </template>
 
 <script setup lang="ts">
+import QRCode from './svg/QRCode.svg';
 const linkList = [
   {
     name: 'HuiYongCloud',
