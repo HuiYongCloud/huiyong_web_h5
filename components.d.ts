@@ -14,6 +14,8 @@ declare module 'vue' {
     ElImageViewer: typeof import('element-plus/es')['ElImageViewer']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
+    ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    ElTree: typeof import('element-plus/es')['ElTree']
     Empty: typeof import('./src/components/Empty.vue')['default']
     FavateBtn: typeof import('./src/components/FavateBtn.vue')['default']
     Footer: typeof import('./src/components/layout/footer/index.vue')['default']

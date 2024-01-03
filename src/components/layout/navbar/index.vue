@@ -156,7 +156,7 @@ const toBlog = ()=> router.push({name: 'blogDetail', query: {userId: mainStore.u
 // 简历
 const toResume = ()=> router.push({name: 'resume', query: {userId: mainStore.userInfo.userId}})
 // 管理后台
-const toAdmin = ()=> window.open("https://admin.huiyong.online/", '_blank')
+const toAdmin = ()=> window.open(`https://admin.${window.HuiYongConfig.domain}/`, '_blank')
 // 博客标签
 const toTagPage = (item: any)=> {
 	emit('openTagInfo', item);

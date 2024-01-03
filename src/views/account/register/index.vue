@@ -22,10 +22,10 @@
           <template #input>
             <div class="flex-center-start">
               <avatar :size="60" :src="state.userImage"/>
-              <div class="ml10">
+              <!-- <div class="ml10">
                 <Button size="small" :loading="state.imageLoading" @click="clickUploadFile">{{state.imageLoadingStr}}</Button>
                 <input type="file" ref="uploadFileRef" style="display:none" @change="changeImage($event)" accept=".jpg, .jpeg, .png, .gif, .webp"/>
-              </div>
+              </div> -->
             </div>
           </template>
         </Field>
