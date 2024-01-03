@@ -55,7 +55,7 @@ const tabChange = (tabName: string) => {
       state.tabName = tabName
       break;
     case "about":
-      window.open(router.resolve({name: 'blogDetail', query: {blogId: '202111260489'}}).href, '_blank');
+      window.open("https://huiyong.online/blogDetail?blogId=202111260489", '_blank')
       break;  
     case "gitee":
       window.open("https://gitee.com/HuiYongCloud", '_blank')
