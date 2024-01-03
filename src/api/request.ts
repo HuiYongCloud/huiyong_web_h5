@@ -8,7 +8,7 @@ import { appStore } from "/@/stores/appStore";
 
 // 创建实例
 const service : AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: (import.meta.env.DEV) ? "http://localhost:8899" : `https://${window.HuiYongConfig.domain}`,
   // 使Session的Token跨域不失效
   withCredentials: true,                 
   timeout: 20000,
