@@ -32,8 +32,8 @@
       </div>
 
       <div style="padding-top: 24px;">
-        <favate-btn v-if="props.detail && props.detail.resumeOpenStatus == 1" width="100%" :height="30" :size="13" text="关于博主" @click="openUserResume(props.detail.blogUserId)"/>
-        <favate-btn class="mt10"  width="100%" :height="30" :size="13" v-if="!isRootBlog && props.detail && props.detail.focusId" text="取消关注" @click="cancelFocus"/>
+        <!-- <favate-btn v-if="props.detail && props.detail.resumeOpenStatus == 1" width="100%" :height="30" :size="13" text="关于博主" @click="openUserResume(props.detail.blogUserId)"/> -->
+        <favate-btn width="100%" :height="30" :size="13" v-if="!isRootBlog && props.detail && props.detail.focusId" text="取消关注" @click="cancelFocus"/>
         <favate-btn class="mt10" width="100%" :height="30" :size="13" v-if="!isRootBlog && props.detail && !props.detail.focusId" text="关注博主" @click="addFocus"/>
       </div>
     </div>
@@ -47,8 +47,8 @@
               <div class="user-name-top flex-center-start">
                 <div class="user-name">{{props.detail.userName}}</div>
                 <div class="flex ml10">
-                  <favate-btn v-if="props.detail && props.detail.resumeOpenStatus == 1" :width="75" :height="20" :size="12" text="关于博主" @click="openUserResume(props.detail.blogUserId)"/>
-                  <favate-btn class="ml10" v-if="!isRootBlog && props.detail && props.detail.focusId" :width="75" :height="20" :size="12" text="取消关注" @click="cancelFocus"/>
+                  <!-- <favate-btn v-if="props.detail && props.detail.resumeOpenStatus == 1" :width="75" :height="20" :size="12" text="关于博主" @click="openUserResume(props.detail.blogUserId)"/> -->
+                  <favate-btn v-if="!isRootBlog && props.detail && props.detail.focusId" :width="75" :height="20" :size="12" text="取消关注" @click="cancelFocus"/>
                   <favate-btn class="ml10" v-if="!isRootBlog && props.detail && !props.detail.focusId" :width="75" :height="20" :size="12" text="关注博主" @click="addFocus"/>
                 </div>
               </div>
