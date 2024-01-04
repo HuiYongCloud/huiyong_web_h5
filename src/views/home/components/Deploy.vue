@@ -8,7 +8,6 @@
 
     <div class="right-content" ref="rightContent">
       <MDPreview :content="state.content"/>
-      <Footer/>
     </div>
 
     <div class="left-nav-mobile">
@@ -39,7 +38,6 @@ import Holder from './svg/holder.svg';
 import Arrow from './svg/arrow.svg';
 // 引入组件
 const MDPreview = defineAsyncComponent(() => import('/@/components/MDPreview.vue'));
-const Footer = defineAsyncComponent(() => import('/@/components/layout/footer/index.vue'));
 
 const rightContent = ref();
 const state = reactive({
@@ -78,7 +76,7 @@ const changeBlogId = (blogId : string) => {
 
 onMounted(()=> {
 	nextTick(() => {
-    changeBlogId('1')
+    changeBlogId(state.activeBlogId)
   })
 })
 </script>
@@ -125,6 +123,7 @@ onMounted(()=> {
   }  
 
   .right-content{
+    flex: 1;
     height: 100%;
     overflow-y: scroll;
     padding: 40px 40px 0;
