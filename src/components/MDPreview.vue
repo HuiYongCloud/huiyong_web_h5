@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div ref="myMdPreview">
 		<MdPreview 
 			editorId="md-preview"
 			:theme="isDarkTheme()?'dark':'light'" 
@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive} from 'vue';
+import { onMounted, reactive, ref} from 'vue';
 import { appStore } from '/@/stores/appStore'
 import { MdPreview, config} from 'md-editor-v3';
 import 'md-editor-v3/lib/preview.css';
@@ -30,6 +30,7 @@ const state = reactive({
 	showImage: '',
 });
 
+const myMdPreview = ref();
 const mainStore = appStore()
 const isDarkTheme = () => {
   	let isDark = false;
@@ -70,7 +71,7 @@ const closePreview = () => {
 const initImageClick = () => {
 	// 延时5秒，保证图片节点加载进来
 	setTimeout(() => {
-		let imgList = document.getElementsByTagName("img");
+		let imgList = myMdPreview.value.getElementsByTagName("img");
 		for (var i = 0; i < imgList.length; i++) {
 			let item = imgList[i];
 			var a = item.getAttribute("class");

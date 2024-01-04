@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="app-header-pc" :class="{ active: state.active }">
+    <div class="app-header-pc" :class="{ active: state.active, 'app-header-border': props.tabName == 'deploy'}">
       <div class="flex-center-between" style="height: 100%; max-width: 980px; margin: 0 auto;">
         <div class="flex-center-center">
           <img src="/logo.svg" width="22" style="margin-right: 10px;">
@@ -9,7 +9,7 @@
         <div class="flex-center-center">
           <div class="navItem" @click="tabChange('home')" :class="{active: props.tabName === 'home'}">首页</div>
           <div class="navItem" @click="tabChange('search')" :class="{active: props.tabName === 'search'}">搜索</div>
-          <div class="navItem" @click="tabChange('deploy')" :class="{active: props.tabName === 'deploy'}">部署文档</div>
+          <div class="navItem" v-if="isHuiYongDomain" @click="tabChange('deploy')" :class="{active: props.tabName === 'deploy'}">部署文档</div>
           <div class="navItem" @click="tabChange('about')">关于</div>
           <div class="navItem" @click="tabChange('gitee')">Gitee</div>
           <div class="navItem" @click="tabChange('github')">Github</div>
@@ -27,7 +27,7 @@
   			:style="{ width: '240px', height: '100%', }">
         <div class="navItem" @click="tabChange('home')" :class="{active: props.tabName === 'home'}">首页</div>
         <div class="navItem" @click="tabChange('search')" :class="{active: props.tabName === 'search'}">搜索</div>
-        <div class="navItem" @click="tabChange('deploy')" :class="{active: props.tabName === 'deploy'}">部署文档</div>
+        <div class="navItem" v-if="isHuiYongDomain" @click="tabChange('deploy')" :class="{active: props.tabName === 'deploy'}">部署文档</div>
         <div class="navItem" @click="tabChange('about')">关于</div>
         <div class="navItem" @click="tabChange('gitee')">Gitee</div>
         <div class="navItem" @click="tabChange('github')">Github</div>
@@ -38,11 +38,13 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, nextTick, reactive, onUnmounted, ref } from 'vue'
+import { onMounted, nextTick, reactive, onUnmounted, computed } from 'vue'
 const emit = defineEmits(['tabChange']);
 import menuOpen from '/@/assets/svg/menu-open.svg';
 import menuClose from '/@/assets/svg/menu-close.svg';
 import { Popup } from 'vant';
+
+const isHuiYongDomain = computed(() => {return window.HuiYongConfig.domain == 'huiyong.online';});
 
 // 定义父组件传过来的值
 const props = defineProps({
@@ -80,6 +82,10 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 @import '/@/theme/media.scss';
+
+.app-header-border{
+  border-bottom: 1px solid var(--app-border-color);
+}
 .app-header-pc {
   position: fixed;
   left: 0;

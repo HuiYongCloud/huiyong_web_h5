@@ -271,11 +271,6 @@ const loadPage = (pageNum: number) => {
 	})
 }
 
-// 返回时刷新页面
-const backRefresh = ()=> {
-	window.location.reload();
-}
-
 onMounted(()=> {
 	nextTick(() => {
     document.body.addEventListener('click', searchListener, true);
@@ -286,16 +281,11 @@ onMounted(()=> {
       // 刷新
       onPullDownRefresh();
     }
-    // 监听返回
-    // 关键字历史记录返回时，是当前页面，所以返回时，页面并没有刷新，这里手动调用刷新
-    window.addEventListener('popstate', backRefresh)
   })
 })
 
 onUnmounted(()=> {
   document.body.removeEventListener('click', searchListener);
-  // 移除监听返回
-	window.removeEventListener('popstate', backRefresh)
 })
 </script>
 

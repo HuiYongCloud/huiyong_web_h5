@@ -1,175 +1,169 @@
 <template>
-  <div class="flex-center-center" style="width: 100vw; height: 100vh; background-color: var(--el-bg-color-page); border-radius: 0 0 0 20vw;">
-      <el-row :gutter="50">
-        <el-col :xs="24" :sm="24" :md="14" :lg="14" :xl="14">
-          <div class="flex-center-center h100">
-              <div class="infoRow">整理中，即将开放...</div>
-          </div>
-        </el-col>
-        
-        <el-col :xs="24" :sm="24" :md="10" :lg="10" :xl="10">
-          <div class="flex-center-center">
-            <div style="position: relative;">
-              <div class="animation1"></div>
-              <div class="animation2"></div>
-              <div class="animation3"></div>
-              <img class="pic" :src="svg2024" />
-            </div>
-          </div>          
-        </el-col>
-      </el-row>
+  <div class="deploy-page flex">
+    <div class="left-nav-pc">
+      <div v-for="(item, index) in state.list" :key="index">
+        <div class="nav-item" :class="{active: state.activeBlogId == item.blogId }" @click="changeBlogId(item.blogId)">{{item.name}}</div>
+      </div>
+    </div>
+
+    <div class="right-content" ref="rightContent">
+      <MDPreview :content="state.content"/>
+      <Footer/>
+    </div>
+
+    <div class="left-nav-mobile">
+      <div class="flex-center-center" style="position: relative; width: 13px; height: 60px;" @click="state.showDrawer = !state.showDrawer">
+				<img :src="Holder" style="width: 13px; height: 60px; position: absolute; top: 0; left: 0; filter: drop-shadow(10000px 0 0 var(--deploy-page-holder-color)); transform: translate(-10000px);"/>
+				<img :src="Arrow" style="width: 13px; height: 13px; position: absolute; top: 22px; left: 0; filter: drop-shadow(10000px 0 0 var(--el-color-white)); transform: translate(-10000px);"/>
+			</div>
+      <Popup 
+				v-model:show="state.showDrawer"  
+				position="left"
+  			:style="{ width: '240px', height: '100%', paddingTop: '50px'}">
+        <div v-for="(item, index) in state.list" :key="index">
+          <div class="nav-item" :class="{active: state.activeBlogId == item.blogId }" @click="changeBlogId(item.blogId)">{{item.name}}</div>
+        </div>
+      </Popup>   
+    </div>
+
+    <el-backtop target=".right-content" :right="20" :bottom="20" />
   </div>
 </template>
 
 <script setup lang="ts">
-import svg2024 from '/@/assets/svg/2024.svg';
+import { defineAsyncComponent, reactive, onMounted, nextTick, ref} from 'vue';
+import Api from "/@/api/api"
+import Request from "/@/api/request"
+import { showNotify, Popup} from 'vant';
+import Holder from './svg/holder.svg';
+import Arrow from './svg/arrow.svg';
+// 引入组件
+const MDPreview = defineAsyncComponent(() => import('/@/components/MDPreview.vue'));
+const Footer = defineAsyncComponent(() => import('/@/components/layout/footer/index.vue'));
+
+const rightContent = ref();
+const state = reactive({
+  showDrawer: false,
+  list : [
+    {name: "部署说明", blogId: '2024010415572701'},
+    {name: "HY-A部署", blogId: '2024010415575201'},
+    {name: "HY-B部署", blogId: '2024010415580901'},
+    {name: "HY-C部署", blogId: '2024010416001801'},
+    {name: "1、Nacos配置说明", blogId: '2024010416004601'},
+    {name: "2、Nginx部署说明", blogId: '2024010416011001'},
+    {name: "3、前端页面部署", blogId: '2024010416013701'},
+    {name: "4、Admin运维菜单", blogId: '2024010416020301'},
+    {name: "5、账号说明", blogId: '2024010416022701'},
+    {name: "6、站点地图", blogId: '2024010416024701'},
+  ],
+  activeBlogId: '2024010415572701',
+  content:""
+})
+
+const changeBlogId = (blogId : string) => {
+  state.showDrawer = false;
+  state.activeBlogId = blogId;
+
+  // 重置状态
+  Request.post(Api.Blog_Detail, { blogId: blogId})
+  .then((res:any) =>{      
+    state.content = res.content
+    // 滑动到顶部
+    rightContent.value.scrollTop = 0
+  })
+  .catch(res =>{
+    showNotify({ type: 'danger', message: res.message });
+  })
+}
+
+onMounted(()=> {
+	nextTick(() => {
+    changeBlogId('1')
+  })
+})
 </script>
 
 <style lang="scss" scoped>
 @import '/@/theme/media.scss';
 
-.infoRow {
-  font-size: 45px;
-  color: var(--app-item-title);
-  font-weight: 700;
-  margin-bottom: 20px;
-}
 
-.infoRow-sub-1 {
-  font-size: 28px;
-  color: var(--app-item-title);
-  font-weight: 700;
-  margin-bottom: 20px;
-  margin-top: 50px;
-}
+.deploy-page{
+  
+  margin-top: 60px;
+  width: 100vw;
+  height: calc(100vh - 60px);
 
-.infoRow-sub-2 {
-  font-size: 28px;
-  color: var(--app-item-title);
-  font-weight: 700;
-  margin-bottom: 20px;
-  margin-top: 20px;
-}    
-
-.desc {
-  color: var(--el-color-info);
-  font-size: 16px;
-  line-height: 1.8;
-  margin-top: 30px;
-  margin-bottom: 30px;
-}
-
-.btn {
-  height: 44px;
-  padding: 0 20px;
-  line-height: 44px;
-  cursor: pointer;
-  background: var(--el-color-primary);
-  color: var(--el-color-white);
-  font-weight: 600;
-  font-size: 15px;
-  border-radius: 5px;
-  transition: all 0.5s;
-  margin-right: 10px;
-
-  &:hover {
-    transform: translateY(-4px);
+  .left-nav-pc{
+    width: 200px;
+    height: 100%;
+    min-width: 200px;
+    border-right: 1px solid var(--app-border-color);
   }
 
-  &.btn-1{  
-    background: var(--el-color-primary);
+  .left-nav-mobile{
+    position: fixed;
+    left: 0;
+    top: calc(50vh - 23px);
+    --deploy-page-holder-color: rgba(0, 0, 0, 0.3);
   }
 
-  &.btn-2{
-    background: #f5828b;
+  .nav-item {
+    line-height: 40px;
+    height: 40px;
+    padding: 0 16px;
+    color: var(--app-item-title);
+    font-size: 14px;
+    cursor: pointer;
+
+    &:last-of-type {
+      padding-right: 0;
+    }
+
+    &.active,&:hover {
+      color: var(--el-color-primary);
+    }
+  }  
+
+  .right-content{
+    height: 100%;
+    overflow-y: scroll;
+    padding: 40px 40px 0;
+  }
+}
+
+
+@media screen and (max-width: $lg) {
+  .deploy-page{
+    .left-nav-pc{
+      display: none;
+    }
+
+    .left-nav-mobile{
+      display: block;
+    }
+
+    .right-content{
+      padding: 15px 15px 0;
+    }
+  }
+}
+
+@media screen and (min-width: $lg) {
+  .deploy-page{
+    .left-nav-pc{
+      display: block;
+    }
+
+    .left-nav-mobile{
+      display: none;
+    }
   }  
 }
-  
-.pic {
-  width: 500px;
-  max-width: 80vw;
-}
 
-.animation1 {
-  width: 38px;
-  height: 38px;
-  border: 7px solid #f5828b;
-  border-radius: 50%;
-  position: absolute;
-  right: -50px;
-  bottom: 86px;
-  animation-name: zoom1;
-  animation-duration: 3s;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-  box-shadow: 0 12px 50px 0 rgba(0, 0, 0, 0.14);
-}
-
-.animation2 {
-  border-radius: 50%;
-  background-color: var(--el-color-primary);
-  box-shadow: 0 20px 30px 0 rgba(48, 61, 114, 0.4);
-  position: absolute;
-  width: 25px;
-  height: 25px;
-  top: -10px;
-  right: 60px;
-  animation: spin 2s infinite alternate;
-  bottom: 60px;
-}
-
-.animation3 {
-  border-radius: 50%;
-  background-color: var(--el-text-color-primary);
-  box-shadow: 0 20px 30px 0 rgba(245, 130, 139, 0.4);
-  position: absolute;
-  width: 25px;
-  height: 25px;
-  bottom: 50px;
-  left: 0px;
-  animation: spin 3s infinite alternate;
-}
-
-@keyframes zoom1 {
-  0% {transform: scale(0.9);}
-  100% {transform: scale(1.5);}
-}
-
-@keyframes spin {
-  0% {transform: translateY(0);}
-  100% {transform: translateY(40px);}
-}
-
-@media screen and (max-width: $md) {
-  .infoRow {
-    margin: 100px 20px 0;
-    font-size: 25px;
-    font-weight: 700;
-  }
-
-  .infoRow-sub-1 {
-    margin: 30px 20px 0;
-    font-size: 20px;
-    font-weight: 700;
-  }
-
-  .infoRow-sub-2 {
-    margin: 5px 20px 0;
-    font-size: 20px;
-    font-weight: 700;
-  }    
-
-  .desc {
-    font-size: 14px;
-    margin: 20px;
-  }
-
-  .btn {
-    height: 35px;
-    padding: 0 15px;
-    line-height: 35px;
-    &.btn-1{
-      margin-left: 20px;
+[data-theme='dark'] {
+  .deploy-page{
+    .left-nav-mobile{
+      --deploy-page-holder-color: rgba(255, 255, 255, 0.3);
     }
   }
 }

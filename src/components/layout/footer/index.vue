@@ -1,6 +1,6 @@
 <template>
 	<div class="layout-footer flex-center-center" :style="{'position': props.absolute ? 'absolute' : 'static'}">
-		<div class="flex-center-start mb20 ml30" style="font-size: 12px; color: var(--app-item-sub);">
+		<div class="flex-center-start mb20" style="font-size: 12px; color: var(--app-item-sub);">
 			<div style="letter-spacing: 1px;">HuiYong, © 2023</div>
 			<div class="text-info" @click="toLink">赣ICP备20008193号</div>
 			<!-- <div class="text-info" @click="toAbout">关于</div> -->

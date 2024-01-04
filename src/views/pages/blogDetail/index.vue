@@ -1,6 +1,5 @@
 <template>
   	<div class="w100 flex-start-center">
-		<BlogShareDialog ref="blogShareDialog"/>
 		<div style="position: relative;" class="blog-detail-page flex-start-center">
 
 			<!-- 个人信息导航 -->
@@ -49,15 +48,15 @@
 				</template>
 			</div>
 		</div>
-
-		<BackTop/>
+		<el-backtop :right="20" :bottom="20" />
+		<BlogShareDialog ref="blogShareDialog"/>
   	</div>
 </template>
 
 <script setup lang="ts">
 import { defineAsyncComponent, onMounted, onUnmounted, reactive, ref, nextTick} from 'vue';
 import { useRoute, useRouter } from "vue-router"
-import { showNotify, Sticky, BackTop } from 'vant';
+import { showNotify, Sticky } from 'vant';
 import Api from "/@/api/api"
 import Request from "/@/api/request"
 import { MdCatalog } from 'md-editor-v3';
@@ -110,6 +109,7 @@ const handleClickCatalog = (e: MouseEvent, t: TocItem) => {
 	const fullPath = route.fullPath.split("#")[0]
 	router.replace(`${fullPath}#${t.text}`);
 	if (el) {
+		// el.scrollTop = 0
 		el.scrollIntoView();
 	}
 };

@@ -8,7 +8,6 @@
     <div style="min-height: calc(100vh - 36px);">
       <Home v-if="state.tabName == 'home'" @tabChange="tabChange"/>
       <Search v-if="state.tabName == 'search'"/>
-      <About v-if="state.tabName == 'about'"/>
       <Deploy v-if="state.tabName == 'deploy'"/>
     </div>
 
@@ -19,7 +18,7 @@
     </div>   
     
     <!-- 底部 -->
-    <div :class="{'home-footer': state.tabName == 'home'}">
+    <div v-if="state.tabName != 'deploy'" :class="{'home-footer': state.tabName == 'home'}">
       <Footer/>
     </div>
 
@@ -28,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent, reactive } from 'vue';
+import { onMounted, onUnmounted, reactive, defineAsyncComponent, nextTick} from 'vue';
 import { BackTop } from 'vant';
 import { useRoute, useRouter } from 'vue-router';
 
@@ -40,7 +39,6 @@ const Footer = defineAsyncComponent(() => import('/@/components/layout/footer/in
 const Header = defineAsyncComponent(() => import('./components/Header.vue'));
 const Search = defineAsyncComponent(() => import('./components/Search.vue'));
 const Home = defineAsyncComponent(() => import('./components/Home.vue'));
-const About = defineAsyncComponent(() => import('./components/About.vue'));
 const Deploy = defineAsyncComponent(() => import('./components/Deploy.vue'));
 // 定义变量
 const state = reactive({
@@ -52,6 +50,13 @@ const tabChange = (tabName: string) => {
     case "home":
     case "search":
     case "deploy":
+      // 变更路径
+      router.push({name: 'home',
+        query: {
+          tab: tabName,
+          q: route.query.q
+        }
+      })
       state.tabName = tabName
       break;
     case "about":
@@ -66,6 +71,27 @@ const tabChange = (tabName: string) => {
   }
 }
 
+// 返回时刷新页面
+const backRefresh = ()=> {
+	window.location.reload();
+}
+
+onMounted(()=> {
+	nextTick(() => {
+    // 搜索关键字处理
+    if(route.query.tab){
+      state.tabName = route.query.tab
+    }
+    // 监听返回
+    // 关键字历史记录返回时，是当前页面，所以返回时，页面并没有刷新，这里手动调用刷新
+    window.addEventListener('popstate', backRefresh)
+  })
+})
+
+onUnmounted(()=> {
+  // 移除监听返回
+	window.removeEventListener('popstate', backRefresh)
+})
 </script>
 
 <style scoped lang="scss">
